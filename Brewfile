@@ -1,0 +1,7 @@
+brew "ffmpeg"
+brew "whisper-cpp"
+brew "node"
+brew "ollama"
+brew "uv"
+brew "gh"
+brew "python"

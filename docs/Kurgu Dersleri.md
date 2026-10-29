@@ -23,7 +23,7 @@ Biçim: `- [YYYY-AA-GG] iş adı (müşteri/Nexus, 9:16|16:9) — not → çıka
 - [2026-10-25] Aynı iş — seslendirme + arkada "kısık ama belli" müzik istedi → kural: müzik konuşma altında ~-20 dB, aralarda ~-14 dB, kapanışta öne çıkar.
 
 - [2026-10-25] Aynı iş v8 — "Seste konuşmalar yok" (gönderdiğim ses dosyasında seslendirme -35 LUFS'ta, müzik altında kaybolmuştu; toplam LUFS'a bakıp onayladım) → KURAL: sesi göndermeden önce konuşma ile müzik ayrı ayrı ve saniye saniye ölçülür; konuşma müzikten en az ~10 dB yüksek olmalı. Toplam -14 LUFS tek başına onay değildir.
-- [2026-10-25] Aynı iş — "Nexus Reels'lerinde nasıl yapıyorduk öyle yap" → KURAL: önce `~/Desktop/02 Projeler/Nexus Video` hattı; ses Remotion'da katman katman (her VO cümlesi kendi Sequence'ında volume=1, müzik ayrı Audio düşük volume), önceden karıştırılmış tek WAV'a güvenme.
+- [2026-10-25] Aynı iş — "Nexus Reels'lerinde nasıl yapıyorduk öyle yap" → KURAL: önce depodaki Nexus Video/Remotion hattı; ses Remotion'da katman katman (her VO cümlesi kendi Sequence'ında volume=1, müzik ayrı Audio düşük volume), önceden karıştırılmış tek WAV'a güvenme.
 - [2026-10-25] Aynı iş — top/bas "davul" vuruşları, turuncu ışık patlaması, flaş+sarsıntı, dev bayrak süpürmesi, whip beğenilmedi; mekan görselleri ve tam ekran gökyüzü/gece bayrak videoları beğenilmedi; kelime kelime yazı ve daktilo damga kaldı. Müziği kullanıcı seçti (İzmir Marşı Epic, Jeretar) ve "asıl başlangıç 1:10" dedi → kullanıcının verdiği müziğin önerdiği noktadan başla, kesmeleri ölçü başına oturt.
 
 - [2026-10-26] Aynı iş v9 — "Kapanış can alıcı değil" + "bayrak belli olmuyor" → kural: kapanış müziğin en güçlü vuruşuna otursun ve 5-7 sn sürsün (yazısız dev bayrak anı → büyük sayı/mesaj → imza/logo); kalabalık uzun söz kapanışa konmaz. Bayrak katmanında maske kumaşı kesiyor muydu diye karede kontrol et; fotoğraflı planlarda ~0.2, koyu planlarda ~0.3, yüzlü planlarda ~0.12.
@@ -35,7 +35,7 @@ Müşteriye özel notlar özel kasada tutulur.
 
 ## Teknik
 - [2026-10-29] FilmCraft `export --preset` altyazı izini videoya yakmayabiliyor (burnCaptions varsayılan kapalı) → altyazılı Reels'i `file.exportMedia` ile `burnCaptions: true` vererek al; teslimden önce çıktıdan altyazılı bir kare çıkarıp bak.
-- [2026-10-27] FilmCraft dışa aktarmada loudness efektinin true_peak_dbtp sınırı uygulanmıyor → teslimden önce her çıktıyı loudnorm ile ölç; tepe > -1 dBTP ise ffmpeg ile yalnız sesi sınırla (aresample=192000, alimiter limit=0.79 attack=2 release=80, aresample=48000; -c:v copy).
+- [2026-10-27] FilmCraft dışa aktarmada loudness efektinin true_peak_dbtp sınırı uygulanmıyor → teslimden önce her çıktıyı loudnorm ile ölç; tepe > -1 dBTP ise ffmpeg ile yalnız sesi sınırla (192 kHz'e yükseltme, alimiter limit=0.79 attack=2 release=80, sonra 48 kHz; -c:v copy).
 
 ## Kaçınılacaklar
 - [2026-10-25] Atatürk/bayrakla aynı karede alkol; bayrağa yazı/logo bindirmek; bayrak rengini "marka tonuna" çekmek; AI ile Atatürk yüzü; özel güne başka tarihin sembolünü zorlamak (29 Ekim'e "Başöğretmen"/1928 → Gemini haklı çıktı).

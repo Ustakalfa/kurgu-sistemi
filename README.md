@@ -1,66 +1,127 @@
-# Kurgu sistemi
+# Kurgu Sistemi
 
-## English summary
+Yapay zekâ destekli, kaynak korumalı ve ölçülebilir bir video kurgu iş akışı. Sistem çekim denetimi, planlama, FilmCraft zaman çizelgesi, Remotion marka katmanı, yerel metin araçları ve kalıcı kurgu derslerini tek depoda birleştirir.
 
-This repository provides an AI assisted video editing workflow built around FilmCraft and Remotion. It is intended for people working with Claude Code, Codex, and Gemini. It includes editing skills, helper scripts, templates, and Remotion examples. Adapt the local paths and models to your setup.
+Kurgu Sistemi is a public, source-oriented video editing workflow for macOS. It combines footage inspection, AI-assisted planning, FilmCraft timeline automation, Remotion graphics, local transcription, and repeatable quality gates. Raw media remains outside the repository and is never treated as disposable. AI tools support decisions but do not replace human review or final approval. The documentation favors verified commands, explicit paths using `$HOME`, and reproducible checks. Final 4K export happens only after review approval.
 
-Claude Code, Codex ve Gemini ile çalışanlar için FilmCraft ve Remotion tabanlı yapay zekâ destekli kurgu hattı. Çekimden projeye kadar yardımcı betikler, beceriler ve örnekler içerir. Çekimleri kullanıcı aktarır.
+## Özellikler
+
+- Salt okunur teknik çekim kontrolü
+- Video için zaman kodlu yapay zekâ incelemesi
+- Tür bazlı Codex, Gemini/agy ve Ollama yönlendiricileri
+- FilmCraft canlı ve başsız MCP bağlantısı
+- Zaman çizelgesi, ses, altyazı ve zorunlu renk akışı
+- Remotion tabanlı tekrar kullanılabilir marka katmanı
+- Whisper kelime/segment zamanları
+- Uzun videodan Reels/Shorts çıkarma
+- Katalog doğrulamalı ses efektleri
+- Kurulum, doğrulama ve senkron betikleri
+- Alt modül tabanlı dış beceri/araç koleksiyonu
+
+## Akış
 
 ```mermaid
 flowchart LR
-A[Çekimi kullanıcı aktarır] --> B[yeni-is: iş klasörü]
-B --> C[cekim-kontrol: ffmpeg]
-C --> D[Gemini: ham çekimi izler, anlar ve zaman kodları]
-D --> E[Claude Opus: Kurgu Dersleri ve kurgu-ustasi ile plan]
-E --> F[Codex: FilmCraft uygulaması]
-F --> G[Zorunlu renk düzenleme]
-G --> H[Remotion marka katmanı]
-H --> I[.fcproj kaydet ve kullanıcıya göster]
-I -->|Kullanıcı al derse| J[4K export]
+ A[Çekim aktarımı] --> B[yeni-is]
+ B --> C[cekim-kontrol]
+ C --> D[Video inceleme]
+ D --> E[Kurgu planı]
+ E --> F[FilmCraft kurgu]
+ F --> G[Ses ve altyazı]
+ G --> H[Renk]
+ H --> I[Remotion marka]
+ I --> J[İnceleme]
+ J --> K{Onay}
+ K -->|revizyon| F
+ K -->|evet| L[4K teslim]
+ L --> M[Kurgu dersi]
 ```
 
-## Kurallar
+## Hızlı başlangıç
 
-FilmCraft 0.10.0'da canlı MCP köprüsü `127.0.0.1:9876` veya `filmcraft-headless` kullanılır. Kesme, ses, altyazı ve grafik FilmCraft'ta yapılır. Renk düzenlemesi her işte zorunludur: S-Log3 ise Sony LUT, scopes ile pozlama ve beyaz denge ölçümü, ten rengi, `applyMatch`, hafif look ve önce/sonra kontrolü. Remotion'da `src/Reels07.tsx` ev stili, `src/marka.ts` ve `public/sfx/katalog.json` marka katmanını oluşturur. Kurgu bitince `.fcproj` kaydedilir; kullanıcı “al” demeden export yapılmaz. Çıktı daima 4K: dikey 2160×3840, yatay 3840×2160; HD yok. Ayrıntı: [kurallar](docs/kurallar.md).
+```sh
+git clone --recursive <DEPO-URL-SI> ~/kurgu-sistemi
+cd ~/kurgu-sistemi
+./kurulum.sh --kuru
+./kurulum.sh --hepsi
+./dogrula.sh
+```
 
-## Kurulum
+`<DEPO-URL-SI>` yer tutucudur; gerçek genel URL bu çalışma ağacında doğrulanmadı. FilmCraft canlı köprüsü:
 
-Kurulum betikleri zsh kullanır. `zsh kurulum.sh --kuru` değişiklikleri gösterir; `zsh kurulum.sh` sembolik bağları kurar. Mevcut gerçek dosya ve klasörler tarihli `.yedek-*` adına taşınır. `cd remotion && npm ci` ile Remotion bağımlılıklarını kurun. [NODE_SURUMU.md](remotion/NODE_SURUMU.md) temiz kurulumda Node 22.23.3 ve 24.22.0 sürümlerini doğrular; mevcut Node 24 kullanılabilir.
+```sh
+open -a FilmCraft --args --control 9876
+```
 
-Bağımlılıklar: ffmpeg, Node.js, Python 3, FilmCraft 0.10.0 uygulaması ve `filmcraft-cli`, Antigravity CLI `agy`, Codex CLI, Ollama, edge-tts, whisper-cli (`ggml-small` modeli), auto-editor. Claude CLI ve Gemini erişimi de akışta kullanılır. Dış kitler ayrıca kurulur, depoya dahil değildir: herk-edit-kit (`cut-silences`, `cut-mistakes`, `edit-video`, `short-form-edit` vb.), `~/.claude/remotion-skills`, hyperframes.
+Yeni iş ve çekim denetimi:
 
-FilmCraft MCP örneği: [mcp/filmcraft.mcp.json](mcp/filmcraft.mcp.json). JSON içindeki `$HOME` kabukta genişletilmez; kendi ev dizininizin mutlak yoluyla değiştirin. Kurulum betiği `claude mcp add` komutlarını yalnızca ekrana yazar.
+```sh
+yeni-is "Ornek" "Tanitim" --format 9x16
+cekim-kontrol "$HOME/Movies/Isler/2026-11-03_ornek-kafe_tanitim-reels/01-ham" --hizli
+```
 
-## Araçlar
+## Klasör haritası
 
-| Araç | Kullanım |
-| --- | --- |
-| `yeni-is` | `yeni-is "Müşteri" "İş" [--format 9x16\|16x9\|ikisi]` → `~/Movies/Isler/<tarih>_<musteri>_<is>/`; yerel wiki kaydı da oluşturur. |
-| `cekim-kontrol` | `cekim-kontrol <klasör>` ile ffmpeg teknik kontrolü. |
-| `gemini-run` | `gemini-run video "En iyi anları zaman kodlarıyla bul" -d <klasör>`. |
-| `codex-run` | Codex'e uygulama görevi devri. |
-| `codex-img` | Codex görsel işi. |
-| `codex-img-batch` | Toplu görsel işi. |
-| `yerel-run` | Ollama ile yerel döküm temizleme gibi işler. |
+| Yol | Amaç |
+|---|---|
+| `bin/` | kullanıcı komutları ve model yönlendiricileri |
+| `docs/` | mimari, kurulum ve üretim rehberleri |
+| `skills/` | yerel kurgu becerileri ve [HARİTA](skills/HARITA.md) |
+| `remotion/src/` | kompozisyonlar, marka ve SFX API'si |
+| `remotion/araclar/` | Reels, FilmCraft, paralaks ve SFX araçları |
+| `remotion/public/` | render varlıkları ve SFX kataloğu |
+| `vendor/avenoxskills/` | video ve üretim becerileri alt modülü |
+| `vendor/herk-edit-kit/` | kurgu araç/örnek alt modülü |
+| `vendor/hyperframes/` | programatik video çerçevesi alt modülü |
+| `vendor/remotion-skills/` | Remotion becerileri alt modülü |
+| `vendor/done-is-a-claim/` | doğrulama yaklaşımı alt modülü |
+| `vendor/sessizkes/` | sessizlik tabanlı kesme alt modülü |
+| `kurulum.sh` | seçilebilir kurulum ve sembolik bağlar |
+| `dogrula.sh` | sözdizimi, tip, self-test ve içerik denetimi |
+| `senkronla.sh` | izin verilen yerel kaynakları depoya eşleme |
 
-## Klasörler
+`vendor/` dış kaynaktır ve salt okunur kabul edilir. Alt modül içeriğini bu deponun yerel kodu gibi değiştirmeyin.
 
-- `bin/`: yedi yerel yardımcı betik.
-- `skills/`: kurgu ve FilmCraft becerileri.
-- `remotion/`: Nexus Video kaynakları ve marka varlıkları. [FilmCraft komutları](remotion/araclar/filmcraft-komutlar.txt).
-- `docs/`: dersler, rehberler, analizler ve kullanıcı kuralları.
-- `hooks/`: video hattı kancası.
-- `mcp/`: örnek MCP yapılandırması.
-- `sablonlar/is-klasoru/`: `yeni-is` iş klasörü örneği.
+## Belge dizini
 
-## Uyarlanabilir ayarlar
+| Belge | İçerik |
+|---|---|
+| [Mimari](docs/mimari.md) | uçtan uca aşamalar ve kalite kapıları |
+| [Kurulum](docs/kurulum.md) | sıfır Mac, seçenekler, güncelleme |
+| [Araçlar](docs/araclar.md) | bütün yerel komutlar |
+| [FilmCraft](docs/filmcraft.md) | MCP, zaman çizelgesi, renk ve teslim |
+| [Remotion](docs/remotion.md) | kompozisyonlar, SFX, render |
+| [Ses efektleri](docs/ses-efektleri.md) | katalog ve yeniden üretim |
+| [Ekip düzeni](docs/ekip-duzeni.md) | kaptan/işçi ve model zincirleri |
+| [Sorun giderme](docs/sorun-giderme.md) | belirti–neden–çözüm |
+| [Örnek iş](docs/ornek-is.md) | baştan sona kurgusal uygulama |
+| [Ekipman](docs/ekipman.md) | kamera, ses, depolama, proxy/4K |
+| [Kurallar](docs/kurallar.md) | değişmez çalışma kuralları |
+| [Kurgu Ustalığı Rehberi](docs/Kurgu%20Ustalığı%20Rehberi.md) | yaratıcı ve teknik başvuru |
+| [Kurgu Dersleri](docs/Kurgu%20Dersleri.md) | genellenebilir öğrenimler |
 
-Varsayılan kurulum macOS üzerindeki zsh ortamına göre yazılmıştır. İş klasörü `~/Movies/Isler`, yerel kaynak yolları, Codex model seçimi ve Ollama modelleri kendi ortamınıza göre düzenlenebilir. Bu ayarlar için `bin/` ve kurulum betiklerine bakın.
+## Kuralların özeti
 
-## Senkronizasyon
+1. Ham medyayı değiştirmeyin; en az iki doğrulanmış kopya tutun.
+2. Teknik ölçüm, görsel inceleme ve yaratıcı kararı birbirinin yerine koymayın.
+3. Yapay zekâ bulgusunu klip ve zaman koduyla doğrulayın.
+4. Ses ve altyazıyı gerçek oynatmada kontrol edin.
+5. Renk aşamasını atlamayın; LUT'u tek başına düzenleme saymayın.
+6. Kişisel, gizli, lisanssız veya işe özel veriyi kamu deposuna koymayın.
+7. Kullanıcı onayı olmadan nihai 4K dışa aktarma yapmayın.
+8. Türetilmiş çıktı ile ham kaynağı aynı klasöre yazmayın.
+9. Komut/parametreyi gerçek betik veya yardım çıktısından doğrulayın.
+10. İş sonunda genellenebilir dersi kişisel veriden arındırarak kaydedin.
 
-Canlı kaynaklardan tek yönlü güncelleme: `zsh senkronla.sh`. `docs/` ve `skills/kurgu-ustasi/` kopyalanmaz; özellikle `docs/Kurgu Dersleri.md` dosyasının elle temizlenmiş genel sürümü korunur. Müşteriye özel Remotion dosyaları da hariç tutulur. Senkronizasyondan sonra gizli bilgi ve büyük dosya denetimini yeniden yapın.
+## Katkı ve senkron
+
+Katkıdan önce `./dogrula.sh` çalıştırın. Yerel kurulumdan depoya bilinçli eşleme için `./senkronla.sh` kullanılır; bu betik medya, WAV, proje, ortam dosyası, `node_modules` ve büyük dosyaları dışlar. Aynı anda çalışan kişilerin dosya sahipliğini önceden ayırın. Alt modül güncellemesi ayrı ve gözden geçirilebilir bir değişiklik olmalıdır.
+
+## Güvenlik ve mahremiyet
+
+İş medyası depoya konmaz. Örneklerde `$HOME` veya `~` kullanılır; kişisel mutlak yol yazılmaz. Günlükler model/tür/süre/sonuç gibi işletim verisini tutar. Bir yazma işleminin tamamlanıp tamamlanmadığı belirsizse başka yüzeyden otomatik tekrar edilmez.
 
 ## Lisans
 
-Kod ve belgeler [MIT lisansı](LICENSE) altındadır. Nexus Studio CS logosu ve marka varlıkları bu lisansın dışındadır; tüm hakları saklıdır. Üçüncü taraf bileşenler için [THIRD_PARTY.md](THIRD_PARTY.md) dosyasına bakın.
+Depo lisans dosyası bu çalışma ağacında doğrulanmadı. Kamuya açmadan önce kökte açık bir lisans dosyası eklenmeli ve üçüncü taraf alt modüller ile medya varlıklarının kendi lisansları ayrıca korunmalıdır. Lisans belirlenene kadar kullanım hakları “doğrulanmadı” kabul edilmelidir.
+
