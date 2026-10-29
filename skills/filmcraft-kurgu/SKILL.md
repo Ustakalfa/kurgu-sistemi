@@ -27,7 +27,11 @@ Gemini, `gemini-run video -d klasör` ile ham çekimi izler ve en iyi anları za
 
 ## Test edilmiş sıra
 
-`media_import {"paths":["/mutlak/yol.mp4"]}` → `command_run {"id":"file.newSequenceFromClip","params":{"items":[id]}}` → `command_run {"id":"timeline.razor","params":{"seconds":3.5}}` → `command_run {"id":"graphics.newText","params":{"text":"Başlık","position":[540,300]}}` → `render_frame {"seconds":3.5,"max_side":1080}` ile kare kontrolü → `command_run {"id":"file.saveAs","params":{"path":"/mutlak/yol/cikti/proje.fcproj"}}`. `id` değerini içe aktarma sonucundan al; `seconds` zaman takma adı CLI yardımında doğrulanmıştır.
+Önce `media_import {"paths":["/mutlak/yol.mp4"]}` ile medyayı içe aktar ve kaynak kare hızını içe aktarma sonucundan al. Ardından `command_run {"id":"file.newSequence","params":{"name":"sekans adı","width":2160,"height":3840,"fps":kaynak_fps,"sampleRate":48000,"video":3,"audio":3}}` ile dikey, ya da `width`: 3840 ve `height`: 2160 ile yatay sekansı **baştan 4K** oluştur. `filmcraft-cli describe file.newSequence` çıktısı bu komutta `name`, `width`, `height`, `fps`, `sampleRate`, `video`, `audio`, isteğe bağlı `mix`, `trackType`, `fromItem` ve `fromItems` parametrelerini doğrular; klipten sekans türeten `file.newSequenceFromClip` kullanılmaz. İçe aktarma sonucundaki `id` değerleriyle klipleri `command_run {"id":"timeline.place","params":{"items":[id],"track":"V1","audioTrack":"A1","seconds":0,"insert":false}}` üzerinden sekansa yerleştir; sonra `command_run {"id":"timeline.razor","params":{"seconds":3.5}}` ve gereken diğer kurgu adımlarını çalıştır. `render_frame` **MCP aracıdır**; renk düzenlemesinden önce ve sonra aynı zaman kodundaki kareyi onunla alarak karşılaştır. Kurgu kontrolü için `render_frame {"seconds":3.5,"max_side":1080}` kullan; ardından `command_run {"id":"file.saveAs","params":{"path":"/mutlak/is-klasoru/04-kurgu/proje.fcproj"}}` ile `.fcproj` dosyasını iş klasörünün `04-kurgu/` altına kaydet.
+
+## Onay sonrası export
+
+Bu bölüm yalnız kullanıcı “al” dedikten sonra uygulanır. Önce `command_run {"id":"export.presets.list","params":{"query":"2160p 4K"}}` çalıştırarak kullanılabilir 2160p veya 4K önayarını bul; `filmcraft-cli describe export.presets.list` çıktısı `query`, `category`, `format` ve `favorites` parametrelerini doğrular. Önayar bulunursa gerçek dönen önayar adını kullanarak `export.quick` çalıştır ve çıktıyı yalnız `/mutlak/is-klasoru/06-teslim/cikti.ext` yoluna yaz. Uygun önayar bulunamazsa `export.quick` için `--settings` ile dikeyde `2160x3840`, yatayda `3840x2160` çözünürlüğünü ver; önayar adı uydurma. İşlem bittiğinde `ffprobe` ile çıktı dosyasının çözünürlüğünü, süresini ve codec bilgisini doğrula.
 
 ## Komut seçkisi
 
@@ -44,18 +48,14 @@ Gemini, `gemini-run video -d klasör` ile ham çekimi izler ve en iyi anları za
 | Maske | `masks.track` | Maskeyi izler; `clip`, `mask`, `direction`, `frames`, `method`, `wait`. |
 | Anlatım | `tts.create` | Sesli anlatım ekler; `text`, `voice`, `pace`, `time`, `track`. |
 | Efekt | `effects.setParam`; `effects.setInterpolation` | `clip`, `effect`, `param`, `value`, `time`, `keyframe:true` ile animasyon; `mediaTime`, `interpolation` ile geçiş ayarı. |
-| Dışa aktarım | `export.quick`; `export.presets.list` | `path`, `preset`, `wait:true` ile render alır; `query`, `category`, `format` ile preset arar. |
+| Dışa aktarım | `export.quick`; `export.presets.list` | Yalnız kullanıcı “al” dedikten sonra kullanılır; önce `query`, `category`, `format`, `favorites` ile önayar aranır, sonra gerçek önayar adıyla `path`, `preset`, `wait:true` kullanılır. |
 
 Her değişiklikten sonra `sequence_inspect` ile doğrula; kritik karelerde `render_frame` ile görsel kontrol yap. Yalnız onaylı dışa aktarım sonrasında dosyayı `ffprobe` ile kontrol et. Reels sekansı baştan **2160×3840** kurulur. FilmCraft 0.10.0 alfa sürümüdür: hata halinde adımı tekrar etme, hatayı ve mevcut durumu Claude'a raporla. Komut uydurma; yalnızca `araclar/filmcraft-komutlar.txt` içindeki adları kullan.
 
 ## Kalite ve Sony FX30 (2026-10-21'de test edildi)
 - **FX30 dosyaları açılıyor:** XAVC S-I (H.264 High 4:2:2 Intra 10-bit) ve XAVC HS (HEVC 4:2:2 10-bit) M4 donanım çözücüsüyle (VideoToolbox) çözülüyor. FilmCraft'ın kendi yazılım çözücüsü 4:2:2 10-bit desteklemiyor; bu yalnızca Mac'te çalışır.
 - **S-Log3 çekimde:** önce Sony'nin resmi S-Log3→Rec.709 LUT'u `lut.import` ile alınır, `lumetri.setInputLut` ile klibe uygulanır; ardından Lumetri ile ince ayar.
-- **Dışa aktarma kuralı:**
-  - Arşiv/master: `export.quick {"preset":"Apple ProRes 422 HQ"}` → 10-bit 4:2:2, 4K'da ~290 Mbps.
-  - YouTube/müşteri teslimi: `"High Quality 2160p 4K"` (H.264, ~59 Mbps) veya `"YouTube 2160p 4K Ultra HD"`.
-  - Dikey video: sekans 2160×3840; onay sonrası 4K dikey dışa aktarım ayarını doğrula.
-  - macOS'ta HEVC dışa aktarma 8-bit; 10-bit gerekiyorsa ProRes kullan.
+- **Dışa aktarma kuralı:** Yalnız kullanıcı “al” dedikten sonra, yukarıdaki **Onay sonrası export** sırasını uygula; önayar adını tahmin etme ve çıktıyı iş klasörünün `06-teslim/` altına yaz. Dikey video için 2160×3840, yatay video için 3840×2160 kullan; işlem sonunda çözünürlük, süre ve codec bilgisini `ffprobe` ile doğrula. macOS'ta HEVC dışa aktarma 8-bit olduğundan 10-bit gerekliyse kullanılabilir önayarlar arasından uygun ProRes seçeneğini ara.
 - **Geçişler:** 115 geçiş var (Cross Dissolve, Dip to Black/White, Push, Cross Zoom, Light Leak, Glitch, Film Dissolve, Morph Cut…) → `sequence.applyVideoTransition` / `sequence.setTransition`.
 - **Ses efekti (SFX):** `public/sfx/katalog.json`'daki dosyalar `media_import` ile alınıp `timeline.place {track:"A2"…, seconds}` ile istenen ana yerleştirilir; müzik altında konuşma için `essentialSound.generateDucking`.
 - **Simge/ürün/tablo:** şeffaf PNG `graphics.newFromFile {path}` ile eklenir; tablo/infografik gerekiyorsa Remotion ya da HTML ile PNG/MOV (alfa) olarak üretilip içe alınır; basit kutu+yazı `graphics.newRectangle` + `graphics.newText` ile yapılır.
