@@ -1,0 +1,8 @@
+node_modules/
+cikti/
+out/
+.DS_Store
+public/test/
+araclar/test-ciktisi/
+__pycache__/
+public/sfx/*.wav

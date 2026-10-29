@@ -1,0 +1,160 @@
+#!/usr/bin/env zsh
+# Yeni video işi için klasör ve Beyin kayıtlarını oluşturur.
+
+setopt err_exit no_unset pipe_fail
+
+kullanim() { print 'Kullanım: yeni-is "<müşteri>" "<iş adı>" [--format 9x16|16x9|ikisi]'; }
+hata() { print -u2 -- "Hata: $1"; exit 1; }
+
+slug_yap() {
+  local metin=$1
+  metin=${metin//ç/c}; metin=${metin//Ç/c}; metin=${metin//ğ/g}; metin=${metin//Ğ/g}
+  metin=${metin//ı/i}; metin=${metin//İ/i}; metin=${metin//ö/o}; metin=${metin//Ö/o}
+  metin=${metin//ş/s}; metin=${metin//Ş/s}; metin=${metin//ü/u}; metin=${metin//Ü/u}
+  print -r -- "$metin" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^[:alnum:]]+/-/g; s/^-+//; s/-+$//'
+}
+
+if (( $# == 1 )) && [[ $1 == '-h' || $1 == '--help' ]]; then kullanim; exit 0; fi
+if (( $# < 2 || $# > 4 )); then kullanim; exit 1; fi
+
+musteri=$1; is_adi=$2; format=ikisi
+if (( $# > 2 )); then
+  if (( $# != 4 )) || [[ $3 != '--format' ]]; then kullanim; exit 1; fi
+  format=$4
+fi
+case $format in
+  9x16) format_metni='9:16' ;;
+  16x9) format_metni='16:9' ;;
+  ikisi) format_metni='9:16 + 16:9' ;;
+  *) hata 'Geçersiz format. 9x16, 16x9 veya ikisi kullanın.' ;;
+esac
+[[ -n $musteri && -n $is_adi ]] || { kullanim; exit 1; }
+[[ $musteri != *'/'* && $is_adi != *'/'* ]] || hata 'Müşteri ve iş adı / içeremez.'
+
+musteri_slug=$(slug_yap "$musteri"); is_slug=$(slug_yap "$is_adi")
+[[ -n $musteri_slug && -n $is_slug ]] || hata 'Müşteri ve iş adı geçerli bir slug üretmelidir.'
+tarih=$(date '+%Y-%m-%d')
+is_kok=${YENI_IS_KOK:-"$HOME/Movies/Isler"}; beyin=${YENI_BEYIN:-"$HOME/Documents/Yeni Beyin"}
+is_klasoru="$is_kok/${tarih}_${musteri_slug}_${is_slug}"; wiki="$beyin/wiki"
+proje_sayfasi="$wiki/projeler/$musteri — $is_adi.md"
+[[ ! -e $is_klasoru ]] || hata "İş klasörü zaten var: $is_klasoru"
+
+mkdir -p -- "$is_klasoru"/{00-brief,01-ham,02-ses-muzik,03-grafik,04-kurgu,05-revizyon,06-teslim}
+cat > "$is_klasoru/00-brief/brief.md" <<EOF
+# Brief — $musteri · $is_adi
+
+Oluşturma tarihi: $tarih
+
+- Müşteri: $musteri
+- İletişim (kişi/telefon/e-posta):
+- Amaç / tek mesaj:
+- Hedef kitle:
+- Platform:
+- Format: $format_metni
+- Süre:
+- Ton / marka sesi:
+- CTA:
+- Teslim tarihi:
+- Bütçe:
+- Revizyon hakkı (kaç tur):
+- Müzik / hak durumu:
+- Rıza (görünen kişiler, mekân izni):
+
+## Notlar
+EOF
+print -r -- 'Çekimleri buraya kendin aktar. Otomatik aktarma yok.' > "$is_klasoru/01-ham/OKU.md"
+print -r -- 'FilmCraft .fcproj buraya kaydedilir. Kurgu bitince dışa aktarma yok; kullanıcı onayı beklenir.' > "$is_klasoru/04-kurgu/OKU.md"
+cat > "$is_klasoru/05-revizyon/revizyonlar.md" <<EOF
+# Revizyonlar — $musteri · $is_adi
+
+Müşteri geri bildirimleri ve yapılan değişiklikler burada takip edilir.
+
+| Tur | Tarih | Müşteri notu | Yapılan | Kalan |
+| --- | --- | --- | --- | --- |
+| 1 |  |  |  |  |
+EOF
+print -r -- 'Yalnız kullanıcı onayından sonra çıktı buraya alınır.' > "$is_klasoru/06-teslim/OKU.md"
+cat > "$is_klasoru/notlar.md" <<EOF
+# Notlar — $musteri · $is_adi
+
+Beyin kaydı: [[$musteri — $is_adi]]
+EOF
+
+if [[ -e $proje_sayfasi ]]; then
+  print -u2 -- "Uyarı: Beyin kaydı mevcut, atlandı: $proje_sayfasi"
+else
+  mkdir -p -- "$wiki/projeler"
+  cat > "$proje_sayfasi" <<EOF
+---
+tur: proje
+etiketler: [proje, nexus, video, $musteri_slug]
+olusturuldu: $tarih
+guncellendi: $tarih
+kaynak_sayisi: 0
+durum: taslak
+---
+# $musteri — $is_adi
+
+Kısa giriş: [[Nexus Studio CS]] için [[$musteri]] video işi. Format: $format_metni. İş klasörü yolu: \`$is_klasoru\`.
+
+## Durum
+
+- [ ] Brief dolduruldu
+- [ ] Çekim aktarıldı (01-ham)
+- [ ] Kurgu (04-kurgu .fcproj)
+- [ ] Revizyon turları
+- [ ] Kullanıcı onayı → teslim
+
+## Revizyon özeti
+
+*(henüz yok)*
+
+## Bağlantılar
+
+[[Nexus Studio CS]] · [[Kurgu Dersleri]] · [[Hedefler & Aktif İşler]] · [[$musteri]]
+EOF
+fi
+
+mevcut_musteri=$(find "$wiki" -type f -iname "$musteri.md" -print -quit 2>/dev/null || true)
+if [[ -n $mevcut_musteri ]]; then
+  print -- "müşteri sayfası mevcut: $mevcut_musteri"
+else
+  musteri_sayfasi="$wiki/kurumlar/$musteri.md"
+  mkdir -p -- "$wiki/kurumlar"
+  cat > "$musteri_sayfasi" <<EOF
+---
+tur: kurum
+etiketler: [musteri, nexus]
+olusturuldu: $tarih
+guncellendi: $tarih
+kaynak_sayisi: 0
+durum: taslak
+---
+# $musteri
+
+[[Nexus Studio CS]] müşterisi.
+
+## İşler
+
+- [[$musteri — $is_adi]]
+
+## İletişim
+
+*(doldurulacak)*
+
+## Kurgu tercihleri
+
+Beğeni/itirazlar [[Kurgu Dersleri]] → Müşteriye özel bölümüne işlenir.
+EOF
+fi
+
+print '\nOluşturulan klasör ağacı:'
+if (( $+commands[tree] )); then tree -- "$is_klasoru"
+else
+  print -r -- "$is_klasoru"
+  find "$is_klasoru" -mindepth 1 -print | sort | sed "s#^$is_klasoru/#  #"
+fi
+print '\nWiki sayfaları:'; print -r -- "$proje_sayfasi"
+if [[ -n ${musteri_sayfasi:-} ]]; then print -r -- "$musteri_sayfasi"
+else print -r -- "$mevcut_musteri"; fi
+print '\nHatırlatma: index.md/log.md güncellemesini Claude yapar.'

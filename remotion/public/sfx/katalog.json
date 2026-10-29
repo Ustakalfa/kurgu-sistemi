@@ -1,0 +1,709 @@
+[
+ {
+  "dosya": "sfx/acilis--acilis-1.wav",
+  "kategori": "acilis",
+  "ad": "acilis-1",
+  "kaynak": "bilinmiyor",
+  "orijinal": "Açılış 1.mp3",
+  "sure_sn": 10.03,
+  "uyarilar": [
+   "kaynakta taşma/bozulma olabilir"
+  ]
+ },
+ {
+  "dosya": "sfx/acilis--hook.wav",
+  "kategori": "acilis",
+  "ad": "hook",
+  "kaynak": "bilinmiyor",
+  "orijinal": "Hook.mp3",
+  "sure_sn": 10.2,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/bildirim--basari.wav",
+  "kategori": "bildirim",
+  "ad": "basari",
+  "kaynak": "sentetik",
+  "orijinal": "06 Bildirim & Zil/03 - Başarı.wav",
+  "sure_sn": 1.3,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/bildirim--bildirim.wav",
+  "kategori": "bildirim",
+  "ad": "bildirim",
+  "kaynak": "bilinmiyor",
+  "orijinal": "Bildirim.mp3",
+  "sure_sn": 2.46,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/bildirim--ding.wav",
+  "kategori": "bildirim",
+  "ad": "ding",
+  "kaynak": "sentetik",
+  "orijinal": "06 Bildirim & Zil/01 - Ding.wav",
+  "sure_sn": 1.1,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/bildirim--ding-cift.wav",
+  "kategori": "bildirim",
+  "ad": "ding-cift",
+  "kaynak": "sentetik",
+  "orijinal": "06 Bildirim & Zil/02 - Ding Çift.wav",
+  "sure_sn": 1.5,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/bildirim--dragon-studio-correct.wav",
+  "kategori": "bildirim",
+  "ad": "dragon-studio-correct",
+  "kaynak": "pixabay",
+  "orijinal": "dragon-studio-correct-472358.mp3",
+  "sure_sn": 1.32,
+  "uyarilar": [
+   "kaynakta taşma/bozulma olabilir"
+  ]
+ },
+ {
+  "dosya": "sfx/bildirim--freesound-community-ding.wav",
+  "kategori": "bildirim",
+  "ad": "freesound-community-ding",
+  "kaynak": "pixabay",
+  "orijinal": "freesound_community-ding-101492.mp3",
+  "sure_sn": 2.74,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/bildirim--hata.wav",
+  "kategori": "bildirim",
+  "ad": "hata",
+  "kaynak": "sentetik",
+  "orijinal": "06 Bildirim & Zil/04 - Hata.wav",
+  "sure_sn": 0.7,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/bildirim--mesaj.wav",
+  "kategori": "bildirim",
+  "ad": "mesaj",
+  "kaynak": "sentetik",
+  "orijinal": "06 Bildirim & Zil/05 - Mesaj.wav",
+  "sure_sn": 0.6,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/bildirim--u-oepgi4ep3v-som-matricula.wav",
+  "kategori": "bildirim",
+  "ad": "u-oepgi4ep3v-som-matricula",
+  "kaynak": "pixabay",
+  "orijinal": "u_oepgi4ep3v-som_matricula-464025.mp3",
+  "sure_sn": 2.51,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/dijital--bozulma.wav",
+  "kategori": "dijital",
+  "ad": "bozulma",
+  "kaynak": "sentetik",
+  "orijinal": "05 Dijital/03 - Bozulma.wav",
+  "sure_sn": 0.8,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/dijital--glitch-kisa.wav",
+  "kategori": "dijital",
+  "ad": "glitch-kisa",
+  "kaynak": "sentetik",
+  "orijinal": "05 Dijital/01 - Glitch Kısa.wav",
+  "sure_sn": 0.25,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/dijital--glitch-uzun.wav",
+  "kategori": "dijital",
+  "ad": "glitch-uzun",
+  "kaynak": "sentetik",
+  "orijinal": "05 Dijital/02 - Glitch Uzun.wav",
+  "sure_sn": 0.7,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/dijital--robot-bip.wav",
+  "kategori": "dijital",
+  "ad": "robot-bip",
+  "kaynak": "sentetik",
+  "orijinal": "05 Dijital/05 - Robot Bip.wav",
+  "sure_sn": 0.35,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/dijital--sinyal-kaybi.wav",
+  "kategori": "dijital",
+  "ad": "sinyal-kaybi",
+  "kaynak": "sentetik",
+  "orijinal": "05 Dijital/06 - Sinyal Kaybı.wav",
+  "sure_sn": 1.0,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/dijital--veri-akisi.wav",
+  "kategori": "dijital",
+  "ad": "veri-akisi",
+  "kaynak": "sentetik",
+  "orijinal": "05 Dijital/04 - Veri Akışı.wav",
+  "sure_sn": 0.7,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/dramatik--alarm.wav",
+  "kategori": "dramatik",
+  "ad": "alarm",
+  "kaynak": "sentetik",
+  "orijinal": "04 Dramatik/06 - Alarm.wav",
+  "sure_sn": 1.4,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/dramatik--gerilim-droneu.wav",
+  "kategori": "dramatik",
+  "ad": "gerilim-droneu",
+  "kaynak": "sentetik",
+  "orijinal": "04 Dramatik/03 - Gerilim Droneu.wav",
+  "sure_sn": 3.0,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/dramatik--nabiz-hizli.wav",
+  "kategori": "dramatik",
+  "ad": "nabiz-hizli",
+  "kaynak": "sentetik",
+  "orijinal": "04 Dramatik/05 - Nabız Hızlı.wav",
+  "sure_sn": 2.0,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/dramatik--nabiz-yavas.wav",
+  "kategori": "dramatik",
+  "ad": "nabiz-yavas",
+  "kaynak": "sentetik",
+  "orijinal": "04 Dramatik/04 - Nabız Yavaş.wav",
+  "sure_sn": 2.4,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/dramatik--yukselen-kisa.wav",
+  "kategori": "dramatik",
+  "ad": "yukselen-kisa",
+  "kaynak": "sentetik",
+  "orijinal": "04 Dramatik/01 - Yükselen Kısa.wav",
+  "sure_sn": 1.0,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/dramatik--yukselen-uzun.wav",
+  "kategori": "dramatik",
+  "ad": "yukselen-uzun",
+  "kaynak": "sentetik",
+  "orijinal": "04 Dramatik/02 - Yükselen Uzun.wav",
+  "sure_sn": 2.6,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/foto--fotograf-sesi.wav",
+  "kategori": "foto",
+  "ad": "fotograf-sesi",
+  "kaynak": "bilinmiyor",
+  "orijinal": "Fotoğraf sesi.mp3",
+  "sure_sn": 2.11,
+  "uyarilar": [
+   "düşük örnekleme (24000 Hz)"
+  ]
+ },
+ {
+  "dosya": "sfx/foto--kauasilbershlachparodes-camera-flash.wav",
+  "kategori": "foto",
+  "ad": "kauasilbershlachparodes-camera-flash",
+  "kaynak": "pixabay",
+  "orijinal": "kauasilbershlachparodes-camera-flash-494027.mp3",
+  "sure_sn": 2.12,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/foto--malarbrush-camera-flash.wav",
+  "kategori": "foto",
+  "ad": "malarbrush-camera-flash",
+  "kaynak": "pixabay",
+  "orijinal": "malarbrush-camera-flash-204151.mp3",
+  "sure_sn": 1.75,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/foto--stevemotion-camera-click.wav",
+  "kategori": "foto",
+  "ad": "stevemotion-camera-click",
+  "kaynak": "pixabay",
+  "orijinal": "stevemotion-camera-click-569825.mp3",
+  "sure_sn": 0.5,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/gecis--kagit-swipe.wav",
+  "kategori": "gecis",
+  "ad": "kagit-swipe",
+  "kaynak": "sentetik",
+  "orijinal": "01 Geçişler/12 - Kağıt Swipe.wav",
+  "sure_sn": 0.3,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/gecis--kagit-yirtma.wav",
+  "kategori": "gecis",
+  "ad": "kagit-yirtma",
+  "kaynak": "bilinmiyor",
+  "orijinal": "Kağıt Yırtma.mp3",
+  "sure_sn": 3.03,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/gecis--kamera-gecis-kuru.wav",
+  "kategori": "gecis",
+  "ad": "kamera-gecis-kuru",
+  "kaynak": "sentetik",
+  "orijinal": "01 Geçişler/08 - Kamera Geçiş Kuru.wav",
+  "sure_sn": 0.3,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/gecis--kamera-gecis-yumusak.wav",
+  "kategori": "gecis",
+  "ad": "kamera-gecis-yumusak",
+  "kaynak": "sentetik",
+  "orijinal": "01 Geçişler/09 - Kamera Geçiş Yumuşak.wav",
+  "sure_sn": 0.42,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/gecis--metalik-gecis.wav",
+  "kategori": "gecis",
+  "ad": "metalik-gecis",
+  "kaynak": "sentetik",
+  "orijinal": "01 Geçişler/13 - Metalik Geçiş.wav",
+  "sure_sn": 0.6,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/gecis--nefes-gecis.wav",
+  "kategori": "gecis",
+  "ad": "nefes-gecis",
+  "kaynak": "sentetik",
+  "orijinal": "01 Geçişler/10 - Nefes Geçiş.wav",
+  "sure_sn": 0.7,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/gecis--ruzgar-gecis.wav",
+  "kategori": "gecis",
+  "ad": "ruzgar-gecis",
+  "kaynak": "sentetik",
+  "orijinal": "01 Geçişler/11 - Rüzgâr Geçiş.wav",
+  "sure_sn": 1.2,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/gecis--tape-stop.wav",
+  "kategori": "gecis",
+  "ad": "tape-stop",
+  "kaynak": "sentetik",
+  "orijinal": "01 Geçişler/14 - Tape Stop.wav",
+  "sure_sn": 0.75,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/gecis--universfield-swoosh-015.wav",
+  "kategori": "gecis",
+  "ad": "universfield-swoosh-015",
+  "kaynak": "pixabay",
+  "orijinal": "universfield-swoosh-015-383769.mp3",
+  "sure_sn": 1.06,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/gecis--whoosh-cift.wav",
+  "kategori": "gecis",
+  "ad": "whoosh-cift",
+  "kaynak": "sentetik",
+  "orijinal": "01 Geçişler/07 - Whoosh Çift.wav",
+  "sure_sn": 0.9,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/gecis--whoosh-derin.wav",
+  "kategori": "gecis",
+  "ad": "whoosh-derin",
+  "kaynak": "sentetik",
+  "orijinal": "01 Geçişler/06 - Whoosh Derin.wav",
+  "sure_sn": 0.7,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/gecis--whoosh-kisa.wav",
+  "kategori": "gecis",
+  "ad": "whoosh-kisa",
+  "kaynak": "sentetik",
+  "orijinal": "01 Geçişler/04 - Whoosh Kısa.wav",
+  "sure_sn": 0.28,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/gecis--whoosh-sert.wav",
+  "kategori": "gecis",
+  "ad": "whoosh-sert",
+  "kaynak": "sentetik",
+  "orijinal": "01 Geçişler/02 - Whoosh Sert.wav",
+  "sure_sn": 0.42,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/gecis--whoosh-ters.wav",
+  "kategori": "gecis",
+  "ad": "whoosh-ters",
+  "kaynak": "sentetik",
+  "orijinal": "01 Geçişler/05 - Whoosh Ters.wav",
+  "sure_sn": 0.6,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/gecis--whoosh-uzun.wav",
+  "kategori": "gecis",
+  "ad": "whoosh-uzun",
+  "kaynak": "sentetik",
+  "orijinal": "01 Geçişler/03 - Whoosh Uzun.wav",
+  "sure_sn": 0.95,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/gecis--whoosh-yumusak.wav",
+  "kategori": "gecis",
+  "ad": "whoosh-yumusak",
+  "kaynak": "sentetik",
+  "orijinal": "01 Geçişler/01 - Whoosh Yumuşak.wav",
+  "sure_sn": 0.55,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/gecis--yavaslatma.wav",
+  "kategori": "gecis",
+  "ad": "yavaslatma",
+  "kaynak": "bilinmiyor",
+  "orijinal": "Yavaşlatma.mp3",
+  "sure_sn": 2.38,
+  "uyarilar": [
+   "kaynakta taşma/bozulma olabilir"
+  ]
+ },
+ {
+  "dosya": "sfx/metin--belirme.wav",
+  "kategori": "metin",
+  "ad": "belirme",
+  "kaynak": "sentetik",
+  "orijinal": "03 Metin & Grafik/09 - Belirme.wav",
+  "sure_sn": 0.45,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/metin--isilti.wav",
+  "kategori": "metin",
+  "ad": "isilti",
+  "kaynak": "sentetik",
+  "orijinal": "03 Metin & Grafik/08 - Işıltı.wav",
+  "sure_sn": 1.1,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/metin--kaybolma.wav",
+  "kategori": "metin",
+  "ad": "kaybolma",
+  "kaynak": "sentetik",
+  "orijinal": "03 Metin & Grafik/10 - Kaybolma.wav",
+  "sure_sn": 0.45,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/metin--klik.wav",
+  "kategori": "metin",
+  "ad": "klik",
+  "kaynak": "sentetik",
+  "orijinal": "03 Metin & Grafik/04 - Klik.wav",
+  "sure_sn": 0.04,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/metin--klik-ince.wav",
+  "kategori": "metin",
+  "ad": "klik-ince",
+  "kaynak": "sentetik",
+  "orijinal": "03 Metin & Grafik/05 - Klik İnce.wav",
+  "sure_sn": 0.03,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/metin--matthewvakaliuk73627-mouse-click.wav",
+  "kategori": "metin",
+  "ad": "matthewvakaliuk73627-mouse-click",
+  "kaynak": "pixabay",
+  "orijinal": "matthewvakaliuk73627-mouse-click-290204.mp3",
+  "sure_sn": 0.37,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/metin--parlama.wav",
+  "kategori": "metin",
+  "ad": "parlama",
+  "kaynak": "sentetik",
+  "orijinal": "03 Metin & Grafik/07 - Parlama.wav",
+  "sure_sn": 0.9,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/metin--pop.wav",
+  "kategori": "metin",
+  "ad": "pop",
+  "kaynak": "sentetik",
+  "orijinal": "03 Metin & Grafik/01 - Pop.wav",
+  "sure_sn": 0.12,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/metin--pop-cift.wav",
+  "kategori": "metin",
+  "ad": "pop-cift",
+  "kaynak": "sentetik",
+  "orijinal": "03 Metin & Grafik/03 - Pop Çift.wav",
+  "sure_sn": 0.3,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/metin--pop-yumusak.wav",
+  "kategori": "metin",
+  "ad": "pop-yumusak",
+  "kaynak": "sentetik",
+  "orijinal": "03 Metin & Grafik/02 - Pop Yumuşak.wav",
+  "sure_sn": 0.18,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/metin--soundreality-pop.wav",
+  "kategori": "metin",
+  "ad": "soundreality-pop",
+  "kaynak": "pixabay",
+  "orijinal": "soundreality-pop-423717.mp3",
+  "sure_sn": 1.97,
+  "uyarilar": [
+   "kaynakta taşma/bozulma olabilir"
+  ]
+ },
+ {
+  "dosya": "sfx/metin--tik-daktilo.wav",
+  "kategori": "metin",
+  "ad": "tik-daktilo",
+  "kaynak": "sentetik",
+  "orijinal": "03 Metin & Grafik/06 - Tık (Daktilo).wav",
+  "sure_sn": 0.09,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/metin--yazi-yazma.wav",
+  "kategori": "metin",
+  "ad": "yazi-yazma",
+  "kaynak": "bilinmiyor",
+  "orijinal": "Yazı Yazma.mp3",
+  "sure_sn": 1.51,
+  "uyarilar": [
+   "çok kısık kaynak (+24 dB yükseltildi, gürültü artmış olabilir)"
+  ]
+ },
+ {
+  "dosya": "sfx/ortam--11325622-clock-ticking-sound-effect.wav",
+  "kategori": "ortam",
+  "ad": "11325622-clock-ticking-sound-effect",
+  "kaynak": "pixabay",
+  "orijinal": "11325622-clock-ticking-sound-effect-240503.mp3",
+  "sure_sn": 9.4,
+  "uyarilar": [
+   "çok kısık kaynak (+15 dB yükseltildi, gürültü artmış olabilir)"
+  ]
+ },
+ {
+  "dosya": "sfx/ortam--hafif-ugultu.wav",
+  "kategori": "ortam",
+  "ad": "hafif-ugultu",
+  "kaynak": "sentetik",
+  "orijinal": "07 Ortam & Doku/03 - Hafif Uğultu.wav",
+  "sure_sn": 4.0,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/ortam--metro-sesi.wav",
+  "kategori": "ortam",
+  "ad": "metro-sesi",
+  "kaynak": "bilinmiyor",
+  "orijinal": "Metro Sesi.mp3",
+  "sure_sn": 30.0,
+  "uyarilar": [
+   "kaynakta taşma/bozulma olabilir",
+   "düşük örnekleme (24000 Hz)"
+  ]
+ },
+ {
+  "dosya": "sfx/ortam--oda-tonu.wav",
+  "kategori": "ortam",
+  "ad": "oda-tonu",
+  "kaynak": "sentetik",
+  "orijinal": "07 Ortam & Doku/01 - Oda Tonu.wav",
+  "sure_sn": 4.0,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/ortam--trafik-gurultusu.wav",
+  "kategori": "ortam",
+  "ad": "trafik-gurultusu",
+  "kaynak": "bilinmiyor",
+  "orijinal": "Trafik Gürültüsü.mp3",
+  "sure_sn": 30.0,
+  "uyarilar": [
+   "düşük örnekleme (24000 Hz)"
+  ]
+ },
+ {
+  "dosya": "sfx/ortam--ucak-sesi.wav",
+  "kategori": "ortam",
+  "ad": "ucak-sesi",
+  "kaynak": "bilinmiyor",
+  "orijinal": "Uçak Sesi.mp3",
+  "sure_sn": 6.55,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/ortam--vinil-citirti.wav",
+  "kategori": "ortam",
+  "ad": "vinil-citirti",
+  "kaynak": "sentetik",
+  "orijinal": "07 Ortam & Doku/02 - Vinil Çıtırtı.wav",
+  "sure_sn": 4.0,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/vurgu--davul-vurusu.wav",
+  "kategori": "vurgu",
+  "ad": "davul-vurusu",
+  "kaynak": "sentetik",
+  "orijinal": "02 Vurgular/06 - Davul Vuruşu.wav",
+  "sure_sn": 0.5,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/vurgu--diamond-tunes-cinematic-sound-effect.wav",
+  "kategori": "vurgu",
+  "ad": "diamond-tunes-cinematic-sound-effect",
+  "kaynak": "pixabay",
+  "orijinal": "diamond_tunes-cinematic-sound-effect-327618.mp3",
+  "sure_sn": 10.48,
+  "uyarilar": [
+   "kaynakta taşma/bozulma olabilir"
+  ]
+ },
+ {
+  "dosya": "sfx/vurgu--insan-dusmesi.wav",
+  "kategori": "vurgu",
+  "ad": "insan-dusmesi",
+  "kaynak": "bilinmiyor",
+  "orijinal": "insan düşmesi.mp3",
+  "sure_sn": 1.51,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/vurgu--isik-kapanma.wav",
+  "kategori": "vurgu",
+  "ad": "isik-kapanma",
+  "kaynak": "bilinmiyor",
+  "orijinal": "Işık Kapanma .mp3",
+  "sure_sn": 1.04,
+  "uyarilar": [
+   "kaynakta taşma/bozulma olabilir"
+  ]
+ },
+ {
+  "dosya": "sfx/vurgu--kalp-atisi.wav",
+  "kategori": "vurgu",
+  "ad": "kalp-atisi",
+  "kaynak": "sentetik",
+  "orijinal": "02 Vurgular/07 - Kalp Atışı.wav",
+  "sure_sn": 1.5,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/vurgu--metal-carpma.wav",
+  "kategori": "vurgu",
+  "ad": "metal-carpma",
+  "kaynak": "sentetik",
+  "orijinal": "02 Vurgular/08 - Metal Çarpma.wav",
+  "sure_sn": 1.3,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/vurgu--sub-dusus.wav",
+  "kategori": "vurgu",
+  "ad": "sub-dusus",
+  "kaynak": "sentetik",
+  "orijinal": "02 Vurgular/04 - Sub Düşüş.wav",
+  "sure_sn": 1.5,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/vurgu--ters-cinlama.wav",
+  "kategori": "vurgu",
+  "ad": "ters-cinlama",
+  "kaynak": "sentetik",
+  "orijinal": "02 Vurgular/09 - Ters Çınlama.wav",
+  "sure_sn": 1.8,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/vurgu--trailer-boom.wav",
+  "kategori": "vurgu",
+  "ad": "trailer-boom",
+  "kaynak": "sentetik",
+  "orijinal": "02 Vurgular/05 - Trailer Boom.wav",
+  "sure_sn": 2.6,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/vurgu--vurus-derin.wav",
+  "kategori": "vurgu",
+  "ad": "vurus-derin",
+  "kaynak": "sentetik",
+  "orijinal": "02 Vurgular/02 - Vuruş Derin.wav",
+  "sure_sn": 1.1,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/vurgu--vurus-orta.wav",
+  "kategori": "vurgu",
+  "ad": "vurus-orta",
+  "kaynak": "sentetik",
+  "orijinal": "02 Vurgular/01 - Vuruş Orta.wav",
+  "sure_sn": 0.85,
+  "uyarilar": []
+ },
+ {
+  "dosya": "sfx/vurgu--vurus-sert.wav",
+  "kategori": "vurgu",
+  "ad": "vurus-sert",
+  "kaynak": "sentetik",
+  "orijinal": "02 Vurgular/03 - Vuruş Sert.wav",
+  "sure_sn": 0.55,
+  "uyarilar": []
+ }
+]

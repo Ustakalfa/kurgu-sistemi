@@ -1,0 +1,72 @@
+#!/bin/zsh
+# codex-run <tür> "prompt"  — Yeni Beyin "Yapay Zekâ İş Düzeni" tarifine göre yeniden kuruldu (2026-10-17).
+# Model sırası türe göre seçilir; model reddeder, boş döner veya limite takılırsa sıradakine geçilir.
+# Her çalıştırma ~/.codex/codex-run-kullanim.csv dosyasına yazılır.
+emulate -L zsh
+set -u
+export PATH="$HOME/.npm-global/bin:$HOME/.local/share/node/bin:/opt/homebrew/bin:$PATH"
+
+tur="${1:-}"; prompt="${2:-}"
+
+codex_run_bildirim() {
+  local kod="$1" bildirim_prompt="${prompt//\"/}" baslik
+  bildirim_prompt="${bildirim_prompt//\'/}"
+  bildirim_prompt="${bildirim_prompt[1,60]}"
+  if (( kod == 0 )); then
+    baslik='Codex bitti ✅'
+  else
+    baslik='Codex hata ❌'
+  fi
+  osascript -e "display notification \"${bildirim_prompt}\" with title \"${baslik}\" sound name \"Glass\"" >/dev/null 2>&1 || true
+  return "$kod"
+}
+trap 'codex_run_bildirim "$?"' EXIT
+
+if [[ -z "$tur" || -z "$prompt" ]]; then
+  print -u2 'Kullanım: codex-run <basit|hafif|orta|ana|ana2|derin|astra> "prompt" [-s read-only|workspace-write]'
+  exit 2
+fi
+shift 2
+sandbox="workspace-write"
+[[ "${1:-}" == "-s" && -n "${2:-}" ]] && sandbox="$2"
+
+efor="low"
+case "$tur" in
+  basit) zincir=(gpt-6-luna gpt-5.6-luna gpt-6-sol) ;;
+  hafif) zincir=(gpt-5.6-luna gpt-6-luna gpt-6-sol) ;;
+  orta)  zincir=(gpt-5.6-terra gpt-6-sol gpt-5.6-sol) ;;
+  ana)   zincir=(gpt-6-sol gpt-5.6-sol) ;;
+  ana2)  zincir=(gpt-5.6-sol gpt-6-sol) ;;
+  derin) zincir=(gpt-6-sol gpt-5.6-sol); efor="high" ;;
+  astra) zincir=(gpt-6-astra gpt-6-sol); efor="high" ;;
+  *) print -u2 "Bilinmeyen tür: $tur"; exit 2 ;;
+esac
+
+log="$HOME/.codex/codex-run-kullanim.csv"
+[[ -f "$log" ]] || print 'zaman,tur,model,efor,sure_sn,sonuc' > "$log"
+
+for model in $zincir; do
+  out=$(mktemp -t codex-run)
+  err=$(mktemp -t codex-run-err)
+  bas=$SECONDS
+  codex exec -m "$model" -c "model_reasoning_effort=\"$efor\"" -s "$sandbox" --skip-git-repo-check \
+    -o "$out" "$prompt" > /dev/null 2> "$err" < /dev/null
+  kod=$?
+  sure=$(( SECONDS - bas ))
+  sonuc="ok"
+  if (( kod != 0 )); then
+    if grep -qiE 'rate.?limit|quota|usage limit|429' "$err"; then sonuc="limit"; else sonuc="hata$kod"; fi
+  elif [[ ! -s "$out" ]]; then
+    sonuc="bos"
+  elif grep -qiE "^(I can.?t|I cannot|I.?m sorry|Bunu yapamam|Üzgünüm)" "$out"; then
+    sonuc="ret"
+  fi
+  print "$(date '+%Y-%m-%d %H:%M:%S'),$tur,$model,$efor,$sure,$sonuc" >> "$log"
+  if [[ "$sonuc" == "ok" ]]; then
+    cat "$out"; rm -f "$out" "$err"; exit 0
+  fi
+  print -u2 "codex-run: $model -> $sonuc, sıradaki modele geçiliyor"
+  rm -f "$out" "$err"
+done
+print -u2 "codex-run: zincirdeki bütün modeller başarısız oldu ($tur)"
+exit 1

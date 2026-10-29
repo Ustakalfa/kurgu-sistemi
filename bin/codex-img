@@ -1,0 +1,43 @@
+#!/bin/zsh
+# codex-img çıktı.png "prompt" [-r referans.png]  — Yeni Beyin tarifine göre yeniden kuruldu (2026-10-17).
+# 6-sol düşük seviye (2026-10-21 ölçüm: 6-luna 3/3 denemede görsel üretemedi, kaldırıldı). Tek üretim, kendi kendine tekrar yok.
+emulate -L zsh
+set -u
+export PATH="$HOME/.npm-global/bin:$HOME/.local/share/node/bin:/opt/homebrew/bin:$PATH"
+
+cikti="${1:-}"; prompt="${2:-}"
+if [[ -z "$cikti" || -z "$prompt" ]]; then
+  print -u2 'Kullanım: codex-img çıktı.png "prompt" [-r referans.png]'; exit 2
+fi
+shift 2
+ref=()
+if [[ "${1:-}" == "-r" && -n "${2:-}" ]]; then
+  [[ -f "$2" ]] || { print -u2 "Referans yok: $2"; exit 2; }
+  ref=(-i "$2")
+fi
+if [[ "$prompt" == *$'\n'* ]]; then
+  print -u2 "codex-img: çok satırlı prompt reddedildi (tek satır yazın)"; exit 2
+fi
+
+cikti="${cikti:A}"
+mkdir -p "${cikti:h}"
+talimat="Görsel üretim aracını kullanarak YALNIZCA BİR KEZ görsel üret ve sonucu PNG olarak tam şu yola kaydet: $cikti . Kontrol edip yeniden üretme, varyant üretme, kodla çizme. İstek: $prompt"
+
+log="$HOME/.codex/codex-run-kullanim.csv"
+[[ -f "$log" ]] || print 'zaman,tur,model,efor,sure_sn,sonuc' > "$log"
+for model in gpt-6-sol; do
+  err=$(mktemp -t codex-img-err)
+  bas=$SECONDS
+  codex exec -m "$model" -c 'model_reasoning_effort="low"' -s workspace-write -C "${cikti:h}" --skip-git-repo-check \
+    $ref -- "$talimat" > /dev/null 2> "$err" < /dev/null
+  sure=$(( SECONDS - bas ))
+  if [[ -s "$cikti" ]]; then
+    print "$(date '+%Y-%m-%d %H:%M:%S'),img,$model,low,$sure,ok" >> "$log"; rm -f "$err"; print "$cikti"; exit 0
+  fi
+  if grep -qiE 'rate.?limit|quota|usage limit|429' "$err"; then
+    print "$(date '+%Y-%m-%d %H:%M:%S'),img,$model,low,$sure,limit" >> "$log"; rm -f "$err"
+    print -u2 "codex-img: kota/limit doldu"; exit 3
+  fi
+  print "$(date '+%Y-%m-%d %H:%M:%S'),img,$model,low,$sure,gorsel-yok" >> "$log"; rm -f "$err"
+done
+print -u2 "codex-img: görsel üretilemedi"; exit 1

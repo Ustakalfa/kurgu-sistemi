@@ -1,0 +1,72 @@
+#!/bin/zsh
+# gemini-run <tür> "prompt" [-d klasör]
+emulate -L zsh
+set -u
+
+kullanim() {
+  print -u2 'Kullanım: gemini-run <hizli|orta|derin|video|claude|opus> "prompt" [-d klasör]'
+}
+
+tur="${1:-}"
+prompt="${2:-}"
+if [[ -z "$prompt" || -z "${prompt//[[:space:]]/}" ]]; then
+  kullanim
+  exit 2
+fi
+
+case "$tur" in
+  hizli)  zincir=(gemini-3.8-flash-low gemini-3.8-flash-medium) ;;
+  orta)  zincir=(gemini-3.8-flash-medium gemini-3.8-flash-high) ;;
+  derin) zincir=(gemini-3.8-flash-high claude-opus-4-6-thinking) ;;
+  video) zincir=(gemini-3.8-flash-medium gemini-3.8-flash-high) ;;
+  claude) zincir=(claude-sonnet-4-6 claude-opus-4-6-thinking) ;;
+  opus) zincir=(claude-opus-4-6-thinking claude-sonnet-4-6) ;;
+  *) kullanim; exit 2 ;;
+esac
+
+shift 2
+if (( $# != 0 )); then
+  if (( $# != 2 )) || [[ "$1" != '-d' || -z "$2" ]]; then
+    kullanim
+    exit 2
+  fi
+  if ! cd -- "$2"; then
+    print -u2 "gemini-run: klasöre geçilemedi: $2"
+    exit 2
+  fi
+fi
+
+log="$HOME/.gemini/gemini-run-kullanim.csv"
+mkdir -p -- "${log:h}" || exit 1
+[[ -f "$log" ]] || print 'zaman,tur,model,sure_sn,sonuc' > "$log"
+
+for model in "${zincir[@]}"; do
+  out=$(mktemp -t gemini-run-out.XXXXXX) || exit 1
+  err=$(mktemp -t gemini-run-err.XXXXXX) || { rm -f -- "$out"; exit 1; }
+  bas=$SECONDS
+  "$HOME/.local/bin/agy" -p "$prompt" --model "$model" --print-timeout 600s > "$out" 2> "$err" < /dev/null
+  kod=$?
+  sure=$(( SECONDS - bas ))
+
+  if grep -qiE 'quota|limit|429|exhausted' "$out" "$err"; then
+    sonuc=limit
+  elif (( kod != 0 )); then
+    sonuc="hata$kod"
+  elif [[ ! -s "$out" ]] || [[ -z "$(tr -d '[:space:]' < "$out")" ]]; then
+    sonuc=bos
+  else
+    sonuc=ok
+  fi
+
+  print "$(date '+%Y-%m-%d %H:%M:%S'),$tur,$model,$sure,$sonuc" >> "$log"
+  if [[ "$sonuc" == ok ]]; then
+    cat -- "$out"
+    rm -f -- "$out" "$err"
+    exit 0
+  fi
+  print -u2 "gemini-run: $model -> $sonuc, sıradaki modele geçiliyor"
+  rm -f -- "$out" "$err"
+done
+
+print -u2 "gemini-run: zincirdeki bütün modeller başarısız oldu ($tur)"
+exit 1

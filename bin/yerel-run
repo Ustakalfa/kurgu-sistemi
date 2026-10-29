@@ -1,0 +1,130 @@
+#!/bin/zsh
+
+setopt pipefail
+
+LOG_FILE="$HOME/.ollama/yerel-run-kullanim.csv"
+
+kullanim() {
+  print -u2 -- 'Kullanım: yerel-run <temizle|etiketle|ozet|cevir|serbest> "prompt" [-m model]'
+  print -u2 -- 'Varsayılan model: temizle → qwen3.5:9b; ozet, etiketle, cevir, serbest → gemma4:e4b.'
+  print -u2 -- "Prompt yerine '-' verilirse metin standart girdiden okunur."
+}
+
+csv_alani() {
+  local deger="$1"
+  deger=${deger//\"/\"\"}
+  print -rn -- "\"${deger}\""
+}
+
+gunluge_yaz() {
+  local tur="$1" model="$2" sure="$3" sonuc="$4"
+  local zaman
+  zaman=$(date '+%Y-%m-%d %H:%M:%S')
+
+  mkdir -p "${LOG_FILE:h}" || return
+  if [[ ! -f "$LOG_FILE" ]]; then
+    print -- 'zaman,tur,model,sure_sn,sonuc' >> "$LOG_FILE" || return
+  fi
+  {
+    csv_alani "$zaman"; print -rn -- ','
+    csv_alani "$tur"; print -rn -- ','
+    csv_alani "$model"; print -rn -- ','
+    csv_alani "$sure"; print -rn -- ','
+    csv_alani "$sonuc"; print -- ''
+  } >> "$LOG_FILE"
+}
+
+if (( $# < 2 )); then
+  kullanim
+  exit 2
+fi
+
+tur="$1"
+prompt="$2"
+model=""
+shift 2
+
+case "$tur" in
+  temizle)
+    model="qwen3.5:9b"
+    talimat='Aşağıdaki konuşma dökümünü temizle: ııı, şey, yani gibi dolgu kelimeleri ve tekrarları çıkar, yazım hatalarını düzelt, anlamı değiştirme, yalnızca temiz metni yaz.'
+    ;;
+  etiketle)
+    model="gemma4:e4b"
+    talimat='Aşağıdaki metni verilen seçeneklerden birine sınıflandır; yalnızca etiketi yaz.'
+    ;;
+  ozet)
+    model="gemma4:e4b"
+    talimat='Aşağıdaki metni Türkçe, kısa maddeler halinde özetle; yeni bilgi ekleme.'
+    ;;
+  cevir)
+    model="gemma4:e4b"
+    talimat='Aşağıdaki metni hedef dile çevir; yalnızca çeviriyi yaz.'
+    ;;
+  serbest)
+    model="gemma4:e4b"
+    talimat=''
+    ;;
+  *)
+    kullanim
+    exit 2
+    ;;
+esac
+
+if (( $# > 0 )); then
+  if (( $# == 2 )) && [[ "$1" == '-m' ]] && [[ -n "$2" ]]; then
+    model="$2"
+  else
+    kullanim
+    exit 2
+  fi
+fi
+
+if [[ "$prompt" == '-' ]]; then
+  prompt=$(cat)
+fi
+
+if [[ -z "$prompt" ]]; then
+  kullanim
+  exit 2
+fi
+
+baslangic=$(date +%s)
+if ! /usr/bin/curl -fsS --max-time 3 http://127.0.0.1:11434/api/tags >/dev/null 2>&1; then
+  bitis=$(date +%s)
+  sure=$(( bitis - baslangic ))
+  gunluge_yaz "$tur" "$model" "$sure" 'servis_yanitsiz'
+  print -u2 -- "Ollama servisi yanıt vermiyor. Başlatmak için: brew services start ollama"
+  exit 1
+fi
+
+if [[ -n "$talimat" ]]; then
+  istek="${talimat}\n\n${prompt}"
+else
+  istek="$prompt"
+fi
+
+json_govde=$(python3 -c 'import json, sys; print(json.dumps({"model": sys.argv[1], "prompt": sys.argv[2], "stream": False, "think": False}))' "$model" "$istek")
+yanit=$(/usr/bin/curl -s --max-time 300 http://localhost:11434/api/generate -d "$json_govde")
+durum=$?
+
+if (( durum != 0 )); then
+  bitis=$(date +%s)
+  sure=$(( bitis - baslangic ))
+  gunluge_yaz "$tur" "$model" "$sure" 'servis_yanitsiz'
+  print -u2 -- "Ollama servisi yanıt vermiyor. Başlatmak için: brew services start ollama"
+  exit 1
+fi
+
+print -r -- "$yanit" | python3 -c 'import json, sys; print(json.load(sys.stdin)["response"], end="")'
+durum=$?
+bitis=$(date +%s)
+sure=$(( bitis - baslangic ))
+
+if (( durum == 0 )); then
+  gunluge_yaz "$tur" "$model" "$sure" 'basarili'
+else
+  gunluge_yaz "$tur" "$model" "$sure" 'hata'
+fi
+
+exit "$durum"

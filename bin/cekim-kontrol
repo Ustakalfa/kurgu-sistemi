@@ -1,0 +1,246 @@
+#!/usr/bin/env python3
+"""Çekim dosyaları için salt okunur teknik denetim."""
+import argparse
+import collections
+import datetime
+import json
+import math
+import os
+from pathlib import Path
+import re
+import shutil
+import statistics
+import subprocess
+import sys
+
+EXT = {'.mp4', '.mov', '.mxf', '.m4v', '.mts', '.avi'}
+FF = ['ffmpeg', '-hide_banner', '-nostats', '-nostdin']
+
+def run(cmd, timeout=900):
+    try:
+        p = subprocess.run(cmd, capture_output=True, text=True, errors='replace', timeout=timeout)
+        return p.returncode, p.stdout + '\n' + p.stderr
+    except (OSError, subprocess.TimeoutExpired) as e:
+        return 1, str(e)
+
+def sec(x):
+    try: return float(x)
+    except (TypeError, ValueError): return 0.0
+
+def tc(x):
+    x = max(0, sec(x)); h = int(x // 3600); m = int(x % 3600 // 60); s = x % 60
+    return f'{h:02}:{m:02}:{s:06.3f}'
+
+def fps(s):
+    try:
+        a, b = map(float, s.split('/')); v = a / b
+        return f'{v:.2f}'.rstrip('0').rstrip('.') if v else '?'
+    except (ValueError, ZeroDivisionError, AttributeError): return '?'
+
+def parse_meta(s, keys):
+    out = {k: [] for k in keys}
+    for k, v in re.findall(r'lavfi\.signalstats\.(YMIN|YMAX|YAVG)=([\d.]+)', s):
+        if k in out: out[k].append(float(v))
+    return out
+
+def intervals(s, kind, duration):
+    if kind == 'black':
+        return [(float(a), float(b)) for a, b in re.findall(r'black_start:([\d.]+)\s+black_end:([\d.]+)', s)]
+    starts = [float(x) for x in re.findall(r'freeze_start:\s*([\d.]+)', s)]
+    ends = [float(x) for x in re.findall(r'freeze_end:\s*([\d.]+)', s)]
+    return [(a, ends[i] if i < len(ends) else duration) for i, a in enumerate(starts)]
+
+def audio_stats(s):
+    channels = []
+    for block in re.split(r'\[Parsed_astats_[^\]]+\] Channel: \d+\s*', s)[1:]:
+        part = block.split('Overall')[0]
+        def val(key):
+            m = re.search(r'\]\s*'+re.escape(key)+r':\s*([^\n]+)', part)
+            try: return float(m.group(1).strip()) if m else None
+            except ValueError: return float('-inf') if m and '-inf' in m.group(1) else None
+        channels.append({'peak': val('Peak level dB'), 'rms': val('RMS level dB'), 'count': val('Peak count')})
+    def vol(key):
+        m = re.search(re.escape(key)+r':\s*([-\w.]+) dB', s)
+        try: return float(m.group(1)) if m else None
+        except ValueError: return None
+    return channels, vol('max_volume'), vol('mean_volume')
+
+def fmt(v, suffix=''):
+    return 'ölçülemedi' if v is None else (('-∞' if v == float('-inf') else f'{v:.1f}') + suffix)
+
+def analyze(path, quick):
+    r = {'path': path, 'issues': [], 'actions': [], 'audio': [], 'black': None, 'freeze': None, 'exposure': None, 'flicker': None}
+    def progress(s): print(f'{path.name}: {s}', file=sys.stderr, flush=True)
+    progress('ffprobe')
+    code, out = run(['ffprobe', '-v', 'error', '-show_streams', '-show_format', '-of', 'json', str(path)], 60)
+    try: data = json.loads(out) if code == 0 else {}
+    except json.JSONDecodeError: data = {}
+    streams = data.get('streams', [])
+    v = next((s for s in streams if s.get('codec_type') == 'video'), None)
+    if not v:
+        r.update({'bad': True, 'duration': 0, 'codec': '?', 'profile': '?', 'depth': '?', 'chroma': '?', 'resolution': '?', 'fps': '?', 'gamma': '?', 'issues': [('❌', 'okunamayan dosya')]})
+        return r
+    r['bad'] = False
+    pix = v.get('pix_fmt', '')
+    bits = v.get('bits_per_raw_sample')
+    depth = int(bits) if str(bits).isdigit() else (int(re.search(r'p(\d+)', pix).group(1)) if re.search(r'p(\d+)', pix) else 8)
+    chroma = '4:2:2' if '422' in pix else '4:2:0' if '420' in pix else '4:4:4' if '444' in pix else '?'
+    duration = sec(v.get('duration') or data.get('format', {}).get('duration'))
+    r.update(duration=duration, codec=v.get('codec_name', '?'), profile=v.get('profile', '?'), depth=depth, chroma=chroma,
+             resolution=f"{v.get('width', '?')}×{v.get('height', '?')}", fps=fps(v.get('avg_frame_rate') or v.get('r_frame_rate')), bitrate=v.get('bit_rate') or data.get('format', {}).get('bit_rate'), transfer=v.get('color_transfer', '?'), primaries=v.get('color_primaries', '?'))
+    tags = json.dumps([v.get('tags', {}), data.get('format', {}).get('tags', {}), r['transfer']], ensure_ascii=False).lower()
+    sidecars = list(path.parent.glob(path.stem + '*M01.XML')) + list(path.parent.glob(path.stem + '*M01.xml'))
+    for side in sidecars:
+        try: tags += side.read_text(errors='replace').lower()
+        except OSError: pass
+    if any(x in tags for x in ['s-log3', 'slog', 's-log', 'capturegammaequation']): r['gamma'] = 'S-Log3/Log'
+    elif 'arib-std-b67' in tags: r['gamma'] = 'HLG'
+    elif 'log' in tags: r['gamma'] = 'Log'
+    else: r['gamma'] = 'Rec709/normal'
+    limit = 120 if quick else (600 if duration > 600 else None)
+    r['limit'] = limit
+    targs = ['-t', str(limit)] if limit else []
+    progress('ses')
+    audios = [s for s in streams if s.get('codec_type') == 'audio']
+    if not audios: r['issues'].append(('⚠️', 'ses yok'))
+    for i, a in enumerate(audios):
+        code, s = run(FF + ['-i', str(path), '-map', f'0:a:{i}'] + targs + ['-af', 'astats=metadata=1:reset=0,volumedetect', '-f', 'null', '-'])
+        ch, peak, mean = audio_stats(s) if code == 0 else ([], None, None)
+        row = {'channels': ch, 'peak': peak, 'mean': mean, 'rate': a.get('sample_rate', '?'), 'n': a.get('channels', '?')}
+        r['audio'].append(row)
+        if code != 0: r['issues'].append(('⚠️', f'ses akışı {i+1} ölçülemedi')); continue
+        for j, c in enumerate(ch):
+            if c['rms'] is not None and c['rms'] < -60: r['issues'].append(('⚠️', f'K{j+1} sessiz'))
+            if c['peak'] is not None and c['peak'] >= -0.1 and (c['count'] or 0) >= 10: r['issues'].append(('❌', f'K{j+1} kırpılma'))
+            elif c['peak'] is not None and c['peak'] > -1: r['issues'].append(('⚠️', f'K{j+1} tepe çok yüksek'))
+        if mean is not None and mean < -35: r['issues'].append(('⚠️', 'ses çok düşük'))
+    progress('siyah ve donma')
+    code, s = run(FF + ['-i', str(path)] + targs + ['-an', '-vf', 'blackdetect=d=0.1:pix_th=0.10,freezedetect=n=-60dB:d=1', '-f', 'null', '-'])
+    if code == 0:
+        r['black'] = intervals(s, 'black', limit or duration)
+        r['freeze'] = [(a, b) for a, b in intervals(s, 'freeze', limit or duration)
+                       if b <= a or sum(max(0, min(b, y) - max(a, x)) for x, y in r['black']) <= .8 * (b - a)]
+        for a, b in r['black']:
+            if a < .5 or b >= min(duration, limit or duration) - .5: continue
+            r['issues'].append(('❌' if b-a > 2 else '⚠️', f'orta siyah {tc(a)}–{tc(b)}'))
+        if r['freeze']: r['issues'].append(('⚠️', 'donmuş kare (statik çekim olabilir)'))
+    progress('pozlama')
+    code, s = run(FF + ['-i', str(path)] + targs + ['-an', '-vf', 'fps=2,scale=480:-2,format=yuv420p,signalstats,metadata=print:file=-', '-f', 'null', '-'])
+    vals = parse_meta(s, ['YMIN', 'YMAX', 'YAVG']) if code == 0 else {}
+    if vals and all(vals.values()):
+        ymin = min(vals['YMIN']) / 255 * 100; ymax = max(vals['YMAX']) / 255 * 100
+        avg = statistics.mean(vals['YAVG']) / 255 * 100
+        r['exposure'] = (ymin, avg, ymax)
+        islog = 'Log' in r['gamma']
+        if not islog and statistics.mean(x >= 99 * 2.55 for x in vals['YMAX']) > .05: r['issues'].append(('⚠️', 'patlayan beyazlar'))
+        if islog and statistics.mean(x >= 93 * 2.55 for x in vals['YMAX']) > .05: r['issues'].append(('⚠️', "Log'da tepeler kırpılıyor olabilir"))
+        if islog and avg < 25: r['issues'].append(('⚠️', 'Log için karanlık (gürültü riski, +1/+1.7 EV ETTR önerilir)'))
+        elif islog and avg > 65: r['issues'].append(('⚠️', 'Log için çok parlak'))
+        elif not islog and avg < 15: r['issues'].append(('⚠️', 'eksik pozlama'))
+        elif not islog and avg > 75: r['issues'].append(('⚠️', 'aşırı pozlama'))
+        if r['gamma'] == 'Rec709/normal' and ymin > 3 and ymax < 85: r['gamma'] = 'muhtemel Log'
+    progress('titreme ipucu')
+    code, s = run(FF + ['-i', str(path), '-t', str(min(20, duration)), '-an', '-vf', 'scale=160:-2,format=yuv420p,signalstats,metadata=print:file=-', '-f', 'null', '-'])
+    yy = parse_meta(s, ['YAVG']).get('YAVG', []) if code == 0 else []
+    if len(yy) >= 20:
+        diffs = [(b-a)/255*100 for a,b in zip(yy, yy[1:])]
+        turns = sum(a*b < 0 and min(abs(a), abs(b)) > 1.5 for a,b in zip(diffs, diffs[1:])) / max(1,len(diffs)-1)
+        r['flicker'] = turns
+        if turns > .65 and statistics.median(abs(x) for x in diffs) > 1.5: r['issues'].append(('⚠️', 'olası titreme (kaba ipucu; 50 Hz şebekede 1/50 veya 1/100 dene)'))
+    return r
+
+def md(rs, folder, gemini, gemini_calisti, gemini_denendi):
+    now = datetime.datetime.now().astimezone().strftime('%Y-%m-%d %H:%M %Z')
+    katmanlar = 'yerel ölçüm + Gemini' if gemini_calisti else 'yerel ölçüm (Gemini denendi, çalışmadı)' if gemini_denendi else 'yerel ölçüm'
+    lines = [f'# Çekim kontrol raporu', '', f'- Tarih: {now}', f'- Klasör: `{folder}`', f'- Klip sayısı: {len(rs)}', f'- Toplam süre: {tc(sum(r['duration'] for r in rs))}', f'- Katmanlar: {katmanlar}', '', '## Özet tablo', '', '| Klip | Süre | Format (codec/profil, bit, kroma) | Çözünürlük·fps | Gamma (Log/709) | Ses | Görüntü | Durum |', '|---|---|---|---|---|---|---|---|']
+    fields = ['codec','profile','depth','chroma','resolution','fps','gamma']
+    modes = {f: collections.Counter(str(r.get(f,'?')) for r in rs if not r['bad']).most_common(1)[0][0] for f in fields if any(not r['bad'] for r in rs)}
+    deviations = []
+    for r in rs:
+        r['dev'] = [f for f in fields if f in modes and not r['bad'] and str(r.get(f)) != modes[f]]
+        if r['dev']: deviations.append(r)
+        if r['dev']: r['issues'].append(('⚠️', 'çoğunluktan farklı: ' + ', '.join(r['dev'])))
+        status = '❌' if any(x[0]=='❌' for x in r['issues']) else '⚠️' if r['issues'] else '✅'
+        r['status'] = status
+        audio = ', '.join(x[1] for x in r['issues'] if any(k in x[1] for k in ['ses', 'K1', 'K2', 'K3'])) or ('normal' if r['audio'] else 'ölçülemedi')
+        visual = ', '.join(x[1] for x in r['issues'] if any(k in x[1] for k in ['siyah','donmuş','pozlama','beyaz','Log için','titreme'])) or ('normal' if not r['bad'] else 'okunamadı')
+        safe=lambda x: str(x).replace('|','/')
+        lines.append('| ' + ' | '.join(map(safe,[r['path'].relative_to(folder),tc(r['duration']),f"{r['codec']}/{r['profile']}, {r['depth']} bit, {r['chroma']}",f"{r['resolution']} · {r['fps']} fps",r['gamma'],audio,visual,status])) + ' |')
+    lines += ['', '## Tutarlılık', '', 'Çoğunluk profili: ' + ', '.join(f'{k}={v}' for k,v in modes.items()) + '.']
+    lines += [f"- ⚠️ {r['path'].name}: " + ', '.join(f"{f}={r[f]} (çoğunluk {modes[f]})" for f in r['dev']) + ('; farklı fps bilinçli ağır çekim olabilir' if 'fps' in r['dev'] else '') for r in deviations] or ['- Sapma yok.']
+    lines += ['', '## Klip ayrıntıları', '']
+    for r in rs:
+        lines += [f"### {r['path'].relative_to(folder)} {r['status']}", '', f"- Süre {tc(r['duration'])}; {r['codec']}/{r['profile']}; {r['depth']} bit {r['chroma']}; {r['resolution']} · {r['fps']} fps; bit hızı {fmt(sec(r['bitrate'])/1e6 if r.get('bitrate') else None,' Mb/sn')}; transfer {r.get('transfer','?')}; primaries {r.get('primaries','?')}; gamma {r['gamma']}."]
+        if r.get('limit'): lines.append(f"- Analiz sınırı: ilk {r['limit']} sn.")
+        for i,a in enumerate(r['audio']):
+            lines.append(f"- Ses {i+1}: {a['n']} kanal, {a['rate']} Hz; max {fmt(a['peak'],' dBFS')}, ortalama {fmt(a['mean'],' dBFS')}.")
+            for j,c in enumerate(a['channels']): lines.append(f"  - K{j+1}: tepe {fmt(c['peak'],' dBFS')}, RMS {fmt(c['rms'],' dBFS')}, tepe sayısı {fmt(c['count'])}.")
+        for key,label in [('black','Siyah'),('freeze','Donma')]:
+            if r[key] is None: lines.append(f'- {label}: ölçülemedi')
+            elif not r[key]: lines.append(f'- {label}: yok')
+            else:
+                for a,b in r[key]:
+                    note = ' (baş/son siyahı; bilgi)' if key=='black' and (a<.5 or b>=min(r['duration'],r.get('limit') or r['duration'])-.5) else (' (statik çekim olabilir)' if key=='freeze' else '')
+                    lines.append(f'- {label}: {tc(a)}–{tc(b)}{note}')
+        e=r['exposure']; lines.append(f"- Pozlama: min YMIN {e[0]:.1f}, ortalama YAVG {e[1]:.1f}, max YMAX {e[2]:.1f} IRE." if e else '- Pozlama: ölçülemedi')
+        lines.append(f"- Titreme kaba ipucu: {'ölçülemedi' if r['flicker'] is None else f'işaret değişimi %{r["flicker"]*100:.0f}'}.")
+        lines.append('- Bulgular: ' + ('; '.join(f'{a} {b}' for a,b in r['issues']) if r['issues'] else 'yok.'))
+        lines.append('')
+    lines += ['## Kurguda dikkat', '']
+    actions=[]
+    for r in rs:
+        name=r['path'].name
+        for a,b in r['black'] or []:
+            if a>=.5 and b<min(r['duration'],r.get('limit') or r['duration'])-.5: actions.append(f'{name} {tc(a)}–{tc(b)} siyah — kes.')
+        for a,b in r['freeze'] or []: actions.append(f'{name} {tc(a)}–{tc(b)} donma — görüntüyü gözle kontrol et.')
+        if any('kırpılma' in x[1] for x in r['issues']): actions.append(f"{name} ses tepe {fmt(r['audio'][0]['peak'] if r['audio'] else None,' dBFS')} kırpılmış — yedek ses kullan.")
+        if any('sessiz' in x[1] for x in r['issues']): actions.append(f'{name} sessiz kanalı kurguda kontrol et.')
+        if 'fps' in r['dev']: actions.append(f"{name} {r['fps']} fps — {modes['fps']} fps zaman çizelgesinde hız yorumunu kontrol et.")
+        if any('pozlama' in x[1] or 'Log için karanlık' in x[1] for x in r['issues']): actions.append(f'{name} karanlık — düzeltmede gürültüyü kontrol et.')
+    lines += [f'- {x}' for x in actions] or ['- Özel işlem gerektiren bulgu yok.']
+    lines += ['', '## Bir dahaki çekimde dene', '']
+    allissues=' '.join(y for r in rs for _,y in r['issues']); tips=[]
+    if 'kırpılma' in allissues: tips.append('Kayıt seviyesini konuşma tepesi -12 dB civarı olacak şekilde ayarla, limiter aç.')
+    if 'Log için karanlık' in allissues: tips.append("S-Log3'te +1/+1.7 EV ETTR dene.")
+    if any('fps' in r['dev'] for r in rs): tips.append("Proje fps'ini çekimden önce sabitle.")
+    if 'titreme' in allissues: tips.append('Enstantaneyi şebekeye göre 1/50–1/100 ayarla.')
+    if 'sessiz' in allissues: tips.append('2. kanala emniyet seviyesi (-6 dB) kaydet.')
+    if not tips: tips=['Çekim öncesi kısa ses ve pozlama kontrolü yap.','Her klibin başında ve sonunda birkaç saniye temiz görüntü bırak.']
+    lines += [f'- {x}' for x in tips[:5]]
+    lines += ['', '## Gemini görsel değerlendirme', '', gemini, '', 'Bu rapor salt okunur denetimdir; hiçbir video dosyası değiştirilmedi.', '']
+    return '\n'.join(lines)
+
+def main():
+    p=argparse.ArgumentParser(description='Çekim klasörünü teknik olarak denetler.')
+    p.add_argument('klasör', type=Path); p.add_argument('--gemini',action='store_true'); p.add_argument('--hizli',action='store_true'); p.add_argument('--cikti',type=Path,metavar='DOSYA')
+    a=p.parse_args(); folder=a.klasör.resolve()
+    if not folder.is_dir(): p.error('klasör yok')
+    files=sorted((x for x in folder.rglob('*') if x.is_file() and x.suffix.lower() in EXT and not any(z.startswith('.') for z in x.relative_to(folder).parts) and not x.name.startswith('._')),key=lambda x:str(x.relative_to(folder)).casefold())
+    if not files: p.error('video yok')
+    if not shutil.which('ffmpeg') or not shutil.which('ffprobe'): p.error('ffmpeg/ffprobe bulunamadı')
+    target=(a.cikti if a.cikti else folder/'cekim-kontrol.md').absolute()
+    parts=target.parts
+    unsafe=any(parts[i]=='Yeni Beyin' and parts[i+1]=='raw' for i in range(len(parts)-1))
+    if unsafe or not os.access(target.parent,os.W_OK):
+        print('Uyarı: çıktı konumu korumalı veya yazılamıyor; rapor cwd içine yazılacak.',file=sys.stderr)
+        target=Path.cwd()/'cekim-kontrol.md'
+    rs=[analyze(x,a.hizli) for x in files]
+    gem='Gemini katmanı çalıştırılmadı (açmak için --gemini)'
+    gemini_calisti=False
+    if a.gemini:
+        if not shutil.which('gemini-run'): gem='Gemini katmanı çalışmadı: gemini-run bulunamadı.'
+        else:
+            summaries=[]
+            for r in rs:
+                peak=r['audio'][0]['peak'] if r['audio'] else None
+                summaries.append(f"{r['path'].relative_to(folder)}: {r['fps']} fps, {r['gamma']}, ses tepe {fmt(peak,' dBFS')}; siyah {', '.join(tc(a)+'–'+tc(b) for a,b in r['black'] or []) or 'yok'}; donma {', '.join(tc(a)+'–'+tc(b) for a,b in r['freeze'] or []) or 'yok'}.")
+            instruction=('Hiçbir kabuk komutu çalıştırma (ffmpeg/ffprobe yok); video dosyalarını doğrudan dosya okuma aracınla açıp izle. Klasördeki şu videoları tek tek incele: '+', '.join(str(x.relative_to(folder)) for x in files)+'. Her klip için zaman kodlu odak kayması/yumuşak odak; kompozisyon ve kadraj (ufuk eğikliği, kafa boşluğu, kesik uzuvlar); istenmeyen nesne/kişi/yansıma; ses-görüntü sorunu (rüzgar, uğultu, senkron); en iyi 3 an ve en kötü 3 an; kurguda kullanılabilirlik puanı 1-5 ver. Başlıkları klip adları olan Türkçe Markdown yaz. Kurallar (Sinematik Video Rehberi): enstantane ≈ 2×fps (180° kuralı; 25p→1/50, 50p→1/100); 10-bit Log çekimde düz/soluk görüntü normaldir, renk sonra yapılır — bunu sorun sayma; ses görüntüden önce gelir: kötü ses kötü görüntüden daha az affedilir; stabil kamera, temiz arka plan, motivasyonlu ışık. Yerel ölçüm özeti; gözle doğrula:\n'+'\n'.join(summaries))
+            code,out=run(['gemini-run','video',instruction,'-d',str(folder)],900)
+            gemini_calisti=code==0 and bool(out.strip())
+            gem=out.strip() if code==0 and out.strip() else 'Gemini katmanı çalışmadı: '+('boş yanıt' if code==0 else out.strip()[-300:])
+    try: target.write_text(md(rs,folder,gem,gemini_calisti,a.gemini),encoding='utf-8')
+    except OSError as e:
+        print(f'Rapor yazılamadı: {e}',file=sys.stderr); return 1
+    print(f'Rapor: {target}')
+    return 0
+if __name__=='__main__': sys.exit(main())

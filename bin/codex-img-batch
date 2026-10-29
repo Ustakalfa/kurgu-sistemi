@@ -1,0 +1,33 @@
+#!/bin/zsh
+# codex-img-batch is-listesi.txt [paralel=2]  — her satır: çıktı.png|prompt[|referans.png]
+# Bozuk satır varsa hiçbir iş başlamaz. Kota dolarsa kalan işler başlatılmaz.
+# Paralel sınır pgrep -P $$ ile sayılır (macOS'ta jobs -r güvenilmez).
+emulate -L zsh
+set -u
+liste="${1:-}"; paralel="${2:-2}"
+[[ -f "$liste" ]] || { print -u2 'Kullanım: codex-img-batch is-listesi.txt [paralel]'; exit 2; }
+
+satirlar=("${(@f)$(grep -v '^\s*$' "$liste" | grep -v '^#')}")
+for s in $satirlar; do
+  parca=("${(@s:|:)s}")
+  if (( ${#parca} < 2 )) || [[ -z "${parca[1]}" || -z "${parca[2]}" ]]; then
+    print -u2 "codex-img-batch: bozuk satır, hiçbir iş başlatılmadı: $s"; exit 2
+  fi
+done
+
+kota="$(mktemp -t codex-img-kota)"; rm -f "$kota"
+for s in $satirlar; do
+  [[ -e "$kota" ]] && { print -u2 "codex-img-batch: kota doldu, kalan işler atlandı"; break; }
+  while (( $(pgrep -P $$ | wc -l) >= paralel )); do sleep 2; done
+  parca=("${(@s:|:)s}")
+  (
+    if (( ${#parca} >= 3 )) && [[ -n "${parca[3]}" ]]; then
+      codex-img "${parca[1]}" "${parca[2]}" -r "${parca[3]}"
+    else
+      codex-img "${parca[1]}" "${parca[2]}"
+    fi
+    (( $? == 3 )) && touch "$kota"
+  ) &
+done
+wait
+rm -f "$kota"
