@@ -175,7 +175,7 @@ Yerel değişiklik varsa `git pull` öncesi ne yapılacağına kullanıcı karar
 
 ## Kaldırma ve geri alma
 
-Kurulum bağlantı kurduğu için hedef sembolik bağları elle kaldırmak geri alınabilir bir işlemdir; önce `ls -l` ile gerçekten bu depoya işaret ettiğini doğrulayın. Betiğin oluşturduğu `.yedek-* ` öğesini özgün adına taşımadan önce hedefin boş olduğundan emin olun. Depo silinse bile Homebrew paketleri, Ollama modelleri ve npm/uv araçları otomatik kaldırılmaz.
+Kurulum bağlantı kurduğu için hedef sembolik bağları elle kaldırmak geri alınabilir bir işlemdir; önce `ls -l` ile gerçekten bu depoya işaret ettiğini doğrulayın. Gerçek dosya ve klasör yedekleri `~/.claude/skills-yedek/<tarih>/` ve `~/.local/bin-yedek/<tarih>/` altında tutulur; özgün adına taşımadan önce hedefin boş olduğundan emin olun. Eski sembolik bağlar bu dizinlerdeki `baglar.txt` dosyasına `<ad> -> <eski hedef>` olarak kaydedilir; ilgili hedef dizinde şu tek satırlık zsh döngüsüyle geri bağlanabilir: `while IFS= read -r satir; do ad=${satir%% -> *}; hedef=${satir#* -> }; ln -s -- "$hedef" "$ad"; done < baglar.txt`. Depo silinse bile Homebrew paketleri, Ollama modelleri ve npm/uv araçları otomatik kaldırılmaz.
 
 ## Sık hatalar
 

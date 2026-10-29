@@ -31,15 +31,28 @@ if [[ ! -e $model_ayar ]]; then
  print "Model ayarı: $repo/config/modeller.ornek.env → $model_ayar"
  if (( ! kuru )); then mkdir -p -- "${model_ayar:h}"; cp -- "$repo/config/modeller.ornek.env" "$model_ayar"; fi
 fi
+yedek_tarihi=$(date '+%Y%m%d-%H%M%S')
 run() { print -r -- "Komut: ${(q)@}"; (( kuru )) || "$@"; }
 bagla() {
- local kaynak=$1 hedef=$2 yedek
+ local kaynak hedef yedek_kok ad yedek eski_hedef yedek_dizin
+ kaynak=$1; hedef=$2; yedek_kok=$3; ad=${hedef:t}
  [[ -e $kaynak ]] || { print -u2 "Kaynak yok: $kaynak"; return 1; }
  if [[ -L $hedef && ${hedef:A} == ${kaynak:A} ]]; then print "Zaten bağlı: $hedef"; return 0; fi
- if [[ -e $hedef || -L $hedef ]]; then
-  yedek="$hedef.yedek-$(date '+%Y%m%d-%H%M%S')"
+ if [[ -L $hedef ]]; then
+  eski_hedef=$(readlink "$hedef")
+  yedek_dizin="$yedek_kok/$yedek_tarihi"
+  print "Bağ yedeği: $hedef kaldırılacak; $ad -> $eski_hedef → $yedek_dizin/baglar.txt"
+  if (( ! kuru )); then
+   mkdir -p -- "$yedek_dizin"
+   print -r -- "$ad -> $eski_hedef" >> "$yedek_dizin/baglar.txt"
+   rm -- "$hedef"
+  fi
+ elif [[ -e $hedef ]]; then
+  yedek_dizin="$yedek_kok/$yedek_tarihi"
+  yedek="$yedek_dizin/$ad"
   while [[ -e $yedek || -L $yedek ]]; do yedek+="-1"; done
-  print "Yedek: $hedef → $yedek"; (( kuru )) || mv -- "$hedef" "$yedek"
+  print "Yedek: $hedef → $yedek"
+  if (( ! kuru )); then mkdir -p -- "$yedek_dizin"; mv -- "$hedef" "$yedek"; fi
  fi
  print "Bağla: $hedef → $kaynak"
  if (( ! kuru )); then mkdir -p -- "${hedef:h}"; ln -s -- "$kaynak" "$hedef"; fi
@@ -61,10 +74,10 @@ if (( skills )); then
  while IFS='|' read -r _ ad kaynak _; do
   ad=${${ad## }%% }; kaynak=${${kaynak## }%% }
   [[ $kaynak == skills/* || $kaynak == vendor/* ]] || continue
-  bagla "$repo/$kaynak" "$HOME/.claude/skills/$ad"
+  bagla "$repo/$kaynak" "$HOME/.claude/skills/$ad" "$HOME/.claude/skills-yedek"
  done < "$repo/skills/HARITA.md"
 fi
-if (( bin )); then for kaynak in "$repo"/bin/*; do bagla "$kaynak" "$HOME/.local/bin/${kaynak:t}"; done; fi
+if (( bin )); then for kaynak in "$repo"/bin/*; do bagla "$kaynak" "$HOME/.local/bin/${kaynak:t}" "$HOME/.local/bin-yedek"; done; fi
 if (( mcp )); then
  run claude mcp add filmcraft -- "$HOME/.local/bin/filmcraft-cli" mcp --bridge 127.0.0.1:9876
  run claude mcp add filmcraft-headless -- "$HOME/.local/bin/filmcraft-cli" mcp
