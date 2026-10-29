@@ -144,6 +144,7 @@ Doğrulanmış Node sürümleri için `remotion/NODE_SURUMU.md` dosyasına bakı
 | `--bin` | `bin/*` araçlarını `~/.local/bin/` altına sembolik bağlar |
 | `--mcp` | canlı ve başsız FilmCraft MCP kayıtlarını ekler |
 | `--remotion` | `remotion/` içinde `npm ci` çalıştırır |
+| `--evet` | Genel değişiklikler için onay sorusunu atlar |
 | `--hepsi` | yukarıdaki beş kurulum bölümünün tümünü seçer |
 
 Seçeneksiz çağrı kullanım metniyle çıkar. Var olan hedef farklıysa betik onu `.yedek-YYYYMMDD-HHMMSS` sonekli ada taşır ve yeni sembolik bağ kurar.
@@ -189,3 +190,5 @@ Kurulum bağlantı kurduğu için hedef sembolik bağları elle kaldırmak geri 
 | font ağdan yüklenmiyor | ağ veya önbellek | ilk kurulumu ağ varken çalıştır |
 | komut eski sürüm | bağlantı başka hedefe gidiyor | `which` ve `ls -l` ile bağı denetle |
 
+
+Model ayarları `~/.config/kurgu-sistemi/modeller.env` dosyasındadır; örnek `config/modeller.ornek.env`.

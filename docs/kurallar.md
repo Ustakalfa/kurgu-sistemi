@@ -2,7 +2,7 @@
 
 ## 20–21 Ekim 2026 — Sorumluluk ve akış
 
-Kullanıcı bütün Reels ve normal videoların kurgusunu Claude'a verdi. Gerekçe: mevcut Nexus Video ev stili atlanınca sonuç beklentiyi karşılamadı. Claude Opus plan ve denetimden, Codex uygulamadan sorumludur. Gemini ham videoyu izleyip en iyi anları ve zaman kodlarını çıkarır; yerel Ollama döküm temizleme gibi yardımcı işleri yapar. Kullanıcı çekimi kendisi aktarır; otomatik aktarım kurulmaz. Önce Nexus Video Remotion hattı, `src/Reels07.tsx`, `src/marka.ts` ve ses kataloğu kullanılır. Kurgu FilmCraft 0.10.0 üzerinden yürür.
+Kullanıcı bütün Reels ve normal videoların kurgusunu Claude'a verdi. Gerekçe: mevcut `remotion/` ev stili atlanınca sonuç beklentiyi karşılamadı. Claude Opus plan ve denetimden, Codex uygulamadan sorumludur. Gemini ham videoyu izleyip en iyi anları ve zaman kodlarını çıkarır; yerel Ollama döküm temizleme gibi yardımcı işleri yapar. Kullanıcı çekimi kendisi aktarır; otomatik aktarım kurulmaz. Önce deponun `remotion/` hattı, `src/Reels07.tsx`, `src/marka.ts` ve ses kataloğu kullanılır. Kurgu FilmCraft 0.10.0 üzerinden yürür.
 
 ## 21 Ekim 2026 — Teslim
 

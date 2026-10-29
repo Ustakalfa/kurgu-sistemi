@@ -37,13 +37,19 @@ flowchart LR
  L --> M[Kurgu dersi]
 ```
 
+## Gereksinimler
+
+Yalnız macOS (Apple Silicon’da test edildi).
+
 ## Hızlı başlangıç
+
+Claude Code ile kurulum: deponun linkini Claude’a verip “[KURULUM-CLAUDE.md](KURULUM-CLAUDE.md)’ye göre kur” deyin.
 
 ```sh
 git clone --recursive <DEPO-URL-SI> ~/kurgu-sistemi
 cd ~/kurgu-sistemi
 ./kurulum.sh --kuru
-./kurulum.sh --hepsi
+./kurulum.sh --hepsi --evet
 ./dogrula.sh
 ```
 
@@ -59,6 +65,10 @@ Yeni iş ve çekim denetimi:
 yeni-is "Ornek" "Tanitim" --format 9x16
 cekim-kontrol "$HOME/Movies/Isler/2026-11-03_ornek-kafe_tanitim-reels/01-ham" --hizli
 ```
+
+## Model ayarı
+
+`kurulum.sh`, [örnek model ayarını](config/modeller.ornek.env) `~/.config/kurgu-sistemi/modeller.env` konumuna kopyalar. Dosyadaki Codex, Gemini ve yerel model zincirlerini kendi aboneliğinize göre düzenleyin. Çağrıdaki ortam değişkenleri dosyadaki değerlerden önceliklidir.
 
 ## Klasör haritası
 
@@ -115,7 +125,7 @@ cekim-kontrol "$HOME/Movies/Isler/2026-11-03_ornek-kafe_tanitim-reels/01-ham" --
 
 ## Katkı ve senkron
 
-Katkıdan önce `./dogrula.sh` çalıştırın. Yerel kurulumdan depoya bilinçli eşleme için `./senkronla.sh` kullanılır; bu betik medya, WAV, proje, ortam dosyası, `node_modules` ve büyük dosyaları dışlar. Aynı anda çalışan kişilerin dosya sahipliğini önceden ayırın. Alt modül güncellemesi ayrı ve gözden geçirilebilir bir değişiklik olmalıdır.
+Katkıdan önce `./dogrula.sh` çalıştırın. `./senkronla.sh`, Remotion kaynaklarını bilinçli olarak depoya eşler; medya, WAV, proje, ortam dosyası, `node_modules` ve büyük dosyaları dışlar. `bin/` ve `skills/` deponun asıl kaynağıdır: betik bunları kopyalamaz, yalnız `~/.local/bin/`, `~/.claude/skills/` ve proje `.claude/skills/` bağlantılarını denetler; farklı içerik için elle birleştirme ya da `./kurulum.sh --bin --skills` ile depoya bağlama uyarısı verir. Aynı anda çalışan kişilerin dosya sahipliğini önceden ayırın. Alt modül güncellemesi ayrı ve gözden geçirilebilir bir değişiklik olmalıdır.
 
 ## Güvenlik ve mahremiyet
 

@@ -2,16 +2,35 @@
 set -u
 setopt pipe_fail null_glob
 repo=${0:A:h}
-kuru=0; bag=0; skills=0; bin=0; mcp=0; remotion=0
-kullanim() { print 'Kullanım: ./kurulum.sh [--kuru] [--bagimliliklar] [--skills] [--bin] [--mcp] [--remotion] [--hepsi]'; }
+kuru=0; evet=0; bag=0; skills=0; bin=0; mcp=0; remotion=0
+kullanim() { print 'Kullanım: ./kurulum.sh [--kuru] [--evet] [--bagimliliklar] [--skills] [--bin] [--mcp] [--remotion] [--hepsi]'; }
 for arg in "$@"; do
  case $arg in
- --kuru) kuru=1;; --bagimliliklar) bag=1;; --skills) skills=1;; --bin) bin=1;; --mcp) mcp=1;; --remotion) remotion=1;; --hepsi) bag=1; skills=1; bin=1; mcp=1; remotion=1;; *) kullanim; exit 2;; esac
+ --kuru) kuru=1;; --evet) evet=1;; --bagimliliklar) bag=1;; --skills) skills=1;; --bin) bin=1;; --mcp) mcp=1;; --remotion) remotion=1;; --hepsi) bag=1; skills=1; bin=1; mcp=1; remotion=1;; *) kullanim; exit 2;; esac
 done
 if (( ! (bag+skills+bin+mcp+remotion) )); then
  if (( kuru )); then bag=1; skills=1; bin=1; mcp=1; remotion=1; else kullanim; exit 2; fi
 fi
-if [[ ! -f "$repo/vendor/avenoxskills/skills/avenox-video/SKILL.md" ]]; then print -u2 'Uyarı: alt modüller eksik. git submodule update --init --recursive çalıştırın.'; fi
+if [[ $(uname -s) != Darwin ]]; then
+ print -u2 'Bu kurulum yalnız macOS içindir. Linux desteklenmiyor; docs/kurulum.md içindeki elle adımlara bakın.'; exit 1
+fi
+if (( ! $+commands[brew] )); then
+ print -u2 'Homebrew yok. Resmî Homebrew kurulum yönergesindeki komutu inceleyip kendiniz çalıştırın: https://brew.sh/'; exit 1
+fi
+if [[ ! -f "$repo/vendor/avenoxskills/skills/avenox-video/SKILL.md" ]]; then
+ if (( kuru )); then print 'Gerekli: git submodule update --init --recursive';
+ else command git submodule update --init --recursive || exit 1; fi
+fi
+if (( ! kuru && ! evet && (skills || bin || mcp) )); then
+ print -n 'Genel kullanıcı ayarları (~/.claude/skills, ~/.local/bin, Claude MCP) değişecek. Onaylıyor musunuz? [e/H] '
+ read -r yanit
+ [[ $yanit == e || $yanit == E ]] || { print 'Kurulum iptal edildi.'; exit 1; }
+fi
+model_ayar="$HOME/.config/kurgu-sistemi/modeller.env"
+if [[ ! -e $model_ayar ]]; then
+ print "Model ayarı: $repo/config/modeller.ornek.env → $model_ayar"
+ if (( ! kuru )); then mkdir -p -- "${model_ayar:h}"; cp -- "$repo/config/modeller.ornek.env" "$model_ayar"; fi
+fi
 run() { print -r -- "Komut: ${(q)@}"; (( kuru )) || "$@"; }
 bagla() {
  local kaynak=$1 hedef=$2 yedek
@@ -60,3 +79,13 @@ done
 [[ -d /Applications/FilmCraft.app ]] && print 'VAR FilmCraft.app' || print 'YOK FilmCraft.app'
 if (( $+commands[ollama] )); then ollama list 2>/dev/null | head -4; fi
 print 'Node uyumluluğu: remotion/NODE_SURUMU.md (22.23.3 ve 24.22.0 doğrulanmış).'
+
+case ":$PATH:" in *":$HOME/.local/bin:"*) ;; *) print -u2 'UYARI: ~/.local/bin PATH içinde değil. ~/.zshrc dosyanıza şu satırı ekleyin: export PATH="$HOME/.local/bin:$PATH"' ;; esac
+print '\nELLE YAPILACAKLAR (ayrıntı: docs/kurulum.md):'
+[[ -d /Applications/FilmCraft.app && -x "$HOME/.local/bin/filmcraft-cli" ]] || print -r -- '- FilmCraft.app ve filmcraft-cli: resmî kaynaktan kurun.'
+(( $+commands[agy] )) || print -r -- '- agy: kurup hesabınızla giriş yapın.'
+[[ -f "$HOME/.codex/auth.json" ]] || print -r -- '- Codex: codex login ile giriş yapın.'
+[[ -d "$HOME/.claude" ]] || print -r -- '- Claude: resmî giriş akışını tamamlayın.'
+print -r -- '- Sony LUT: resmî LUT dosyasını edinip FilmCraft içinde tanıtın.'
+print -r -- '- Montserrat: Remotion yüklemesini doğrulayın; gerekirse yazı tipini kurun.'
+[[ -n "$(find "$repo/remotion/public/sfx" -type f -name '*.wav' -print -quit 2>/dev/null)" ]] || print -r -- '- SFX WAV: lisanslı ses dosyalarını remotion/public/sfx içine ekleyin.'

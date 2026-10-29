@@ -1,4 +1,9 @@
 #!/bin/zsh
+# Model ayarları: dosya önce, çağrı ortamı öncelikli.
+typeset -A _model_ortam
+for _ad in ${(k)parameters[(I)(CODEX_*|GEMINI_*|YEREL_*)]}; do _model_ortam[$_ad]=${(P)_ad}; done
+[[ -f "$HOME/.config/kurgu-sistemi/modeller.env" ]] && source "$HOME/.config/kurgu-sistemi/modeller.env"
+for _ad in ${(k)_model_ortam}; do typeset -g "$_ad=${_model_ortam[$_ad]}"; done
 # codex-img çıktı.png "prompt" [-r referans.png]  — Yeni Beyin tarifine göre yeniden kuruldu (2026-10-17).
 # 6-sol düşük seviye (2026-10-21 ölçüm: 6-luna 3/3 denemede görsel üretemedi, kaldırıldı). Tek üretim, kendi kendine tekrar yok.
 emulate -L zsh
@@ -25,7 +30,8 @@ talimat="Görsel üretim aracını kullanarak YALNIZCA BİR KEZ görsel üret ve
 
 log="$HOME/.codex/codex-run-kullanim.csv"
 [[ -f "$log" ]] || print 'zaman,tur,model,efor,sure_sn,sonuc' > "$log"
-for model in gpt-6-sol; do
+model_hatasi_sayisi=0
+for model in ${=CODEX_IMG_MODEL:-gpt-6-sol}; do
   err=$(mktemp -t codex-img-err)
   bas=$SECONDS
   codex exec -m "$model" -c 'model_reasoning_effort="low"' -s workspace-write -C "${cikti:h}" --skip-git-repo-check \
@@ -38,6 +44,13 @@ for model in gpt-6-sol; do
     print "$(date '+%Y-%m-%d %H:%M:%S'),img,$model,low,$sure,limit" >> "$log"; rm -f "$err"
     print -u2 "codex-img: kota/limit doldu"; exit 3
   fi
+  grep -qiE "model.*(not found|unsupported|unavailable|does not exist|bulunamadı|desteklenmiyor)|unknown model" "$err" && ((model_hatasi_sayisi++))
   print "$(date '+%Y-%m-%d %H:%M:%S'),img,$model,low,$sure,gorsel-yok" >> "$log"; rm -f "$err"
 done
+img_zincir=(${=CODEX_IMG_MODEL:-gpt-6-sol})
+if (( model_hatasi_sayisi == ${#img_zincir} )); then
+  print -u2 'codex-img: model bulunamadı; Codex varsayılan modeli son kez deneniyor.'
+  codex exec -c 'model_reasoning_effort="low"' -s workspace-write -C "${cikti:h}" --skip-git-repo-check $ref -- "$talimat" >/dev/null 2>&1 </dev/null
+  [[ -s "$cikti" ]] && { print "$cikti"; exit 0; }
+fi
 print -u2 "codex-img: görsel üretilemedi"; exit 1

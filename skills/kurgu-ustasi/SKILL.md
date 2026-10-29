@@ -10,7 +10,7 @@ description: 'Her video kurgu işinde (Nexus veya müşteri, yatay veya dikey) k
 
 **ÇEKİM KONTROLÜ:** Kurgu planından önce aktarılan çekim klasöründe `cekim-kontrol <klasör>` çalıştır (salt okunur; ffmpeg ile codec/fps tutarlılığı, ses kırpılma/sessiz kanal, siyah/donmuş kare, pozlama; rapor `<klasör>/cekim-kontrol.md`). Görsel değerlendirme gerekirse `--gemini` (kotalı). Rapordaki ❌/⚠️ ve "Kurguda dikkat" maddelerini plana kat.
 
-**ÖĞRENME DÖNGÜSÜ:** Kurgu planından önce `$HOME/Documents/Yeni Beyin/wiki/kavramlar/Kurgu Dersleri.md` sayfasını oku (kullanıcının geçmiş düzeltmeleri ve zevki — rehberden önceliklidir). Kullanıcı bir kurguya not/düzeltme verince, işi bitirdikten sonra notu o sayfaya tarihli ve 'not → kural' biçiminde ekle.
+**ÖĞRENME DÖNGÜSÜ:** Kurgu planından önce ve yeni ders eklerken aynı kaynağı kullan: önce `KURGU_DERSLERI` ortam değişkeninin gösterdiği dosya; yoksa ve varsa `$HOME/Documents/Yeni Beyin/wiki/kavramlar/Kurgu Dersleri.md`; o da yoksa deponun `docs/Kurgu Dersleri.md` dosyası. Depo kökünü `KURGU_SISTEMI_KOK` ile veya bu skill'in sembolik bağını gerçek yola çözerek bul (`realpath skills/kurgu-ustasi/SKILL.md` yolundan iki üst dizin). Notu tarihli “not → kural” biçiminde seçilen dosyaya ekle.
 
 **İŞ KLASÖRÜ:** Müşteri/iş kurgusuna başlamadan `~/Movies/Isler/<tarih>_<musteri>_<is>/` içindeki `00-brief/brief.md` ve `05-revizyon/revizyonlar.md` okunur (klasör yoksa `yeni-is "<müşteri>" "<iş>" [--format 9x16|16x9|ikisi]` ile açılır; `.fcproj` → `04-kurgu/`).
 **MÜŞTERİ NOTLARI:** Müşteriye özel beğeni/itirazlar `Kurgu Dersleri.md` → "Müşteriye özel" bölümüne müşteri adıyla, tarihli işlenir.

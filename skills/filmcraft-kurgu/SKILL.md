@@ -12,6 +12,10 @@ description: "Video kurgu, kesme, renk, ses, altyazı, grafik veya FilmCraft ge�
 
 Gemini, `gemini-run video -d klasör` ile ham çekimi izler ve en iyi anları zaman kodlarıyla verir. Claude kurgu planını yapar. FilmCraft kesme, renk, ses, altyazı ve basit grafikleri işler. Remotion, `src/Reels07.tsx` ev stili ve `src/marka.ts` ile marka grafikleri, kelime kelime altyazı ve logo açılışını üretir. Son ürün `cikti/` klasörüne gider.
 
+## Remotion proje yolu
+
+Önce `REMOTION_PROJE` ortam değişkenini kullan. Yoksa ve mevcutsa sahibin `$HOME/Desktop/02 Projeler/Nexus Video` klasörünü kullan. O da yoksa `KURGU_SISTEMI_KOK/remotion` veya bu skill sembolik bağının gerçek yolundan bulunan depo kökündeki `remotion/` klasörünü kullan.
+
 ## Bağlantı
 
 - **Penceresiz:** `.mcp.json` içindeki `filmcraft-headless` (`filmcraft-cli mcp`) otomatik işler için.

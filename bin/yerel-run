@@ -1,4 +1,9 @@
 #!/bin/zsh
+# Model ayarları: dosya önce, çağrı ortamı öncelikli.
+typeset -A _model_ortam
+for _ad in ${(k)parameters[(I)(CODEX_*|GEMINI_*|YEREL_*)]}; do _model_ortam[$_ad]=${(P)_ad}; done
+[[ -f "$HOME/.config/kurgu-sistemi/modeller.env" ]] && source "$HOME/.config/kurgu-sistemi/modeller.env"
+for _ad in ${(k)_model_ortam}; do typeset -g "$_ad=${_model_ortam[$_ad]}"; done
 
 setopt pipefail
 
@@ -70,6 +75,9 @@ case "$tur" in
     exit 2
     ;;
 esac
+
+ayar="YEREL_MODEL_${(U)tur}"
+model=${(P)ayar:-$model}
 
 if (( $# > 0 )); then
   if (( $# == 2 )) && [[ "$1" == '-m' ]] && [[ -n "$2" ]]; then

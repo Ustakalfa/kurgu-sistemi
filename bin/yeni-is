@@ -80,7 +80,9 @@ cat > "$is_klasoru/notlar.md" <<EOF
 Beyin kaydı: [[$musteri — $is_adi]]
 EOF
 
-if [[ -e $proje_sayfasi ]]; then
+if [[ ! -d $wiki ]]; then
+  print "Beyin wiki klasörü yok; kayıt atlandı, yalnız iş klasörü oluşturuldu."
+elif [[ -e $proje_sayfasi ]]; then
   print -u2 -- "Uyarı: Beyin kaydı mevcut, atlandı: $proje_sayfasi"
 else
   mkdir -p -- "$wiki/projeler"
@@ -115,6 +117,7 @@ Kısa giriş: [[Nexus Studio CS]] için [[$musteri]] video işi. Format: $format
 EOF
 fi
 
+if [[ -d $wiki ]]; then
 mevcut_musteri=$(find "$wiki" -type f -iname "$musteri.md" -print -quit 2>/dev/null || true)
 if [[ -n $mevcut_musteri ]]; then
   print -- "müşteri sayfası mevcut: $mevcut_musteri"
@@ -154,7 +157,10 @@ else
   print -r -- "$is_klasoru"
   find "$is_klasoru" -mindepth 1 -print | sort | sed "s#^$is_klasoru/#  #"
 fi
-print '\nWiki sayfaları:'; print -r -- "$proje_sayfasi"
+fi
+print '\nWiki sayfaları:'; if [[ -d $wiki ]]; then
+print -r -- "$proje_sayfasi"
 if [[ -n ${musteri_sayfasi:-} ]]; then print -r -- "$musteri_sayfasi"
 else print -r -- "$mevcut_musteri"; fi
+fi
 print '\nHatırlatma: index.md/log.md güncellemesini Claude yapar.'
