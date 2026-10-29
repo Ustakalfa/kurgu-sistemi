@@ -4,7 +4,7 @@ If a user gives you this repository and asks you to install it, follow the steps
 
 ## Ajan adımları
 
-1. Depoyu nereye klonlayacağınızı kullanıcıya sorun; yanıt yoksa `~/kurgu-sistemi` önerin. `git clone --recursive <DEPO-URL-SI> ~/kurgu-sistemi` kullanın.
+1. Depoyu nereye klonlayacağınızı kullanıcıya sorun; yanıt yoksa `~/kurgu-sistemi` önerin. `git clone --recursive https://github.com/Ustakalfa/kurgu-sistemi.git ~/kurgu-sistemi` kullanın.
 2. Depoda `./kurulum.sh --kuru` çalıştırın. Planlanan işlemleri ve eksikleri kullanıcıya özetleyin.
 3. `~/.claude/skills`, `~/.local/bin`, `~/.config/kurgu-sistemi` ve Claude MCP kayıtları gibi genel değişiklikler için kullanıcının açık onayını alın. Onaydan sonra `./kurulum.sh --hepsi --evet` çalıştırın.
 4. `./dogrula.sh` çalıştırın; hata varsa düzeltip yeniden doğrulayın.

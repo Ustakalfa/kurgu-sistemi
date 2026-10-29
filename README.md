@@ -46,14 +46,14 @@ Yalnız macOS (Apple Silicon’da test edildi).
 Claude Code ile kurulum: deponun linkini Claude’a verip “[KURULUM-CLAUDE.md](KURULUM-CLAUDE.md)’ye göre kur” deyin.
 
 ```sh
-git clone --recursive <DEPO-URL-SI> ~/kurgu-sistemi
+git clone --recursive https://github.com/Ustakalfa/kurgu-sistemi.git ~/kurgu-sistemi
 cd ~/kurgu-sistemi
 ./kurulum.sh --kuru
 ./kurulum.sh --hepsi --evet
 ./dogrula.sh
 ```
 
-`<DEPO-URL-SI>` yer tutucudur; gerçek genel URL bu çalışma ağacında doğrulanmadı. FilmCraft canlı köprüsü:
+`https://github.com/Ustakalfa/kurgu-sistemi.git` yer tutucudur; gerçek genel URL bu çalışma ağacında doğrulanmadı. FilmCraft canlı köprüsü:
 
 ```sh
 open -a FilmCraft --args --control 9876

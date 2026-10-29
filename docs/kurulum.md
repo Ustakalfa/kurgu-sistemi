@@ -26,12 +26,12 @@ brew --version
 
 
 ```sh
-git clone --recursive <DEPO-URL-SI> ~/kurgu-sistemi
+git clone --recursive https://github.com/Ustakalfa/kurgu-sistemi.git ~/kurgu-sistemi
 cd ~/kurgu-sistemi
 ```
 
 
-`<DEPO-URL-SI>` yer tutucudur; gerçek genel depo adresi bu çalışma ağacında doğrulanmadı. Sonradan eksik alt modül için:
+`https://github.com/Ustakalfa/kurgu-sistemi.git` yer tutucudur; gerçek genel depo adresi bu çalışma ağacında doğrulanmadı. Sonradan eksik alt modül için:
 
 
 ```sh
