@@ -1,0 +1,18 @@
+[submodule "vendor/avenoxskills"]
+	path = vendor/avenoxskills
+	url = https://github.com/avenoxai/avenoxskills.git
+[submodule "vendor/herk-edit-kit"]
+	path = vendor/herk-edit-kit
+	url = https://github.com/nateherkai/herk-edit-kit.git
+[submodule "vendor/hyperframes"]
+	path = vendor/hyperframes
+	url = https://github.com/heygen-com/hyperframes.git
+[submodule "vendor/remotion-skills"]
+	path = vendor/remotion-skills
+	url = https://github.com/remotion-dev/skills.git
+[submodule "vendor/done-is-a-claim"]
+	path = vendor/done-is-a-claim
+	url = https://github.com/Grit-77/done-is-a-claim.git
+[submodule "vendor/sessizkes"]
+	path = vendor/sessizkes
+	url = https://github.com/avenoxai/sessizkes.git
