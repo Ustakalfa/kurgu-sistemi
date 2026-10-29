@@ -1,5 +1,11 @@
 # Ekip Düzeni
 
+## Genel Claude kuralı ve kurgu-ekip
+
+[Claude kural bloğu](../claude/CLAUDE.kurgu.md), Claude'u plan, karar ve denetimden sorumlu ana beyin olarak tanımlar. Claude FilmCraft MCP ile canlı kurgu ve renk düzenlemesini bizzat yürütür. Codex Remotion kodu, betik, toplu iş, belge ve görsel üretir; yalnız verilmiş penceresiz FilmCraft adım dosyasını yürütebilir. Gemini videoyu izleyip zaman kodlu bulgu sağlar; yerel model dökümü temizler. [kurgu-ekip skill'i](../skills/kurgu-ekip/SKILL.md) iş devri, model seçimi ve sonuç denetimini ayrıntılandırır.
+
+`./kurulum.sh --claude-md`, işaretli bloğu kullanıcının `~/.claude/CLAUDE.md` dosyasına ekler veya günceller; diğer içeriği korur ve değişiklik öncesi yedek alır. `./kurulum.sh --claude-md-kaldir` yalnız bu bloğu kaldırır. `--kuru` ile hedef farkı önce görülebilir; `--hepsi` eklemeyi de seçer. `--hooks`, hookify kuruluysa depo içindeki yerel kuralı bağlar.
+
 ## Kaptan/işçi modeli
 
 Kaptan işi parçalara ayırır, kaynakları korur, kalite kapılarını izler ve kullanıcıdan onay alır. İşçi yalnız verilen kapsamda araştırır veya üretir; sonucu kanıtıyla döndürür. Aynı dosyada eşzamanlı yazma yapılmaz. Ham medya, nihai teslim ve ortak bilgi tabanı için tek sahip belirlenir.

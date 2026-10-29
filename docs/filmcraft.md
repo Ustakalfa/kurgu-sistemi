@@ -20,8 +20,7 @@ Canlı mod görsel uygulama durumuyla çalışmak; başsız mod otomasyon ve tem
 
 ## Tick ve zaman takma adları
 
-FilmCraft komutları zamanı çoğunlukla `ticks`, `frame`, `seconds` veya `timecode` alanlarından biriyle kabul eder. Tick sabitinin sayısal değeri bu depodaki başvuru dosyasında doğrulanmadı; tahmin etmeyin. Okunabilirlik için saniye veya kare kullanın, dönen proje durumundaki tick'i aynen koruyun.
-
+`timeline.razor` komut tanımında `time` tick (254016000000 tick/sn) ister; FilmCraft MCP sunucusu ve CLI komut çağrıları `seconds`, `frame` veya `timecode` takma adlarını da kabul eder. Diğer komutların zaman alanlarını kendi tanımlarından kontrol edin; dönen proje durumundaki tick değerini aynen koruyun.
 ```json
 {"timecode":"00:00:05:00"}
 {"seconds":5}
@@ -53,7 +52,7 @@ FilmCraft komutları zamanı çoğunlukla `ticks`, `frame`, `seconds` veya `time
 | yerleştirme | `timeline.place` | `item/items,track,audioTrack,time,insert,sourceIn,duration,video,audio` |
 | seçim | `timeline.select` | `clips,transitions,add,toggle,linked` |
 | taşıma | `timeline.move` | `moves,insert,linked,copy` |
-| kesme | `timeline.razor` | `time,track,clip` |
+| kesme | `timeline.razor` | `time (tick); MCP/CLI: seconds/frame/timecode, track, clip` |
 | kırpma | `timeline.trim` | `clip,edge,mode,delta/deltaFrames` |
 | roll | `timeline.roll` | `left,right,delta/deltaFrames,followLinks` |
 | slip | `timeline.slip` | `clip,delta/deltaFrames` |
@@ -111,11 +110,13 @@ FPS kaynağa/teslim şartına göre seçilir; örnek değer zorunlu değildir. S
 4. Pozlama, sıcaklık ve tint ile nötr başlangıç kurun.
 5. Ten tonunu vectorscope ten çizgisi çevresinde doğal tutun.
 6. Parlak alanları bastırın; gölgede ayrıntıyı koruyun.
-7. Referans planı seçip benzer planlara `applyMatch` uygulayın.
+7. Referans planı seçip benzer planlara `lumetri.applyMatch` uygulayın.
 8. Her eşleşmeyi yeniden ölçün; otomatik eşleşmeyi nihai kabul etmeyin.
 9. Yaratıcı look'u teknik düzeltmenin üzerine ekleyin.
-10. Aynı zaman noktasını düzeltme kapalı/açık `render_frame` ile alın.
+10. Aynı zaman noktasını düzeltme kapalı/açık FilmCraft MCP aracı `render_frame` ile alın.
 11. Farklı ekran ve tam oynatmada banding, gürültü ve ten kontrolü yapın.
+
+`render_frame`, `filmcraft-cli commands` listesindeki bir komut değil, FilmCraft MCP sunucusunun kare denetim aracıdır. Claude canlı FilmCraft MCP üzerinden kurgu ve renk kararlarını uygular; Codex yalnız verilen penceresiz adım dosyasını çalıştırabilir.
 
 ## Teslim kuralı
 

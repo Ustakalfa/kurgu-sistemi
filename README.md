@@ -63,8 +63,20 @@ Yeni iş ve çekim denetimi:
 
 ```sh
 yeni-is "Ornek" "Tanitim" --format 9x16
-cekim-kontrol "$HOME/Movies/Isler/2026-11-03_ornek-kafe_tanitim-reels/01-ham" --hizli
+cekim-kontrol "$HOME/Movies/Isler/<YYYY-AA-GG>_ornek_tanitim/01-ham" --hizli
 ```
+
+## Nasıl çalışır: Claude kaptan, Codex işçi, Gemini göz
+
+1. Claude briefi okur, planı kurar, karar verir ve kalite kapılarını denetler.
+2. Gemini (`gemini-run video`) ham videoyu izler; klip ve zaman kodlu bulguları Claude'a verir.
+3. Codex Remotion kodu, betik, toplu iş, belge ve görsel üretir; gerektiğinde verilen penceresiz FilmCraft adım dosyasını yürütür.
+4. Yerel model (`yerel-run`) dökümü temizler ve yardımcı etiketler üretir; sonucu Claude denetler.
+5. Claude FilmCraft MCP ile kurgu ve renk düzenlemesini bizzat yürütür; kritik kareleri MCP aracı `render_frame` ile kontrol eder.
+6. Sekans baştan 4K kurulur; her videoda renk yapılır ve `.fcproj` dosyası `04-kurgu/` altında kaydedilir.
+7. Kullanıcı açıkça “al” demeden export yapılmaz; onaylı 4K çıktı `06-teslim/` içine alınır.
+
+Bu düzenin tam metni [Claude kural bloğunda](claude/CLAUDE.kurgu.md), devir ayrıntıları [kurgu-ekip skill'inde](skills/kurgu-ekip/SKILL.md) bulunur. `./kurulum.sh --claude-md` bloğu `~/.claude/CLAUDE.md` içine ekler veya günceller; `--claude-md-kaldir` yalnız işaretli bloğu kaldırır; `--hooks` kurulu hookify eklentisi varsa yerel video hattı kuralını bağlar. [Denetim raporu](docs/denetim-raporu.md) düzeltmelerin kaydını tutar.
 
 ## Model ayarı
 

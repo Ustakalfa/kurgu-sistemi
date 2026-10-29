@@ -1,17 +1,20 @@
-# Video üretim kuralları
+# Kurgu sistemi kuralları
 
-## 20–21 Ekim 2026 — Sorumluluk ve akış
+Kaynak: kişisel çalışma notlarının müşteri ve hesap bilgisi çıkarılmış taşınabilir özeti. Tarihler, kararların notlara işlendiği günlerdir.
 
-Kullanıcı bütün Reels ve normal videoların kurgusunu Claude'a verdi. Gerekçe: mevcut `remotion/` ev stili atlanınca sonuç beklentiyi karşılamadı. Claude Opus plan ve denetimden, Codex uygulamadan sorumludur. Gemini ham videoyu izleyip en iyi anları ve zaman kodlarını çıkarır; yerel Ollama döküm temizleme gibi yardımcı işleri yapar. Kullanıcı çekimi kendisi aktarır; otomatik aktarım kurulmaz. Önce deponun `remotion/` hattı, `src/Reels07.tsx`, `src/marka.ts` ve ses kataloğu kullanılır. Kurgu FilmCraft 0.10.0 üzerinden yürür.
-
-## 21 Ekim 2026 — Teslim
-
-Kurgu tamamlanınca FilmCraft `.fcproj` dosyası kaydedilir ve kullanıcıya kontrol için gösterilir. Kullanıcı “al” veya “oldu, sen al” demedikçe export yapılmaz. Gerekçe: son kalite ve teslim kararı kullanıcıdadır; erken export zaman ve hata riskidir. Doğrulamada tam export yerine kare renderı kullanılır.
-
-## 28 Ekim 2026 — 4K
-
-Her video çıktısı 4K olur: dikey 2160×3840, yatay 3840×2160. HD render yapılmaz; sekans baştan 4K kurulur. Gerekçe: HD kalite beklentisini karşılamaz. Yatay 4K kaynaktan dikey kırpmanın doğal genişliği yaklaşık 1215 piksel olduğundan büyütme gereksinimi kullanıcıya açıkça söylenir. Kapaklar da en az 2160×3840 hazırlanır.
-
-## 28 Ekim 2026 — Zorunlu renk
-
-Her klip teslimden önce renk düzenlemesinden geçer. S-Log3 ise Sony resmî LUT uygulanır. Scopes ile waveform, parade ve vektörskop ölçülerek pozlama, beyaz denge ve ten rengi düzeltilir. Dikkat dağıtan parlak alanlar bastırılır; farklı çekimler `lumetri.applyMatch` ile eşleştirilir. En son hafif marka look'u uygulanır; önce/sonra kareleri kontrol edilir ve gösterilir. 8 bit kaynakta sert grade yapılmaz. Gerekçe: düzeltilmemiş ham kayıt profesyonel görünmez. Bu işlem export onayı yerine geçmez.
+| Tarih | Kural | Neden | Nasıl uygulanır | Nerede uygulanır |
+| --- | --- | --- | --- | --- |
+| 2026-10-19 | Claude kaptan, Codex işçi | Yaratıcı karar ile uygulama ayrılır | Claude brief ve denetim yapar; uygulamayı `codex-run` ile devreder | Genel blok, `kurgu-ekip` skill'i |
+| 2026-10-19 | İşçi sonucu kendiliğinden gösterilir | Kullanıcı durumu sormak zorunda kalmasın | Tek `run_in_background`, bitiş bildirimi, çıktı denetimi; ara yoklama yok | Genel blok, `kurgu-ekip` |
+| 2026-10-20 | Kota korunur | Gereksiz yoklama ve yinelenen okuma maliyetlidir | Büyük işten önce `limit`; küçük işleri tek brief; uzun sohbeti taşı | Genel blok, `kurgu-ekip` |
+| 2026-10-21 | Gemini her videoyu izler | Kurgu kararı gerçek ham görüntüye dayanır | `gemini-run video -d <klasör>` ile zaman kodlu analiz | Genel blok, `kurgu-ustasi`, `kurgu-ekip` |
+| 2026-10-21 | Yerel model yalnız yardımcı metin işler | Yaratıcı Türkçe ve özet güvenilirliği sınırlıdır | `yerel-run` sonucu denetlenir; müşteri metni yazdırılmaz | Genel blok, `kurgu-ekip` |
+| 2026-10-21 | Mevcut görsel hat korunur | Yeniden tasarım ev stilini bozabilir | Mevcut Remotion bileşenleri ve marka varlıkları kullanılır; ffmpeg yardımcıdır | Genel blok, `filmcraft-kurgu` |
+| 2026-10-21 | Kurgu bitince export yok | Son kontrol ve teslim kararı kullanıcıdadır | `.fcproj` kaydet, açık bırak, liste ver; “al” ile export | Genel blok, kurgu skill'leri |
+| 2026-10-21 | Dış paylaşım açık onay ister | Yayın kararı kullanıcıdadır | Gönderi/yayın öncesinde onayı al | Genel blok |
+| 2026-10-21 | Görsel tek üretimdir | Yinelenen üretim kota tüketir | `codex-img` bir kez; varyantlar yerelde; kodla logo çizme | Genel blok, `kurgu-ekip` |
+| 2026-10-21 | Eklenti sade tutulur | Gereksiz eklenti bağlam yükler | API anahtarı isteyen araç kurma/önerme | Genel blok |
+| 2026-10-27 | Prompt kabuk ikamesinden korunur | Ters tırnak ve `$(...)` yol/metin silebilir | Brief dosyası ve `"$(cat brief.md)"`; boş yol kontrolü | Genel blok, `kurgu-ekip` |
+| 2026-10-28 | Her video baştan 4K | HD kalite beklentisini karşılamaz | Dikey 2160×3840, yatay 3840×2160; Remotion `--scale=2` | Genel blok, kurgu skill'leri |
+| 2026-10-28 | Her video renk düzenlemesinden geçer | Ham çekimler tutarsız ve dikkat dağıtıcı olabilir | LUT, scopes, pozlama/beyaz denge/ten, eşleme, hafif look, önce/sonra | Genel blok, kurgu skill'leri |
+| 2026-10-29 | Çekimi kullanıcı aktarır | İş hattının başlangıcı aktarılan klasördür | Klasörü kullanıcıdan alıp kontrol ve analize geç | Genel blok, `kurgu-ustasi` |

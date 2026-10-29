@@ -144,10 +144,15 @@ Doğrulanmış Node sürümleri için `remotion/NODE_SURUMU.md` dosyasına bakı
 | `--bin` | `bin/*` araçlarını `~/.local/bin/` altına sembolik bağlar |
 | `--mcp` | canlı ve başsız FilmCraft MCP kayıtlarını ekler |
 | `--remotion` | `remotion/` içinde `npm ci` çalıştırır |
+| `--claude-md` | `claude/CLAUDE.kurgu.md` işaretli bloğunu `~/.claude/CLAUDE.md` içine ekler veya günceller; diğer içeriği korur ve değişiklikte yedek alır |
+| `--claude-md-kaldir` | yalnız işaretli kurgu bloğunu kaldırır; `--claude-md` ile birlikte kullanılamaz |
+| `--hooks` | hookify kuruluysa `hooks/hookify.video-hatti.local.md` dosyasını proje `.claude/` dizinine bağlar; kurulu değilse bilgi verir |
 | `--evet` | Genel değişiklikler için onay sorusunu atlar |
-| `--hepsi` | yukarıdaki beş kurulum bölümünün tümünü seçer |
+| `--hepsi` | bağımlılıklar, skills, bin, mcp, remotion, Claude bloğu ve hooks bölümlerini seçer; kaldırmayı seçmez |
 
-Seçeneksiz çağrı kullanım metniyle çıkar. Var olan hedef farklıysa betik onu `.yedek-YYYYMMDD-HHMMSS` sonekli ada taşır ve yeni sembolik bağ kurar.
+Seçeneksiz çağrı kullanım metniyle çıkar. `--kuru` ile Claude bloğunun önerilen farkı gösterilir. `--claude-md-kaldir` yalnız işaretli bloğu çıkarır; var olan diğer Claude kuralları korunur.
+
+Var olan hedef farklıysa betik onu `.yedek-YYYYMMDD-HHMMSS` sonekli ada taşır ve yeni sembolik bağ kurar.
 
 ## Doğrulama
 

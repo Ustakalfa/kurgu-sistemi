@@ -10,9 +10,9 @@ Sistem dört katmandır: `bin/` orkestrasyonu, FilmCraft zaman çizelgesi, `remo
 
 | Rol | Yapar | Yapmaz | Çağrı |
 |---|---|---|---|
-| Claude | Kaptanlık, plan ve MCP denetimi | Onaysız teslim kararı | Claude Code; FilmCraft MCP |
-| Codex | Kod, belge, denetim | Ham medyayı keyfî değiştirmez | codex-run orta "talimat" |
-| Gemini/agy | Video inceleme, uzun bağlam | Yerel ölçümü kesin gerçek saymaz | gemini-run video "talimat" -d "$HOME/Movies/Isler/2026-11-03_ornek-kafe_tanitim-reels/01-ham" |
+| Claude | Kaptanlık, plan, karar, denetim; FilmCraft MCP ile kurgu ve renk | Onaysız teslim kararı | Claude Code; FilmCraft MCP |
+| Codex | Remotion kodu, betik, toplu iş, belge, görsel; verilen penceresiz FilmCraft adım dosyası | Ham medyayı keyfî değiştirmez | codex-run orta "talimat" |
+| Gemini/agy | Video inceleme, uzun bağlam | Yerel ölçümü kesin gerçek saymaz | gemini-run video "talimat" -d "$HOME/Movies/Isler/<YYYY-AA-GG>_ornek-kafe_tanitim-reels/01-ham" |
 | Ollama | Yerel temizleme, etiket, özet, çeviri | Zaman çizelgesine dokunmaz | yerel-run temizle - |
 | FilmCraft | Kurgu, ses, altyazı, renk, proje | Marka animasyonunun kod tabanını üretmez | FilmCraft MCP |
 | Remotion | Tekrarlanabilir grafik, SFX, marka | Ana kurgu kararını vermez | cd remotion && npm run studio |
@@ -39,7 +39,7 @@ Sistem dört katmandır: `bin/` orkestrasyonu, FilmCraft zaman çizelgesi, `remo
 
 - Girdi: 01-ham/.
 - Çıktı/yol: cekim-kontrol.md.
-- Komut/yöntem: `cekim-kontrol "$HOME/Movies/Isler/2026-11-03_ornek-kafe_tanitim-reels/01-ham" --hizli`.
+- Komut/yöntem: `cekim-kontrol "$HOME/Movies/Isler/<YYYY-AA-GG>_ornek-kafe_tanitim-reels/01-ham" --hizli`.
 - Kalite kapısı: codec, fps, ses ve pozlama bulguları incelendi.
 - Geri dönüş: kapı geçmezse sonraki aşamaya geçilmez; bulgu kaynağa bağlı not edilir.
 
@@ -47,7 +47,7 @@ Sistem dört katmandır: `bin/` orkestrasyonu, FilmCraft zaman çizelgesi, `remo
 
 - Girdi: ham klipler ve teknik rapor.
 - Çıktı/yol: zaman kodlu görsel notlar.
-- Komut/yöntem: `gemini-run video "Klipleri zaman kodlarıyla değerlendir" -d "$HOME/Movies/Isler/2026-11-03_ornek-kafe_tanitim-reels/01-ham"`.
+- Komut/yöntem: `gemini-run video "Klipleri zaman kodlarıyla değerlendir" -d "$HOME/Movies/Isler/<YYYY-AA-GG>_ornek-kafe_tanitim-reels/01-ham"`.
 - Kalite kapısı: her iddia klip ve zaman koduna bağlı.
 - Geri dönüş: kapı geçmezse sonraki aşamaya geçilmez; bulgu kaynağa bağlı not edilir.
 
@@ -63,7 +63,7 @@ Sistem dört katmandır: `bin/` orkestrasyonu, FilmCraft zaman çizelgesi, `remo
 
 - Girdi: plan ve medya.
 - Çıktı/yol: FilmCraft zaman çizelgesi.
-- Komut/yöntem: `MCP ile import/place/razor/trim`.
+- Komut/yöntem: `Claude, FilmCraft MCP ile import/place/razor/trim`.
 - Kalite kapısı: öykü anlaşılır; boş kare ve sert konuşma kesiği yok.
 - Geri dönüş: kapı geçmezse sonraki aşamaya geçilmez; bulgu kaynağa bağlı not edilir.
 
@@ -87,7 +87,7 @@ Sistem dört katmandır: `bin/` orkestrasyonu, FilmCraft zaman çizelgesi, `remo
 
 - Girdi: Log/normal kaynak ve kilitli kurgu.
 - Çıktı/yol: ölçülmüş, eşleşmiş görüntü.
-- Komut/yöntem: `LUT → scopes.read → birincil düzeltme → ten → parlak alan → applyMatch → look → render_frame`.
+- Komut/yöntem: `LUT → scopes.read → birincil düzeltme → ten → parlak alan → lumetri.applyMatch → look → FilmCraft MCP aracı render_frame`.
 - Kalite kapısı: LUT tek başına yeterli sayılmadı; scope ve göz kontrolü geçti.
 - Geri dönüş: kapı geçmezse sonraki aşamaya geçilmez; bulgu kaynağa bağlı not edilir.
 
@@ -131,9 +131,11 @@ Sistem dört katmandır: `bin/` orkestrasyonu, FilmCraft zaman çizelgesi, `remo
 4. Pozlama ve beyaz dengesini birincil kontrollerle düzelt.
 5. Ten tonunu ten çizgisine yaklaştır; doğal varyasyonu koru.
 6. Parlak alanları bastır; gölgeleri ezmeden siyah noktasını kur.
-7. Benzer planları `applyMatch` ile yaklaştır ve yeniden ölç.
+7. Benzer planları `lumetri.applyMatch` ile yaklaştır ve yeniden ölç.
 8. Teknik eşleşmeden sonra yaratıcı look ekle.
-9. `render_frame` ile aynı karenin önce/sonra çıktısını karşılaştır.
+9. FilmCraft MCP aracı `render_frame` ile aynı karenin önce/sonra çıktısını karşılaştır.
+
+`timeline.razor` komut tanımında `time` tick (254016000000 tick/sn) ister; FilmCraft MCP sunucusu ve CLI komut çağrıları `seconds`, `frame` veya `timecode` takma adlarını da kabul eder.
 
 ## Ayrıntılı akış şeması
 
@@ -174,7 +176,7 @@ flowchart TD
 ## İş klasörü ağacı
 
 ```text
-$HOME/Movies/Isler/2026-11-03_ornek-kafe_tanitim-reels/
+$HOME/Movies/Isler/<YYYY-AA-GG>_ornek-kafe_tanitim-reels/
 ├── 00-brief/       # brief, plan ve onay
 ├── 01-ham/         # değiştirilmeyen kamera/ses
 ├── 02-ses-muzik/   # müzik, ortam, SFX ve seslendirme

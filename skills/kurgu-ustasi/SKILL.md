@@ -1,7 +1,10 @@
 ---
 name: kurgu-ustasi
-description: 'Her video kurgu işinde (Nexus veya müşteri, yatay veya dikey) kurgu planı yapmadan önce kullan.'
+description: 'Her video kurgu işinde (kişisel veya müşteri, yatay veya dikey) kurgu planı yapmadan önce kullan.'
 ---
+
+> **ZORUNLU KURALLAR:** Sekans baştan 4K (dikey 2160×3840, yatay 3840×2160); HD render yok, Remotion renderında `--scale=2`. Her videoda ölçümlü renk düzenleme ve önce/sonra kontrolü. Kurgu bitince export yok: `.fcproj` kaydet, FilmCraft'ta açık bırak, kullanıcı kontrol listesi ver; 4K export yalnız “al” onayından sonra. Ham video izleme her zaman Gemini (`gemini-run video`). Uygulama işlerini `kurgu-ekip` skill'iyle Codex'e devret; canlı FilmCraft MCP'yi Claude yönetir.
+
 
 # Kurgu ustası
 
@@ -13,13 +16,13 @@ description: 'Her video kurgu işinde (Nexus veya müşteri, yatay veya dikey) k
 **ÖĞRENME DÖNGÜSÜ:** Kurgu planından önce ve yeni ders eklerken aynı kaynağı kullan: önce `KURGU_DERSLERI` ortam değişkeninin gösterdiği dosya; yoksa ve varsa `$HOME/Documents/Yeni Beyin/wiki/kavramlar/Kurgu Dersleri.md`; o da yoksa deponun `docs/Kurgu Dersleri.md` dosyası. Depo kökünü `KURGU_SISTEMI_KOK` ile veya bu skill'in sembolik bağını gerçek yola çözerek bul (`realpath skills/kurgu-ustasi/SKILL.md` yolundan iki üst dizin). Notu tarihli “not → kural” biçiminde seçilen dosyaya ekle.
 
 **İŞ KLASÖRÜ:** Müşteri/iş kurgusuna başlamadan `~/Movies/Isler/<tarih>_<musteri>_<is>/` içindeki `00-brief/brief.md` ve `05-revizyon/revizyonlar.md` okunur (klasör yoksa `yeni-is "<müşteri>" "<iş>" [--format 9x16|16x9|ikisi]` ile açılır; `.fcproj` → `04-kurgu/`).
-**MÜŞTERİ NOTLARI:** Müşteriye özel beğeni/itirazlar `Kurgu Dersleri.md` → "Müşteriye özel" bölümüne müşteri adıyla, tarihli işlenir.
+**MÜŞTERİ NOTLARI:** Müşteriye özel beğeni/itirazlar özel alanda tutulur; herkese açık `Kurgu Dersleri.md` dosyasına yalnız kişisel bilgisi çıkarılmış tarihli genel ders yazılır.
 
 Detay ve kaynaklar: `wiki/kavramlar/Kurgu Ustalığı Rehberi.md`.
 
 ## İşe başlamadan sor
 
-Format/oran (9:16 mı 16:9 mu), platform, hedef süre, amaç/tek mesaj, kitle, marka sesi ve CTA nedir? Ham görüntü, röportaj, müzik hakları, rıza ve teslim briefi hazır mı? Nexus işi mi, müşteri/ayrı marka mı? Kişisel içerikte samimi ve doğrudan; B2B'de ölçülü; Ayrı markalarda briefteki tonu, doğrulanmış kaynakları ve ayrı kimliği koru.
+Format/oran (9:16 mı 16:9 mu), platform, hedef süre, amaç/tek mesaj, kitle, marka sesi ve CTA nedir? Ham görüntü, röportaj, müzik hakları, rıza ve teslim briefi hazır mı? Kişisel iş mi, müşteri/ayrı marka mı? Kişisel içerikte samimi ve doğrudan; B2B'de ölçülü; Ayrı markalarda briefteki tonu, doğrulanmış kaynakları ve ayrı kimliği koru.
 
 ## Tür reçetesi
 
@@ -43,7 +46,7 @@ Süreyi performans garantisi sayma; brief ve platforma uyarla.
 - Görsel değişimi anlam için yap. Notlardaki 2–3 saniye, 0,3 saniye sessizlik, 10–15 saniye yeniden kanca eşikleri **genel uygulama**; nefes ve sakin anlatı için esnet.
 - Doğru Türkçe altyazı; yüz, yazı ve CTA için arayüz güvenli alanını platform önizlemesinde doğrula.
 - 16:9'dan 9:16'ya kör kırpma yapma; master'ı çoğalt, özneyi yeniden çerçevele. Müzik vuruşu ve tek CTA anlamı desteklesin.
-- Nexus Reels ev stili: Remotion `src/Reels07.tsx` + `src/marka.ts`. Müşteri markasını Nexus görselleriyle karıştırma.
+- Mevcut Reels ev stili: Remotion `src/Reels07.tsx` + `src/marka.ts`. Müşteri markasını başka marka görselleriyle karıştırma.
 
 ## Yatay 16:9 kural kartı
 

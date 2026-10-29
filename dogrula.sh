@@ -31,6 +31,10 @@ while IFS= read -r dosya; do
  [[ -f $dosya ]] || continue
  python3 -m json.tool "$dosya" >/dev/null || ((hata++))
 done < <(liste | grep -E '(^|/)[^/]+\.json$')
+for isaret in '<!-- kurgu-sistemi:basla -->' '<!-- kurgu-sistemi:bitis -->'; do
+ grep -F -x -q -- "$isaret" claude/CLAUDE.kurgu.md || { print "Claude kural işareti eksik: $isaret"; ((hata++)); }
+done
+[[ -f skills/kurgu-ekip/SKILL.md ]] || { print 'kurgu-ekip skill dosyası yok'; ((hata++)); }
 for dosya in skills/*/SKILL.md(N); do
  head -30 "$dosya" | grep -q '^name:' || { print "name eksik: $dosya"; ((hata++)); }
  head -30 "$dosya" | grep -q '^description:' || { print "description eksik: $dosya"; ((hata++)); }

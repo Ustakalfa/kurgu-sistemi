@@ -44,6 +44,8 @@
 | yedek geri gelmedi | `.yedek-* ` hedefi var | bağlantıyı doğrula, doğru zaman damgalı yedeği seç |
 | disk hızla doluyor | proxy/render/model | türetilmişleri ayır; onaylı teslimi koruyarak temizlik planla |
 
+`render_frame` CLI komut listesinde görünmez çünkü FilmCraft MCP aracıdır; Claude MCP üzerinden kareyi denetlemelidir. `timeline.razor` tanımında `time` tick (254016000000 tick/sn) ister; MCP ve CLI komut çağrılarında `seconds`, `frame` veya `timecode` takma adı kabul edilir.
+
 ## Tanı sırası
 
 1. `pwd` ve hedef yolu kontrol edin.

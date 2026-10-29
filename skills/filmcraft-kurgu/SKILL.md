@@ -3,6 +3,9 @@ name: filmcraft-kurgu
 description: "Video kurgu, kesme, renk, ses, altyazı, grafik veya FilmCraft geçen her işte kullan."
 ---
 
+> **ZORUNLU KURALLAR:** Sekans baştan 4K (dikey 2160×3840, yatay 3840×2160); HD render yok, Remotion renderında `--scale=2`. Her videoda ölçümlü renk düzenleme ve önce/sonra kontrolü. Kurgu bitince export yok: `.fcproj` kaydet, FilmCraft'ta açık bırak, kullanıcı kontrol listesi ver; 4K export yalnız “al” onayından sonra. Ham video izleme her zaman Gemini (`gemini-run video`). Uygulama işlerini `kurgu-ekip` skill'iyle Codex'e devret; canlı FilmCraft MCP'yi Claude yönetir.
+
+
 > **TESLİM KURALI (kullanıcı, 2026-10-21):** Kurgu bitince DIŞA AKTARMA YOK. `file.saveAs` ile `.fcproj` kaydet, FilmCraft'ta açık bırak, kullanıcıya kontrol listesi ver. `export.quick` / `export.queue.*` yalnızca kullanıcı "al" derse. Doğrulama için `render_frame` kullan.
 
 
@@ -10,11 +13,11 @@ description: "Video kurgu, kesme, renk, ses, altyazı, grafik veya FilmCraft ge�
 
 ## Ekipteki yer
 
-Gemini, `gemini-run video -d klasör` ile ham çekimi izler ve en iyi anları zaman kodlarıyla verir. Claude kurgu planını yapar. FilmCraft kesme, renk, ses, altyazı ve basit grafikleri işler. Remotion, `src/Reels07.tsx` ev stili ve `src/marka.ts` ile marka grafikleri, kelime kelime altyazı ve logo açılışını üretir. Son ürün `cikti/` klasörüne gider.
+Gemini, `gemini-run video -d klasör` ile ham çekimi izler ve en iyi anları zaman kodlarıyla verir. Claude kurgu planını yapar. FilmCraft kesme, renk, ses, altyazı ve basit grafikleri işler. Remotion, `src/Reels07.tsx` ev stili ve `src/marka.ts` ile marka grafikleri, kelime kelime altyazı ve logo açılışını üretir. Teslim `.fcproj` dosyasıdır; onaydan sonra 4K çıktı alınır.
 
 ## Remotion proje yolu
 
-Önce `REMOTION_PROJE` ortam değişkenini kullan. Yoksa ve mevcutsa sahibin `$HOME/Desktop/02 Projeler/Nexus Video` klasörünü kullan. O da yoksa `KURGU_SISTEMI_KOK/remotion` veya bu skill sembolik bağının gerçek yolundan bulunan depo kökündeki `remotion/` klasörünü kullan.
+Önce `REMOTION_PROJE` ortam değişkenini kullan. Yoksa ve mevcutsa kullanıcının belirlediği mevcut Remotion projesini kullan. O da yoksa `KURGU_SISTEMI_KOK/remotion` veya bu skill sembolik bağının gerçek yolundan bulunan depo kökündeki `remotion/` klasörünü kullan.
 
 ## Bağlantı
 
@@ -24,7 +27,7 @@ Gemini, `gemini-run video -d klasör` ile ham çekimi izler ve en iyi anları za
 
 ## Test edilmiş sıra
 
-`media_import {"paths":["/mutlak/yol.mp4"]}` → `command_run {"id":"file.newSequenceFromClip","params":{"items":[id]}}` → `command_run {"id":"timeline.razor","params":{"seconds":3.5}}` → `command_run {"id":"graphics.newText","params":{"text":"Başlık","position":[540,300]}}` → `render_frame {"seconds":3.5,"max_side":1080}` ile kare kontrolü → `command_run {"id":"export.quick","params":{"path":"/mutlak/yol/cikti/video.mp4","wait":true}}` → `command_run {"id":"file.saveAs","params":{"path":"/mutlak/yol/cikti/proje.fcproj"}}`. `id` değerini içe aktarma sonucundan al; `seconds` zaman takma adı CLI yardımında doğrulanmıştır.
+`media_import {"paths":["/mutlak/yol.mp4"]}` → `command_run {"id":"file.newSequenceFromClip","params":{"items":[id]}}` → `command_run {"id":"timeline.razor","params":{"seconds":3.5}}` → `command_run {"id":"graphics.newText","params":{"text":"Başlık","position":[540,300]}}` → `render_frame {"seconds":3.5,"max_side":1080}` ile kare kontrolü → `command_run {"id":"file.saveAs","params":{"path":"/mutlak/yol/cikti/proje.fcproj"}}`. `id` değerini içe aktarma sonucundan al; `seconds` zaman takma adı CLI yardımında doğrulanmıştır.
 
 ## Komut seçkisi
 
@@ -43,7 +46,7 @@ Gemini, `gemini-run video -d klasör` ile ham çekimi izler ve en iyi anları za
 | Efekt | `effects.setParam`; `effects.setInterpolation` | `clip`, `effect`, `param`, `value`, `time`, `keyframe:true` ile animasyon; `mediaTime`, `interpolation` ile geçiş ayarı. |
 | Dışa aktarım | `export.quick`; `export.presets.list` | `path`, `preset`, `wait:true` ile render alır; `query`, `category`, `format` ile preset arar. |
 
-Her değişiklikten sonra `sequence_inspect` ile doğrula; kritik karelerde `render_frame` ile görsel kontrol yap. Dışa aktarılan dosyayı `ffprobe` ile kontrol et. Reels hedefi **1080×1920**. FilmCraft 0.10.0 alfa sürümüdür: hata halinde adımı tekrar etme, hatayı ve mevcut durumu Claude'a raporla. Komut uydurma; yalnızca `araclar/filmcraft-komutlar.txt` içindeki adları kullan.
+Her değişiklikten sonra `sequence_inspect` ile doğrula; kritik karelerde `render_frame` ile görsel kontrol yap. Yalnız onaylı dışa aktarım sonrasında dosyayı `ffprobe` ile kontrol et. Reels sekansı baştan **2160×3840** kurulur. FilmCraft 0.10.0 alfa sürümüdür: hata halinde adımı tekrar etme, hatayı ve mevcut durumu Claude'a raporla. Komut uydurma; yalnızca `araclar/filmcraft-komutlar.txt` içindeki adları kullan.
 
 ## Kalite ve Sony FX30 (2026-10-21'de test edildi)
 - **FX30 dosyaları açılıyor:** XAVC S-I (H.264 High 4:2:2 Intra 10-bit) ve XAVC HS (HEVC 4:2:2 10-bit) M4 donanım çözücüsüyle (VideoToolbox) çözülüyor. FilmCraft'ın kendi yazılım çözücüsü 4:2:2 10-bit desteklemiyor; bu yalnızca Mac'te çalışır.
@@ -51,7 +54,7 @@ Her değişiklikten sonra `sequence_inspect` ile doğrula; kritik karelerde `ren
 - **Dışa aktarma kuralı:**
   - Arşiv/master: `export.quick {"preset":"Apple ProRes 422 HQ"}` → 10-bit 4:2:2, 4K'da ~290 Mbps.
   - YouTube/müşteri teslimi: `"High Quality 2160p 4K"` (H.264, ~59 Mbps) veya `"YouTube 2160p 4K Ultra HD"`.
-  - Instagram Reels: sekans 1080×1920; `"Social Vertical 1080×1920"`. Instagram yeniden sıkıştırdığı için yüksek bit hızı yeterli, ProRes yüklenmez.
+  - Dikey video: sekans 2160×3840; onay sonrası 4K dikey dışa aktarım ayarını doğrula.
   - macOS'ta HEVC dışa aktarma 8-bit; 10-bit gerekiyorsa ProRes kullan.
 - **Geçişler:** 115 geçiş var (Cross Dissolve, Dip to Black/White, Push, Cross Zoom, Light Leak, Glitch, Film Dissolve, Morph Cut…) → `sequence.applyVideoTransition` / `sequence.setTransition`.
 - **Ses efekti (SFX):** `public/sfx/katalog.json`'daki dosyalar `media_import` ile alınıp `timeline.place {track:"A2"…, seconds}` ile istenen ana yerleştirilir; müzik altında konuşma için `essentialSound.generateDucking`.

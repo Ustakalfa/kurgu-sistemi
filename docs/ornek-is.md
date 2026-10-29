@@ -8,7 +8,7 @@ Bu senaryo kurgusaldır; komut yüzeyi depodaki betiklerden alınmıştır. Ama�
 yeni-is "Ornek Kafe" "Tanitim Reels" --format 9x16
 ```
 
-Bu örneğin iş kökü: `$HOME/Movies/Isler/2026-11-03_ornek-kafe_tanitim-reels/`.
+Bu örneğin iş kökü: `$HOME/Movies/Isler/<YYYY-AA-GG>_ornek-kafe_tanitim-reels/`.
 
 Örnek ekran çıktısı (temsili):
 
@@ -23,7 +23,7 @@ Sonraki adım: ham çekimleri ilgili klasöre kopyalayın.
 ## 2. Teknik çekim kontrolü
 
 ```sh
-cekim-kontrol "$HOME/Movies/Isler/2026-11-03_ornek-kafe_tanitim-reels/01-ham" --hizli --cikti "$HOME/Movies/Isler/2026-11-03_ornek-kafe_tanitim-reels/00-brief/cekim-kontrol.md"
+cekim-kontrol "$HOME/Movies/Isler/<YYYY-AA-GG>_ornek-kafe_tanitim-reels/01-ham" --hizli --cikti "$HOME/Movies/Isler/<YYYY-AA-GG>_ornek-kafe_tanitim-reels/00-brief/cekim-kontrol.md"
 ```
 
 Örnek rapor parçası (temsili):
@@ -40,7 +40,7 @@ Bu değerler gerçek bir müşteriye ait değildir. Raporun gerçek değerleri k
 ## 3. Görsel inceleme
 
 ```sh
-gemini-run video "Her klip için iyi/kötü anları zaman koduyla yaz; odak, kadraj, istenmeyen nesne ve ses-görüntü sorunlarını belirt." -d "$HOME/Movies/Isler/2026-11-03_ornek-kafe_tanitim-reels/01-ham"
+gemini-run video "Her klip için iyi/kötü anları zaman koduyla yaz; odak, kadraj, istenmeyen nesne ve ses-görüntü sorunlarını belirt." -d "$HOME/Movies/Isler/<YYYY-AA-GG>_ornek-kafe_tanitim-reels/01-ham"
 ```
 
 Sonuç `00-brief/gorsel-inceleme.md` dosyasına insan tarafından kaydedilir. Modelin zaman kodları klip açılarak örneklenir.
@@ -48,8 +48,8 @@ Sonuç `00-brief/gorsel-inceleme.md` dosyasına insan tarafından kaydedilir. Mo
 ## 4. Transkript ve kısa an seçimi
 
 ```sh
-python3 remotion/araclar/nexus-reels.py yaziya-dok "$HOME/Movies/Isler/2026-11-03_ornek-kafe_tanitim-reels/01-ham/roportaj.mp4" --cikti "$HOME/Movies/Isler/2026-11-03_ornek-kafe_tanitim-reels/00-brief/transkript" --dil tr
-python3 remotion/araclar/nexus-reels.py sec "$HOME/Movies/Isler/2026-11-03_ornek-kafe_tanitim-reels/01-ham/roportaj.mp4" --cikti "$HOME/Movies/Isler/2026-11-03_ornek-kafe_tanitim-reels/00-brief/transkript" --adet 3 --min 20 --max 45 --model gemini
+python3 remotion/araclar/nexus-reels.py yaziya-dok "$HOME/Movies/Isler/<YYYY-AA-GG>_ornek-kafe_tanitim-reels/01-ham/roportaj.mp4" --cikti "$HOME/Movies/Isler/<YYYY-AA-GG>_ornek-kafe_tanitim-reels/00-brief/transkript" --dil tr
+python3 remotion/araclar/nexus-reels.py sec "$HOME/Movies/Isler/<YYYY-AA-GG>_ornek-kafe_tanitim-reels/01-ham/roportaj.mp4" --cikti "$HOME/Movies/Isler/<YYYY-AA-GG>_ornek-kafe_tanitim-reels/00-brief/transkript" --adet 3 --min 20 --max 45 --model gemini
 ```
 
 Ürünler: `transkript.json`, `transkript.srt`, `transkript.txt`, `secim.json`.
@@ -88,7 +88,7 @@ python3 remotion/araclar/filmcraft-mcp.py "$HOME/.local/bin/filmcraft-cli" adiml
 {"item":"DÖNEN_ITEM_KIMLIGI","track":"V1","audioTrack":"A1","seconds":0,"insert":false,"video":true,"audio":true}
 ```
 
-Kurguda `timeline.razor`, `timeline.trim`, `timeline.move` kullanılır. Yer tutucu kimlik gerçek komut değildir; MCP yanıtındaki kimlikle değiştirilir.
+Claude kurguyu FilmCraft MCP ile yürütür. `timeline.razor` komut tanımında `time` tick (254016000000 tick/sn) ister; MCP ve CLI komut çağrılarında `seconds`, `frame` veya `timecode` takma adı kabul edilir. Kurguda `timeline.razor`, `timeline.trim`, `timeline.move` kullanılır. Yer tutucu kimlik gerçek komut değildir; MCP yanıtındaki kimlikle değiştirilir.
 
 ## 7. Ses
 
@@ -112,10 +112,10 @@ Whisper SRT başlangıç noktasıdır. Her satır en fazla iki okunabilir satır
 4. Beyaz denge ve pozlamayı birincil kontrollerle düzelt.
 5. Ten tonunu ten çizgisi çevresinde doğal tut.
 6. Kahve fincanı/parlak metalde tepeyi bastır.
-7. Referans iç planı seç; benzer planlara `applyMatch` uygula.
+7. Referans iç planı seç; benzer planlara `lumetri.applyMatch` uygula.
 8. Dış planı ayrıca düzelt; otomatik eşleşmeye kör güvenme.
 9. Sıcak ama nötrleri kirletmeyen look ekle.
-10. Aynı kareyi önce/sonra `render_frame` ile karşılaştır.
+10. Aynı kareyi önce/sonra FilmCraft MCP aracı `render_frame` ile karşılaştır.
 
 ## 10. Remotion marka katmanı
 
@@ -127,10 +127,12 @@ npm run tip
 npm run studio
 ```
 
+4K render yalnız kullanıcı açıkça “al” dedikten sonra yapılır; öncesinde Remotion Studio önizlemesi kullanılır. `--scale=2`, @remotion/cli içindeki `scaleOption` ile doğrulanmıştır.
+
 4K render:
 
 ```sh
-npm run render -- NexusTanitim "$HOME/Movies/Isler/2026-11-03_ornek-kafe_tanitim-reels/06-teslim/marka-katmani.mp4" --scale=2
+npm run render -- NexusTanitim "$HOME/Movies/Isler/<YYYY-AA-GG>_ornek-kafe_tanitim-reels/06-teslim/marka-katmani.mp4" --scale=2
 ```
 
 Kompozisyon kaynağı 1080×1920'dir; `--scale=2` çıktıyı 2160×3840 yapar. 1080 çözünürlüklü render yasaktır.

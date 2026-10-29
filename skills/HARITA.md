@@ -11,6 +11,7 @@ Kurulum `--skills` bu yolları kullanır. Aynı adlı dış skill için aşağı
 | checking-delivery | vendor/done-is-a-claim/skills/checking-delivery | Apache-2.0 | Bir dosya, mesaj, dışa aktarım veya dağıtımın gerçek teslim hedefinde doğrulanmasını ve hazırlama, gönderim, yayın ile tüketici kontrolünün ayrılmasını sağlar. | teslim/denetim |
 | collecting-worker-results | vendor/done-is-a-claim/skills/collecting-worker-results | Apache-2.0 | Duran bir çalışanın döndürdüğü iş, kanıt ve doğrulamayı inceleyerek kabul, yeniden deneme veya entegrasyon kararını verir. | teslim/denetim |
 | filmcraft-kurgu | skills/filmcraft-kurgu | MIT | FilmCraft MCP ile kesme, renk, ses, altyazı ve basit grafik işlemlerini proje dosyasına uygulayıp görsel olarak doğrular. | ince kurgu |
+| kurgu-ekip | skills/kurgu-ekip | MIT | Claude, Codex, Gemini ve yerel model arasındaki kurgu devrini ve teslim denetimini düzenler. | orkestrasyon |
 | kurgu-ustasi | skills/kurgu-ustasi | MIT | Brief ve ham çekim klasöründen çekim-kontrol raporunu okuyup format, hikâye, ses, renk ve teslim adımlarını içeren kurgu planı çıkarır. | çekim kontrol |
 | limit | vendor/avenoxskills/skills/limit | MIT | Claude ve Codex abonelik kullanım pencerelerini tek ekranda göstererek iş devretmeden önce kota kontrolü yapılmasını sağlar. | orkestrasyon |
 | cut-mistakes | vendor/herk-edit-kit/.claude/skills/cut-mistakes | MIT | Kelime düzeyli transkriptten kekeleme, tekrar, falso başlangıç ve tekrar çekim adaylarını gerekçeleriyle önerir, onaylanan kesimleri ffmpeg ile uygular. | ince kurgu |

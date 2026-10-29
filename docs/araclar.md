@@ -18,7 +18,7 @@ Bu belge depodaki çalıştırılabilir araçların sözdizimini kaynak kodundan
 - Amaç: Video dosyalarını salt okunur teknik denetler.
 - Sözdizimi: `cekim-kontrol KLASOR [--gemini] [--hizli] [--cikti DOSYA]`.
 - Seçenekler/davranış: `--gemini` görsel katman; `--hizli` süre sınırı; `--cikti` rapor yolu.
-- Örnek: `cekim-kontrol "$HOME/Movies/Isler/2026-11-03_ornek-kafe_tanitim-reels/01-ham" [--gemini] [--hizli] [--cikti DOSYA]`.
+- Örnek: `cekim-kontrol "$HOME/Movies/Isler/<YYYY-AA-GG>_ornek-kafe_tanitim-reels/01-ham" [--gemini] [--hizli] [--cikti DOSYA]`.
 - Ürün: komuta göre stdout, rapor, klasör veya PNG.
 - Tuzak: kullanıcı verisini prompta koymayın; kaynak/çıktı yolunu karıştırmayın; çıkış kodunu kontrol edin.
 

@@ -1,24 +1,15 @@
 # Claude Code için kurulum
 
-If a user gives you this repository and asks you to install it, follow the steps below on their Mac. Explain each global change and obtain explicit approval before making it. Keep account sign-ins with the user.
+Bu depoyu kurmanız istendiyse şu adımları Mac üzerinde uygulayın. Genel kullanıcı klasörlerinde yapılacak değişiklikleri ve eklenecek Claude kural bloğunu kullanıcıya gösterip açık onay alın. Hesap girişlerini kullanıcı yapar.
 
-## Ajan adımları
-
-1. Depoyu nereye klonlayacağınızı kullanıcıya sorun; yanıt yoksa `~/kurgu-sistemi` önerin. `git clone --recursive https://github.com/Ustakalfa/kurgu-sistemi.git ~/kurgu-sistemi` kullanın.
-2. Depoda `./kurulum.sh --kuru` çalıştırın. Planlanan işlemleri ve eksikleri kullanıcıya özetleyin.
-3. `~/.claude/skills`, `~/.local/bin`, `~/.config/kurgu-sistemi` ve Claude MCP kayıtları gibi genel değişiklikler için kullanıcının açık onayını alın. Onaydan sonra `./kurulum.sh --hepsi --evet` çalıştırın.
+1. Depoyu nereye klonlayacağınızı sorun; yanıt yoksa `~/kurgu-sistemi` önerin. `git clone --recursive https://github.com/Ustakalfa/kurgu-sistemi.git ~/kurgu-sistemi` kullanın.
+2. Depoda `./kurulum.sh --kuru` çalıştırın. Özellikle `claude/CLAUDE.kurgu.md` bloğunun `~/.claude/CLAUDE.md` içine eklenecek farkını, `--hooks` kuralının proje `.claude/` konumunu ve diğer genel değişiklikleri gösterin.
+3. Kullanıcının açık onayından sonra `./kurulum.sh --hepsi --evet` çalıştırın. `--hepsi`, `--claude-md` ve `--hooks` seçeneklerini içerir. `--claude-md` var olan işaretli bloğu günceller; yoksa ekler ve önce genel dosyayı tarihli yedekler. İstenirse `--claude-md-kaldir` yalnız işaretli bloğu siler. Hookify eklentisi yoksa betik bunu bildirir.
 4. `./dogrula.sh` çalıştırın; hata varsa düzeltip yeniden doğrulayın.
-5. Betiğin **ELLE YAPILACAKLAR** listesini tek tek anlatın: FilmCraft.app ve filmcraft-cli, agy girişi, Codex girişi, Claude girişi, Sony LUT, Montserrat ve SFX WAV dosyaları. FilmCraft indirmesini ve hesap girişlerini kullanıcı yapar. Şifre istemeyin. Ayrıntı: [kurulum rehberi](docs/kurulum.md).
-6. Kullanıcının Codex planında kullanılabilen modelleri öğrenin. `~/.config/kurgu-sistemi/modeller.env` içindeki zincirleri kullanıcıyla birlikte düzenleyin; örnek [model ayarları](config/modeller.ornek.env).
-7. Nexus marka varlıkları MIT kapsamı dışındadır. Kullanıcı kendi markası için `remotion/src/marka.ts` ve `remotion/public/logo/` içeriğini değiştirmelidir.
-8. İlk testi [örnek iş](docs/ornek-is.md) akışıyla, kullanıcının kendi kısa videosunda kuru prova olarak yapın. Teslim onayı olmadan dışa aktarmayın.
+5. Betiğin **ELLE YAPILACAKLAR** listesini anlatın: FilmCraft.app ve filmcraft-cli, agy ve Codex/Claude girişleri, Sony LUT, Montserrat ve SFX WAV. FilmCraft indirmesini ve girişleri kullanıcı yapar. Şifre istemeyin. Ayrıntı: [kurulum rehberi](docs/kurulum.md).
+6. Kullanılabilir Codex modellerini öğrenip `$HOME/.config/kurgu-sistemi/modeller.env` zincirlerini kullanıcıyla düzenleyin; örnek `config/modeller.ornek.env`.
+7. Depodaki örnek marka varlıkları yerine kullanıcının kendi markası için `remotion/src/marka.ts` ve `remotion/public/logo/` içeriğini uyarlayın.
+8. Kullanıcının kısa videosuyla `docs/ornek-is.md` akışını kuru prova edin. Kullanıcı “al” demeden export almayın.
+9. **Kabul testi:** Depo **dışındaki** bir klasörde yeni Claude oturumu açıp “şu klasördeki videoyu kurgula” isteğini verin. Claude'un `kurgu-ustasi` skill'ini açtığını, `gemini-run video` ve `codex-run` devrini planladığını, baştan 4K sekans, her videoda renk ve `.fcproj` kaydedip onaysız export almama kurallarını söylediğini kontrol edin.
 
-## Yapılmayacaklar
-
-- Kullanıcı onayı olmadan genel kullanıcı klasörlerine yazmayın.
-- `curl|bash` ile kurulum yapmayın.
-- Hesaplara giriş yapmayın; şifre istemeyin.
-- `vendor/` içeriğini değiştirmeyin.
-- Kullanıcı “al” demeden export almayın.
-
-Sorun çıkarsa [sorun giderme](docs/sorun-giderme.md) belgesine bakın.
+Kullanıcı onayı olmadan genel klasörlere yazmayın. `curl|bash` kullanmayın. `vendor/` içeriğini değiştirmeyin. Sorun için `docs/sorun-giderme.md` dosyasına bakın.

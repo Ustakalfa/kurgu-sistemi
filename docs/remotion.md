@@ -61,6 +61,8 @@ npm run studio
 npm run render -- Reels07 out/reels07.mp4 --scale=2
 ```
 
+`--scale=2` seçeneği @remotion/cli içindeki `scaleOption` ile doğrulanmıştır. Nihai render yalnız kullanıcı açıkça “al” dedikten sonra alınır.
+
 Kompozisyonlar kaynakta 1080×1920 veya 1080×1080'dir; bu tabloda kaynak boyutu olarak kalır. **4K kuralı:** Her Remotion render komutu `--scale=2` içerir; bu dikey kaynaklarda çıktıyı 2160×3840 yapar. 1080 çözünürlüklü çıktı yasaktır. Yalnız ölçek büyütmek kaynak videoya ayrıntı eklemez; bu nedenle kaynak medya ve kadraj ayrıca denetlenir.
 
 ## nexus-reels.py ile uzun videodan Reels
