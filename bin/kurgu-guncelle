@@ -1,0 +1,72 @@
+#!/usr/bin/env zsh
+# Oturum açılışını hiçbir koşulda engelleme.
+{
+  set -u
+  kok=${KURGU_SISTEMI_KOK:-${0:A:h:h}}
+  sessiz=0; zorla=0
+  for secenek in "$@"; do
+    case $secenek in
+      --sessiz) sessiz=1;;
+      --zorla) zorla=1;;
+      *) (( sessiz )) || print -u2 "Bilinmeyen seçenek: $secenek"; exit 0;;
+    esac
+  done
+  python3 - "$kok" "$sessiz" "$zorla" <<'PY'
+import os
+from pathlib import Path
+import subprocess
+import sys
+import time
+
+root, quiet, force = Path(sys.argv[1]).resolve(), bool(int(sys.argv[2])), bool(int(sys.argv[3]))
+cache = Path.home() / '.cache/kurgu-sistemi'
+stamp, logfile = cache / 'son-guncelleme', cache / 'guncelle.log'
+deadline = time.monotonic() + 15
+
+def log(message):
+    try:
+        cache.mkdir(parents=True, exist_ok=True)
+        lines = logfile.read_text().splitlines() if logfile.exists() else []
+        lines.append(time.strftime('%Y-%m-%d %H:%M:%S') + ' ' + message)
+        logfile.write_text('\n'.join(lines[-200:]) + '\n')
+    except OSError:
+        pass
+
+def run(*args):
+    remaining = deadline - time.monotonic()
+    if remaining <= 0:
+        raise TimeoutError()
+    env = dict(os.environ, GIT_TERMINAL_PROMPT='0', GIT_HTTP_LOW_SPEED_LIMIT='1000', GIT_HTTP_LOW_SPEED_TIME='3')
+    return subprocess.run(['git', '-C', str(root), *args], capture_output=True, text=True,
+                          timeout=remaining, env=env, check=True).stdout.strip()
+
+try:
+    if not force and stamp.exists() and time.time() - stamp.stat().st_mtime < 3600:
+        sys.exit(0)
+    if run('status', '--porcelain'):
+        if not quiet:
+            print('Güncelleme atlandı: çalışma ağacında commit edilmemiş değişiklik var.')
+        log('Atlandı: çalışma ağacı değişik.')
+        sys.exit(0)
+    run('fetch', '--quiet')
+    if int(run('rev-list', '--count', '@{upstream}..HEAD')):
+        if not quiet:
+            print('Güncelleme atlandı: yerel dal uzaktan ileride.')
+        log('Atlandı: yerel dal ileride.')
+        sys.exit(0)
+    before = run('rev-parse', 'HEAD')
+    run('pull', '--ff-only', '--quiet')
+    run('submodule', 'update', '--init', '--recursive', '--quiet')
+    after = run('rev-parse', 'HEAD')
+    if before != after:
+        changed = run('diff', '--name-only', before, after).splitlines()
+        if not quiet and any(p == 'HARITA.md' or p == 'skills/HARITA.md' or p.startswith('bin/') for p in changed):
+            print('Yeni bağ olabilir: ./kurulum.sh --skills --bin')
+    cache.mkdir(parents=True, exist_ok=True)
+    stamp.touch()
+    log('Başarılı güncelleme denemesi.')
+except (OSError, subprocess.SubprocessError, TimeoutError, ValueError):
+    log('Ağ veya uzak depo erişilemedi; güncelleme atlandı.')
+PY
+} 2>/dev/null
+exit 0

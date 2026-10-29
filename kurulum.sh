@@ -2,15 +2,16 @@
 set -u
 setopt pipe_fail null_glob
 repo=${0:A:h}
-kuru=0; evet=0; bag=0; skills=0; bin=0; mcp=0; remotion=0; claude_md=0; claude_md_kaldir=0; hooks=0
-kullanim() { print 'Kullanım: ./kurulum.sh [--kuru] [--evet] [--bagimliliklar] [--skills] [--bin] [--mcp] [--remotion] [--claude-md] [--claude-md-kaldir] [--hooks] [--hepsi]'; }
+kuru=0; evet=0; bag=0; skills=0; bin=0; mcp=0; remotion=0; claude_md=0; claude_md_kaldir=0; hooks=0; guncelle_kancasi=0; guncelle_kancasi_kaldir=0
+kullanim() { print 'Kullanım: ./kurulum.sh [--kuru] [--evet] [--bagimliliklar] [--skills] [--bin] [--mcp] [--remotion] [--claude-md] [--claude-md-kaldir] [--hooks] [--guncelle-kancasi] [--guncelle-kancasi-kaldir] [--hepsi]'; }
 for arg in "$@"; do
  case $arg in
- --kuru) kuru=1;; --evet) evet=1;; --bagimliliklar) bag=1;; --skills) skills=1;; --bin) bin=1;; --mcp) mcp=1;; --remotion) remotion=1;; --claude-md) claude_md=1;; --claude-md-kaldir) claude_md_kaldir=1;; --hooks) hooks=1;; --hepsi) bag=1; skills=1; bin=1; mcp=1; remotion=1; claude_md=1; hooks=1;; *) kullanim; exit 2;; esac
+ --kuru) kuru=1;; --evet) evet=1;; --bagimliliklar) bag=1;; --skills) skills=1;; --bin) bin=1;; --mcp) mcp=1;; --remotion) remotion=1;; --claude-md) claude_md=1;; --claude-md-kaldir) claude_md_kaldir=1;; --hooks) hooks=1;; --guncelle-kancasi) guncelle_kancasi=1;; --guncelle-kancasi-kaldir) guncelle_kancasi_kaldir=1;; --hepsi) bag=1; skills=1; bin=1; mcp=1; remotion=1; claude_md=1; hooks=1; guncelle_kancasi=1;; *) kullanim; exit 2;; esac
 done
 if (( claude_md && claude_md_kaldir )); then print -u2 "--claude-md ile --claude-md-kaldir birlikte kullanılamaz."; exit 2; fi
-if (( ! (bag+skills+bin+mcp+remotion+claude_md+claude_md_kaldir+hooks) )); then
- if (( kuru )); then bag=1; skills=1; bin=1; mcp=1; remotion=1; claude_md=1; hooks=1; else kullanim; exit 2; fi
+if (( guncelle_kancasi && guncelle_kancasi_kaldir )); then print -u2 "Güncelleme kancası ekleme ve kaldırma birlikte kullanılamaz."; exit 2; fi
+if (( ! (bag+skills+bin+mcp+remotion+claude_md+claude_md_kaldir+hooks+guncelle_kancasi+guncelle_kancasi_kaldir) )); then
+ if (( kuru )); then bag=1; skills=1; bin=1; mcp=1; remotion=1; claude_md=1; hooks=1; guncelle_kancasi=1; else kullanim; exit 2; fi
 fi
 if [[ $(uname -s) != Darwin ]]; then
  print -u2 'Bu kurulum yalnız macOS içindir. Linux desteklenmiyor; docs/kurulum.md içindeki elle adımlara bakın.'; exit 1
@@ -22,8 +23,8 @@ if [[ ! -f "$repo/vendor/avenoxskills/skills/avenox-video/SKILL.md" ]]; then
  if (( kuru )); then print 'Gerekli: git submodule update --init --recursive';
  else command git submodule update --init --recursive || exit 1; fi
 fi
-if (( ! kuru && ! evet && (skills || bin || mcp || claude_md || claude_md_kaldir || hooks) )); then
- print -n 'Genel kullanıcı ayarları (~/.claude/skills, ~/.local/bin, Claude MCP, ~/.claude/CLAUDE.md ve hookify kuralı) değişecek. Onaylıyor musunuz? [e/H] '
+if (( ! kuru && ! evet && (skills || bin || mcp || claude_md || claude_md_kaldir || hooks || guncelle_kancasi || guncelle_kancasi_kaldir) )); then
+ print -n 'Genel kullanıcı ayarları (~/.claude/skills, ~/.local/bin, Claude MCP, ~/.claude/CLAUDE.md hookify kuralı ve ~/.claude/settings.json kancası) değişecek. Onaylıyor musunuz? [e/H] '
  read -r yanit
  [[ $yanit == e || $yanit == E ]] || { print 'Kurulum iptal edildi.'; exit 1; }
 fi
@@ -101,6 +102,33 @@ PYCLAUDE
  rm -f -- "$yeni"
 }
 if (( claude_md || claude_md_kaldir )); then claude_md_duzenle || exit 1; fi
+guncelle_kancasi_duzenle() {
+ local hedef="$HOME/.claude/settings.json" yeni yedek
+ if (( guncelle_kancasi_kaldir )) && [[ ! -f $hedef ]]; then print "Claude kancası zaten yok: $hedef"; return 0; fi
+ yeni=$(mktemp) || return 1
+ if ! python3 "$repo/araclar/kanca.py" "$hedef" "$HOME/.local/bin/kurgu-guncelle --sessiz" $([[ $guncelle_kancasi_kaldir == 1 ]] && print -- --kaldir) > "$yeni"; then
+  rm -f -- "$yeni"; return 1
+ fi
+ if (( kuru )); then
+  print "Claude SessionStart kanca farkı: $hedef"
+  if [[ -f $hedef ]]; then diff -u --label "$hedef (mevcut)" --label "$hedef (önerilen)" "$hedef" "$yeni" || true
+  else diff -u --label "$hedef (mevcut)" --label "$hedef (önerilen)" /dev/null "$yeni" || true; fi
+ elif [[ -f $hedef ]] && cmp -s -- "$hedef" "$yeni"; then
+  print "Claude kancası zaten güncel: $hedef"
+ else
+  mkdir -p -- "${hedef:h}" || return 1
+  if [[ -f $hedef ]]; then
+   yedek="$hedef.yedek-$yedek_tarihi"
+   while [[ -e $yedek ]]; do yedek+="-1"; done
+   cp -- "$hedef" "$yedek" || return 1
+   print "Yedek: $yedek"
+  fi
+  cp -- "$yeni" "$hedef" || return 1
+  print "Claude kancası güncellendi: $hedef"
+ fi
+ rm -f -- "$yeni"
+}
+if (( guncelle_kancasi || guncelle_kancasi_kaldir )); then guncelle_kancasi_duzenle || exit 1; fi
 if (( hooks )); then
  if [[ -d "$HOME/.claude/plugins/cache/claude-code-plugins/hookify" ]]; then
   bagla "$repo/hooks/hookify.video-hatti.local.md" "$repo/.claude/hookify.video-hatti.local.md" "$repo/.claude/hooks-yedek"

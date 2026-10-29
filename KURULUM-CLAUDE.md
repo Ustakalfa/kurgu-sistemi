@@ -4,7 +4,7 @@ Bu depoyu kurmanız istendiyse şu adımları Mac üzerinde uygulayın. Genel ku
 
 1. Depoyu nereye klonlayacağınızı sorun; yanıt yoksa `~/kurgu-sistemi` önerin. `git clone --recursive https://github.com/Ustakalfa/kurgu-sistemi.git ~/kurgu-sistemi` kullanın.
 2. Depoda `./kurulum.sh --kuru` çalıştırın. Özellikle `claude/CLAUDE.kurgu.md` bloğunun `~/.claude/CLAUDE.md` içine eklenecek farkını, `--hooks` kuralının proje `.claude/` konumunu ve diğer genel değişiklikleri gösterin.
-3. Kullanıcının açık onayından sonra `./kurulum.sh --hepsi --evet` çalıştırın. `--hepsi`, `--claude-md` ve `--hooks` seçeneklerini içerir. `--claude-md` var olan işaretli bloğu günceller; yoksa ekler ve önce genel dosyayı tarihli yedekler. İstenirse `--claude-md-kaldir` yalnız işaretli bloğu siler. Hookify eklentisi yoksa betik bunu bildirir.
+3. Kullanıcının açık onayından sonra `./kurulum.sh --hepsi --evet` çalıştırın. `--hepsi`, `--claude-md`, `--hooks` ve `--guncelle-kancasi` seçeneklerini içerir; genel onay `~/.claude/settings.json` SessionStart kancasını da kapsar. `--claude-md` var olan işaretli bloğu günceller; yoksa ekler ve önce genel dosyayı tarihli yedekler. İstenirse `--claude-md-kaldir` yalnız işaretli bloğu siler. Hookify eklentisi yoksa betik bunu bildirir.
 4. `./dogrula.sh` çalıştırın; hata varsa düzeltip yeniden doğrulayın.
 5. Betiğin **ELLE YAPILACAKLAR** listesini anlatın: FilmCraft.app ve filmcraft-cli, agy ve Codex/Claude girişleri, Sony LUT, Montserrat ve SFX WAV. FilmCraft indirmesini ve girişleri kullanıcı yapar. Şifre istemeyin. Ayrıntı: [kurulum rehberi](docs/kurulum.md).
 6. Kullanılabilir Codex modellerini öğrenip `$HOME/.config/kurgu-sistemi/modeller.env` zincirlerini kullanıcıyla düzenleyin; örnek `config/modeller.ornek.env`.

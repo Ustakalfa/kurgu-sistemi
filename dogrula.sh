@@ -44,6 +44,26 @@ while IFS='|' read -r _ _ kaynak _; do
  [[ $kaynak == skills/* || $kaynak == vendor/* ]] || continue
  [[ -e $kaynak ]] || { print "Harita yolu yok: $kaynak"; ((hata++)); }
 done < skills/HARITA.md
+# Mevcut SessionStart kancasını koruyarak ekleme, tekrar ve kaldırma.
+python3 - "$repo/araclar/kanca.py" "$gecici" <<'PYK'
+import importlib.util
+import json
+from pathlib import Path
+import sys
+spec = importlib.util.spec_from_file_location('kanca', sys.argv[1])
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
+path = Path(sys.argv[2]) / 'settings.json'
+original = {'hooks': {'SessionStart': [{'hooks': [{'type': 'command', 'command': 'diger-komut'}]}]}, 'other': 1}
+path.write_text(json.dumps(original))
+command = '/ornek/.local/bin/kurgu-guncelle --sessiz'
+first = module.duzenle(json.loads(path.read_text()), command)
+second = module.duzenle(first, command)
+assert first == second
+assert len(second['hooks']['SessionStart']) == 2
+assert module.duzenle(second, command, True) == original
+PYK
+[[ $? == 0 ]] || ((hata++))
 # Tarama metin dosyalarıyla sınırlıdır; eşleşen satırın kendisi rapora yazılmaz.
 desen='Güncel Kafalar|guncel kafalar|Çekme Felek|cekme felek|Müfredat|mufredat|Macera Park|Coldwell|Yükseller|/Users/ustakalfa|api[_-]?key[[:space:]]*[:=][[:space:]]*[A-Za-z0-9]{12,}|sk-[A-Za-z0-9]{20,}'
 : > "$gecici/tarama"

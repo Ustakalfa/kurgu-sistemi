@@ -37,6 +37,8 @@ flowchart LR
  L --> M[Kurgu dersi]
 ```
 
+Kurulum seçenekleri arasında `--guncelle-kancasi` ve `--guncelle-kancasi-kaldir` bulunur; `--hepsi` eklemeyi seçer.
+
 ## Gereksinimler
 
 Yalnız macOS (Apple Silicon’da test edildi).
@@ -52,6 +54,8 @@ cd ~/kurgu-sistemi
 ./kurulum.sh --hepsi --evet
 ./dogrula.sh
 ```
+
+`--hepsi`, `--guncelle-kancasi` seçeneğini de içerir; yalnız oturum açılışı güncellemesini kurmak için `./kurulum.sh --guncelle-kancasi` kullanın.
 
 `https://github.com/Ustakalfa/kurgu-sistemi.git` yer tutucudur; gerçek genel URL bu çalışma ağacında doğrulanmadı. FilmCraft canlı köprüsü:
 
@@ -76,7 +80,7 @@ cekim-kontrol "$HOME/Movies/Isler/<YYYY-AA-GG>_ornek_tanitim/01-ham" --hizli
 6. Sekans baştan 4K kurulur; her videoda renk yapılır ve `.fcproj` dosyası `04-kurgu/` altında kaydedilir.
 7. Kullanıcı açıkça “al” demeden export yapılmaz; onaylı 4K çıktı `06-teslim/` içine alınır.
 
-Bu düzenin tam metni [Claude kural bloğunda](claude/CLAUDE.kurgu.md), devir ayrıntıları [kurgu-ekip skill'inde](skills/kurgu-ekip/SKILL.md) bulunur. `./kurulum.sh --claude-md` bloğu `~/.claude/CLAUDE.md` içine ekler veya günceller; `--claude-md-kaldir` yalnız işaretli bloğu kaldırır; `--hooks` kurulu hookify eklentisi varsa yerel video hattı kuralını bağlar. [Denetim raporu](docs/denetim-raporu.md) düzeltmelerin kaydını tutar.
+Bu düzenin tam metni [Claude kural bloğunda](claude/CLAUDE.kurgu.md), devir ayrıntıları [kurgu-ekip skill'inde](skills/kurgu-ekip/SKILL.md) bulunur. `./kurulum.sh --guncelle-kancasi` Claude Code oturum açılışına sessiz güncelleme ekler. `./kurulum.sh --claude-md` bloğu `~/.claude/CLAUDE.md` içine ekler veya günceller; `--claude-md-kaldir` yalnız işaretli bloğu kaldırır; `--hooks` kurulu hookify eklentisi varsa yerel video hattı kuralını bağlar. [Denetim raporu](docs/denetim-raporu.md) düzeltmelerin kaydını tutar.
 
 ## Model ayarı
 

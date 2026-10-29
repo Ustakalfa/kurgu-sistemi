@@ -146,9 +146,11 @@ Doğrulanmış Node sürümleri için `remotion/NODE_SURUMU.md` dosyasına bakı
 | `--remotion` | `remotion/` içinde `npm ci` çalıştırır |
 | `--claude-md` | `claude/CLAUDE.kurgu.md` işaretli bloğunu `~/.claude/CLAUDE.md` içine ekler veya günceller; diğer içeriği korur ve değişiklikte yedek alır |
 | `--claude-md-kaldir` | yalnız işaretli kurgu bloğunu kaldırır; `--claude-md` ile birlikte kullanılamaz |
+| `--guncelle-kancasi` | Claude Code SessionStart kancasını `~/.claude/settings.json` içine ekler; değişiklikten önce tarihli yedek alır |
+| `--guncelle-kancasi-kaldir` | Yalnız güncelleme komutunu içeren kancayı kaldırır |
 | `--hooks` | hookify kuruluysa `hooks/hookify.video-hatti.local.md` dosyasını proje `.claude/` dizinine bağlar; kurulu değilse bilgi verir |
 | `--evet` | Genel değişiklikler için onay sorusunu atlar |
-| `--hepsi` | bağımlılıklar, skills, bin, mcp, remotion, Claude bloğu ve hooks bölümlerini seçer; kaldırmayı seçmez |
+| `--hepsi` | bağımlılıklar, skills, bin, mcp, remotion, Claude bloğu, hooks ve güncelleme kancasını seçer; kaldırmayı seçmez |
 
 Seçeneksiz çağrı kullanım metniyle çıkar. `--kuru` ile Claude bloğunun önerilen farkı gösterilir. `--claude-md-kaldir` yalnız işaretli bloğu çıkarır; var olan diğer Claude kuralları korunur.
 
@@ -197,3 +199,17 @@ Kurulum bağlantı kurduğu için hedef sembolik bağları elle kaldırmak geri 
 
 
 Model ayarları `~/.config/kurgu-sistemi/modeller.env` dosyasındadır; örnek `config/modeller.ornek.env`.
+
+## Birden fazla Mac
+
+Her Mac'te depoyu alt modülleriyle klonlayıp kurun:
+
+```sh
+git clone --recursive <depo-adresi> ~/kurgu-sistemi
+cd ~/kurgu-sistemi
+./kurulum.sh --hepsi
+```
+
+`--hepsi`, `~/.local/bin/kurgu-guncelle` bağını ve Claude Code SessionStart kancasını da kurar. Oturum açılırken araç en fazla 15 saniye içinde güncellemeyi dener; başarılı denemeler arasında 60 dakika bekler. İnternet veya uzak depo erişilemezse sessizce çıkar. Commit edilmemiş değişiklik varsa ya da yerel dal uzaktan ilerideyse çekmez; sessiz olmayan çağrıda uyarır. Elle hemen denemek için `kurgu-guncelle --zorla` çalıştırın. Yeni `bin/` veya `skills/HARITA.md` girdisi geldiyse önerilen bağlantıları `./kurulum.sh --skills --bin` ile gözden geçirin.
+
+Değişiklikleri depoda yapıp commit ve push edin; diğer Mac'ler güncellemeyi oradan alır. Özel Kurgu Dersleri yalnız sahibinin ana Mac'inde kalır. Diğer Mac'ler depodaki genel dersleri kullanır; farklı ders dosyası için `KURGU_DERSLERI` ayarlanabilir.

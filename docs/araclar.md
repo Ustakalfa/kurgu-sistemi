@@ -156,3 +156,7 @@ Başı kırpar, tepeyi normalize eder, 48 kHz stereo PCM WAV üretir; 30 saniyey
 
 Araçlar `$HOME` kullanır; mutlak kişisel yol belgeye yazılmaz. CSV günlükleri prompt metnini değil tür/model/süre/sonucu tutar. Kaynağa yazan araçlarda önce `--dry-run` kullanın. Ham medya klasörünü çıktı hedefi yapmayın. Model/CLI sürümleri değişebileceği için hata anında kaynak betiği ve `--help` çıktısı son sözdür.
 
+
+## kurgu-guncelle
+
+`kurgu-guncelle [--sessiz] [--zorla]` depoyu ve alt modülleri hızlı ileri günceller. Kökü kendi sembolik bağının gerçek yolundan veya `KURGU_SISTEMI_KOK` değişkeninden bulur. `--sessiz` çıktı vermez; `--zorla` 60 dakikalık beklemeyi atlar. Kirli çalışma ağacında veya uzaktan ilerideki yerel dalda çekmez. Başarılı denemenin damgası `~/.cache/kurgu-sistemi/son-guncelleme`, son 200 kayıt `~/.cache/kurgu-sistemi/guncelle.log` içindedir. Oturum açılışında hata kodu üretmez.
