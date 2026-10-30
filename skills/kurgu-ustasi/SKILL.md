@@ -19,7 +19,8 @@ description: 'Her video kurgu işinde (kişisel veya müşteri, yatay veya dikey
 **MÜŞTERİ NOTLARI:** Müşteriye özel beğeni/itirazlar özel alanda tutulur; herkese açık `Kurgu Dersleri.md` dosyasına yalnız kişisel bilgisi çıkarılmış tarihli genel ders yazılır.
 
 Detay ve kaynaklar: `wiki/kavramlar/Kurgu Ustalığı Rehberi.md`.
-Platform, reklam ve retention stratejisi (Reels, TikTok, Shorts, YouTube uzun, Meta reklamı, tanıtım filmi): Yeni Beyin kasasında wiki/rehberler/Kurgu & Reklam Kaynak Havuzu.md (varsa); kurgu planındaki kanca, süre, güvenli alan ve CTA kararlarını oradaki ilgili rehberle kontrol et.
+**BİLGİ TABANI (zorunlu):** Kurgu planından önce Yeni Beyin kasasında wiki/rehberler/Kurgu & Reklam — Çekirdek Kurallar.md (varsa) oku; kanca, süre, güvenli alan, ses, CTA ve hak kararlarını ona göre ver. Ayrıntı: aynı klasördeki Kurgu & Reklam Kaynak Havuzu.md ve rehberleri. Kullanıcı kuralları ve Kurgu Dersleri karttan önce gelir.
+**OTONOM ÇALIŞMA:** Kurgu planını, kaba/ince kurguyu, rengi, sesi, altyazıyı ve grafikleri sormadan ilerlet; yalnız yayın/dış gönderim, export onayı, bütçe harcama ve geri dönüşü zor işlemlerde dur. Varsayımları not edip iş sonunda tek raporda göster.
 
 ## İşe başlamadan sor
 
