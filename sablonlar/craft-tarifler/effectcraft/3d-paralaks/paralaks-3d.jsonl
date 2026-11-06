@@ -1,0 +1,17 @@
+{"command":"file.newProject","params":{}}
+{"command":"file.projectSettings","params":{"bitDepth":16,"workingSpace":"rec709","renderer":"software"}}
+{"command":"comp.new","params":{"name":"PARALAKS_3D","width":3840,"height":2160,"frameRate":25,"duration":4,"background":"#101522","renderer":"advanced3D","open":true}}
+{"command":"layer.newShape","params":{"kind":"rect","name":"KART_ARKA","size":[1500,900],"fill":"#243055","position":[1920,1080]}}
+{"command":"layer.setSwitch","params":{"layers":["KART_ARKA"],"switch":"threeD","value":true}}
+{"command":"prop.set","params":{"layer":"KART_ARKA","path":"transform/position","value":[1920,1080,500]}}
+{"command":"layer.newShape","params":{"kind":"rect","name":"KART_ORTA","size":[1250,720],"fill":"#355D8A","position":[1920,1080]}}
+{"command":"layer.setSwitch","params":{"layers":["KART_ORTA"],"switch":"threeD","value":true}}
+{"command":"prop.set","params":{"layer":"KART_ORTA","path":"transform/position","value":[1920,1080,0]}}
+{"command":"layer.newShape","params":{"kind":"rect","name":"KART_ON","size":[900,500],"fill":"#F58220","position":[1920,1080]}}
+{"command":"layer.setSwitch","params":{"layers":["KART_ON"],"switch":"threeD","value":true}}
+{"command":"prop.set","params":{"layer":"KART_ON","path":"transform/position","value":[1920,1080,-450]}}
+{"command":"layer.newCamera","params":{"name":"KAMERA","type":"twoNode","preset":"35mm","dof":true,"focusDistance":2600,"aperture":120,"blurLevel":75,"position":[1920,1080,-3000],"poi":[1920,1080,0]}}
+{"command":"layer.newLight","params":{"kind":"Spot","name":"ISIK","color":"#FFF2DC","intensity":130,"coneAngle":80,"coneFeather":70,"castsShadows":true,"position":[1000,300,-1800],"poi":[1920,1080,0]}}
+{"command":"prop.addKey","params":{"layer":"KAMERA","path":"transform/position","time":0,"value":[1500,1000,-3200]}}
+{"command":"prop.addKey","params":{"layer":"KAMERA","path":"transform/position","time":4,"value":[2350,1120,-2450]}}
+{"command":"file.saveAs","params":{"path":"paralaks-3d.ecproj"}}

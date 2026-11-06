@@ -1,0 +1,32 @@
+{"command":"file.new","params":{"name":"Turkce_Rozet_4K","width":3840,"height":2160,"units":"Pixels","backgroundContents":"transparent","colorMode":"rgb"}}
+{"command":"document.setUnits","params":{"units":"Pixels"}}
+{"command":"shape.rectangle","params":{"x":840,"y":400,"width":2160,"height":1360,"radius":220}}
+{"command":"object.setProps","params":{"id":"$2.id","name":"Rozet Zemin"}}
+{"command":"paint.setFill","params":{"id":"$2.id","gradient":{"kind":"linear","angle":25,"dither":true,"stops":[{"offset":0,"color":"#5B36F2"},{"offset":0.55,"color":"#00B8D9"},{"offset":1,"color":"#72F2C7"}]}}}
+{"command":"paint.setStroke","params":{"id":"$2.id","color":"#DDFBFF"}}
+{"command":"stroke.set","params":{"id":"$2.id","weight":18,"join":"round"}}
+{"command":"shape.ellipse","params":{"x":1120,"y":610,"width":720,"height":720}}
+{"command":"object.setProps","params":{"id":"$7.id","name":"Sol Halka"}}
+{"command":"paint.setFill","params":{"id":"$7.id","color":"#10152D"}}
+{"command":"shape.star","params":{"cx":1780,"cy":970,"radius1":390,"radius2":170,"points":8,"rotation":22.5}}
+{"command":"object.setProps","params":{"id":"$10.id","name":"Sekizli Yildiz"}}
+{"command":"paint.setFill","params":{"id":"$10.id","gradient":{"kind":"radial","stops":[{"offset":0,"color":"#FFF5B8"},{"offset":1,"color":"#FF6B6B"}]}}}
+{"command":"object.pathfinder.unite","params":{"ids":["$7.id","$10.id"]}}
+{"command":"shape.ellipse","params":{"x":1500,"y":690,"width":560,"height":560}}
+{"command":"object.setProps","params":{"id":"$14.id","name":"Merkez Oyuk"}}
+{"command":"paint.setFill","params":{"id":"$14.id","color":"#FFFFFF"}}
+{"command":"object.pathfinder.minusFront","params":{"ids":["$13.ids.0","$14.id"]}}
+{"command":"paint.setFill","params":{"ids":"$17.ids","color":"#10152D"}}
+{"command":"paint.setStroke","params":{"ids":"$17.ids","color":"#DDFBFF"}}
+{"command":"stroke.set","params":{"ids":"$17.ids","weight":12,"join":"round"}}
+{"command":"text.create","params":{"x":1920,"y":1480,"text":"Çağrı Işığı Öğün Şükür İğne","size":150,"font":"Arial","style":"Bold","color":"#FFFFFF","justify":"center"}}
+{"command":"object.setProps","params":{"id":"$21.id","name":"Turkce Baslik"}}
+{"command":"select.set","params":{"ids":["$21.id"]}}
+{"command":"type.createOutlines","params":{}}
+{"command":"object.setProps","params":{"ids":"$24.ids","name":"Turkce Baslik Outline"}}
+{"command":"document.inspect","params":{"depth":4}}
+{"command":"file.saveAs","params":{"path":"vectorcraft-rozet.vectorcraft"}}
+{"command":"document.export","params":{"path":"vectorcraft-rozet.svg","format":"svg","artboard":0,"svg":{"outlineText":true,"decimals":3,"minify":false,"responsive":false}}}
+{"command":"document.export","params":{"path":"vectorcraft-rozet.pdf","format":"pdf","artboard":0,"preserveEditing":true}}
+{"command":"document.export","params":{"path":"vectorcraft-rozet.png","format":"png","artboard":0,"scale":1,"background":"transparent","antiAlias":"art"}}
+{"command":"document.json","params":{}}

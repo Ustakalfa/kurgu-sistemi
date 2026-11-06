@@ -1,0 +1,3 @@
+{"command":"comp.open","params":{"comp":"ANA_4K25_6SN"}}
+{"command":"layer.setSwitch","params":{"layers":["KOYU_ZEMIN"],"switch":"video","value":false}}
+{"command":"file.saveAs","params":{"path":"effectcraft-alfa.ecproj"}}

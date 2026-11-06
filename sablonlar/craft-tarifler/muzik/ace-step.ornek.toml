@@ -1,0 +1,17 @@
+config_path = "acestep-v15-turbo"
+lm_model_path = "acestep-5Hz-lm-0.6B"
+save_dir = "./cikti"
+audio_format = "wav"
+caption = "calm piano and warm strings, cinematic documentary underscore, instrumental"
+lyrics = "[Instrumental]"
+duration = 30
+instrumental = true
+vocal_language = "en"
+task_type = "text2music"
+thinking = false
+batch_size = 1
+seed = 42
+use_random_seed = false
+offload_to_cpu = true
+offload_dit_to_cpu = true
+backend = "mlx"

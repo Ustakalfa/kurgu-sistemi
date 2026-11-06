@@ -156,9 +156,35 @@ if (( skills )); then
   bagla "$repo/$kaynak" "$HOME/.claude/skills/$ad" "$HOME/.claude/skills-yedek"
  done < "$repo/skills/HARITA.md"
 fi
+if (( bin || mcp )); then
+ anahtar="$HOME/.config/filmcraft/control-token"
+ if [[ ! -f $anahtar ]]; then
+  print "FilmCraft kontrol anahtarı oluştur: $anahtar"
+  if (( ! kuru )); then
+   (umask 077; mkdir -p -- "${anahtar:h}"; openssl rand -hex 32 > "$anahtar") || exit 1
+   chmod 600 -- "$anahtar" || exit 1
+  fi
+ fi
+fi
+if (( bin || mcp )); then
+ photo_anahtar="$HOME/.config/photocraft/control-token"
+ if [[ ! -f $photo_anahtar ]]; then
+  print "PhotoCraft kontrol anahtarı oluştur: $photo_anahtar"
+  if (( ! kuru )); then
+   (umask 077; mkdir -p -- "${photo_anahtar:h}"; openssl rand -hex 32 > "$photo_anahtar") || exit 1
+   chmod 600 -- "$photo_anahtar" || exit 1
+  fi
+ fi
+fi
 if (( bin )); then for kaynak in "$repo"/bin/*; do bagla "$kaynak" "$HOME/.local/bin/${kaynak:t}" "$HOME/.local/bin-yedek"; done; fi
 if (( mcp )); then
- run claude mcp add filmcraft -- "$HOME/.local/bin/filmcraft-cli" mcp --bridge 127.0.0.1:9876
+ if (( ! bin )); then
+  bagla "$repo/bin/filmcraft-ac" "$HOME/.local/bin/filmcraft-ac" "$HOME/.local/bin-yedek"
+  bagla "$repo/bin/filmcraft-kopru" "$HOME/.local/bin/filmcraft-kopru" "$HOME/.local/bin-yedek"
+ fi
+ if (( kuru )) || claude mcp get filmcraft >/dev/null 2>&1; then run claude mcp remove filmcraft; fi
+ run claude mcp add filmcraft -- "$HOME/.local/bin/filmcraft-kopru" mcp --bridge 127.0.0.1:9876
+ if (( kuru )) || claude mcp get filmcraft-headless >/dev/null 2>&1; then run claude mcp remove filmcraft-headless; fi
  run claude mcp add filmcraft-headless -- "$HOME/.local/bin/filmcraft-cli" mcp
 else
  print 'MCP isteğe bağlı: --mcp veya --hepsi ile claude mcp add çalışır.'

@@ -10,12 +10,14 @@ Kurgu Sistemi is a public, source-oriented video editing workflow for macOS. It 
 - Video için zaman kodlu yapay zekâ incelemesi
 - Tür bazlı Codex, Gemini/agy ve Ollama yönlendiricileri
 - FilmCraft canlı ve başsız MCP bağlantısı
+- Craft ailesi (FilmCraft, EffectCraft, SoundCraft, PhotoCraft, VectorCraft, PdfCraft) için başlatıcılar (`craft-ac`, `filmcraft-ac`, `filmcraft-kopru`) ve uçtan uca tarifler (`sablonlar/craft-tarifler/`)
+- `sinema-kalitesi` skill'i: araç seçim matrisi, birleştirme hattı ve ölçümlü kalite kapıları
 - Zaman çizelgesi, ses, altyazı ve zorunlu renk akışı
 - Remotion tabanlı tekrar kullanılabilir marka katmanı
 - Whisper kelime/segment zamanları
 - Uzun videodan Reels/Shorts çıkarma
 - Katalog doğrulamalı ses efektleri
-- Kurulum, doğrulama ve senkron betikleri
+- Kurulum, doğrulama ve müşteri içeriğini dışarıda tutan güvenli senkron betikleri
 - Alt modül tabanlı dış beceri/araç koleksiyonu
 
 ## Akış
@@ -57,11 +59,13 @@ cd ~/kurgu-sistemi
 
 `--hepsi`, `--guncelle-kancasi` seçeneğini de içerir; yalnız oturum açılışı güncellemesini kurmak için `./kurulum.sh --guncelle-kancasi` kullanın.
 
-`https://github.com/Ustakalfa/kurgu-sistemi.git` yer tutucudur; gerçek genel URL bu çalışma ağacında doğrulanmadı. FilmCraft canlı köprüsü:
+Depo adresi: <https://github.com/Ustakalfa/kurgu-sistemi>. FilmCraft canlı köprüsü (kontrol anahtarıyla, önerilen yol):
 
 ```sh
-open -a FilmCraft --args --control 9876
+filmcraft-ac
 ```
+
+FilmCraft 0.13 ve sonrası canlı modda kontrol anahtarı ister; anahtarsız `--control 9876` bağlantısı reddedilir.
 
 Yeni iş ve çekim denetimi:
 
@@ -81,6 +85,37 @@ cekim-kontrol "$HOME/Movies/Isler/<YYYY-AA-GG>_ornek_tanitim/01-ham" --hizli
 7. Kullanıcı açıkça “al” demeden export yapılmaz; onaylı 4K çıktı `06-teslim/` içine alınır.
 
 Bu düzenin tam metni [Claude kural bloğunda](claude/CLAUDE.kurgu.md), devir ayrıntıları [kurgu-ekip skill'inde](skills/kurgu-ekip/SKILL.md) bulunur. `./kurulum.sh --guncelle-kancasi` Claude Code oturum açılışına sessiz güncelleme ekler. `./kurulum.sh --claude-md` bloğu `~/.claude/CLAUDE.md` içine ekler veya günceller; `--claude-md-kaldir` yalnız işaretli bloğu kaldırır; `--hooks` kurulu hookify eklentisi varsa yerel video hattı kuralını bağlar. [Denetim raporu](docs/denetim-raporu.md) düzeltmelerin kaydını tutar.
+
+## Craft ailesi
+
+Kurgu Craft uygulamalarıyla yapılır; Remotion yalnız Craft'ın karşılamadığı yerlerde, özellikle tipografi ve hareketli yazıda kullanılır. 4K alfa kıyasında yazı grafiğinde Remotion, görüntü efekti, ışık, gren ve 3D'de EffectCraft öne çıktı.
+
+| Uygulama | Görev |
+|---|---|
+| FilmCraft | kurgu, renk, altyazı, teslim (canlı ve başsız MCP) |
+| EffectCraft | hareketli grafik, ışık, gren, 3D; ProRes 4444 alfa |
+| SoundCraft | ses temizliği, miks, MIDI beste |
+| PhotoCraft | kapak ve küçük resim |
+| VectorCraft | logo, ikon, vektör |
+| PdfCraft | belge |
+
+`craft-ac <uygulama>` canlı köprüyü anahtarla açar. Komutları uydurmayın; önce `<uygulama>-cli commands` çıktısından doğrulayın. Ayrıntı: [Craft ailesi](docs/craft-ailesi.md), sürümler: [Sürümler](docs/surumler.md).
+
+## Kalite kapıları
+
+- Sekans baştan 4K: yatay 3840×2160, dikey 2160×3840.
+- Her videoda ölçümle renk düzeltme, ardından hafif look; önce/sonra karesi.
+- Teslimden önce tam tarama: baştan sona yaklaşık 2 sn'de bir kare, her grafik ve geçişin hemen sonrası, ses LUFS/TP, altyazı görünürlüğü, son kare. Her düzeltmeden sonra tarama yinelenir.
+- Uzun kayıttan kısa video: önce anlam haritası ve video listesi, kullanıcı onayı; az ve seçkin.
+- Kurgu planı ve büyük yaratıcı kararlar üretimden önce onaylanır.
+- Export yalnız açık onayla (“al”).
+
+## Yapay zekâ araç kararları
+
+- Yerel yapay zekâ ile **video üretimi yapılmaz**; odak eldeki kurgu ve efekt araçlarını iyi kullanmaktır.
+- **Müzik üretimi var:** Magenta RT small (sözsüz, CC BY 4.0, atıf gerekir) ve ACE-Step 1.5 (MIT; Türkçe vokal zayıf, sözsüz kullanılır).
+- Yardımcılar: DeepFilterNet (konuşma temizliği), PySceneDetect, SAM 2.1, Real-ESRGAN, RIFE, colour-science, librosa. Bunlar depoda değildir; kullanıcı ayrıca kurar.
+- Lisans nedeniyle müşteri işinde kullanılmayanlar: MusicGen/AudioGen, AudioLDM2, YuE, Demucs ağırlıkları, CoTracker3, MatAnyone, BRIA rembg modelleri, Stable Audio Open.
 
 ## Model ayarı
 
@@ -125,6 +160,10 @@ Bu düzenin tam metni [Claude kural bloğunda](claude/CLAUDE.kurgu.md), devir ay
 | [Kurallar](docs/kurallar.md) | değişmez çalışma kuralları |
 | [Kurgu Ustalığı Rehberi](docs/Kurgu%20Ustalığı%20Rehberi.md) | yaratıcı ve teknik başvuru |
 | [Kurgu Dersleri](docs/Kurgu%20Dersleri.md) | genellenebilir öğrenimler |
+| [Craft ailesi](docs/craft-ailesi.md) | Craft uygulamaları, komutlar, tarifler |
+| [Sürümler](docs/surumler.md) | doğrulanmış araç ve paket sürümleri |
+| [Değişiklikler](docs/degisiklikler.md) | tarihli değişiklik günlüğü |
+| [Yerel değişiklikler](docs/yerel-degisiklikler.md) | senkron davranışı ve korunan dosyalar |
 
 ## Kuralların özeti
 
@@ -141,7 +180,7 @@ Bu düzenin tam metni [Claude kural bloğunda](claude/CLAUDE.kurgu.md), devir ay
 
 ## Katkı ve senkron
 
-Katkıdan önce `./dogrula.sh` çalıştırın. `./senkronla.sh`, Remotion kaynaklarını bilinçli olarak depoya eşler; medya, WAV, proje, ortam dosyası, `node_modules` ve büyük dosyaları dışlar. `bin/` ve `skills/` deponun asıl kaynağıdır: betik bunları kopyalamaz, yalnız `~/.local/bin/`, `~/.claude/skills/` ve proje `.claude/skills/` bağlantılarını denetler; farklı içerik için elle birleştirme ya da `./kurulum.sh --bin --skills` ile depoya bağlama uyarısı verir. Aynı anda çalışan kişilerin dosya sahipliğini önceden ayırın. Alt modül güncellemesi ayrı ve gözden geçirilebilir bir değişiklik olmalıdır.
+Katkıdan önce `./dogrula.sh` çalıştırın. `./senkronla.sh` (önce `--kuru` ile deneyin) yalnız depoda zaten izlenen Remotion dosyalarını günceller; canlıdaki yeni dosyaları kopyalamaz, “elle karar ver” diye listeler. `config/senkron-korunan.txt` içindeki dosyalar hiç ezilmez ve her dosya gizlilik deseniyle taranır (kişiye özel desenler depo dışında: `$HOME/.config/kurgu-sistemi/gizli-desenler.txt`, örnek `config/gizli-desenler.ornek.txt`). Betik medya, WAV, proje, ortam dosyası, `node_modules` ve büyük dosyaları dışlar. `bin/` ve `skills/` deponun asıl kaynağıdır: betik bunları kopyalamaz, yalnız `~/.local/bin/`, `~/.claude/skills/` ve proje `.claude/skills/` bağlantılarını denetler; farklı içerik için elle birleştirme ya da `./kurulum.sh --bin --skills` ile depoya bağlama uyarısı verir. Aynı anda çalışan kişilerin dosya sahipliğini önceden ayırın. Alt modül güncellemesi ayrı ve gözden geçirilebilir bir değişiklik olmalıdır.
 
 ## Güvenlik ve mahremiyet
 
@@ -149,5 +188,5 @@ Katkıdan önce `./dogrula.sh` çalıştırın. `./senkronla.sh`, Remotion kayna
 
 ## Lisans
 
-Depo lisans dosyası bu çalışma ağacında doğrulanmadı. Kamuya açmadan önce kökte açık bir lisans dosyası eklenmeli ve üçüncü taraf alt modüller ile medya varlıklarının kendi lisansları ayrıca korunmalıdır. Lisans belirlenene kadar kullanım hakları “doğrulanmadı” kabul edilmelidir.
+Depo kodu [MIT](LICENSE) lisanslıdır. Nexus marka varlıkları (logo, marka renkleri) MIT kapsamı dışındadır, tüm hakları saklıdır. `vendor/` altındaki alt modüller kendi lisanslarını taşır: [THIRD_PARTY.md](THIRD_PARTY.md).
 

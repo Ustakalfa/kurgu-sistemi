@@ -22,7 +22,7 @@ Gemini, `gemini-run video -d klasör` ile ham çekimi izler ve en iyi anları za
 ## Bağlantı
 
 - **Penceresiz:** `.mcp.json` içindeki `filmcraft-headless` (`filmcraft-cli mcp`) otomatik işler için.
-- **Canlı:** Kullanıcı izlerken önce `open -a FilmCraft --args --control 9876`; ardından `.mcp.json` içindeki `filmcraft` köprüsü (`mcp --bridge 127.0.0.1:9876`). `filmcraft-cli --help`, uygulama argümanını `filmcraft --control PORT` olarak doğrular.
+- **Canlı:** Önce `filmcraft-ac [proje.fcproj]` ile uygulamayı anahtarlı olarak 9876 portunda aç; MCP `filmcraft` kaydı `filmcraft-kopru mcp --bridge 127.0.0.1:9876` çalıştırır. FilmCraft 0.13+ canlı kontrol için uygulama ve CLI tarafında aynı `FILMCRAFT_CONTROL_TOKEN` anahtarını zorunlu kılar. Anahtar `~/.config/filmcraft/control-token` içinde izin 600 ile kalır; bu herkese açık depoya veya kasaya asla yazılmaz.
 - Satır satır adım dosyası için `python3 -I araclar/filmcraft-mcp.py ~/.local/bin/filmcraft-cli adimlar.txt`; her satır `araç_adı {json}`. Bu yardımcı penceresiz MCP açar. Komut ve parametrelerin tam kaynağı `araclar/filmcraft-komutlar.txt`.
 
 ## Test edilmiş sıra
@@ -38,6 +38,10 @@ Bu bölüm yalnız kullanıcı “al” dedikten sonra uygulanır. Önce `comman
 | Alan | Komut | İş ve kritik parametreler |
 |---|---|---|
 | Kurgu | `timeline.razor` | Zamanda keser; `time` (tick), isteğe bağlı `track`, `clip`; CLI `seconds` kabul eder. |
+| Kurgu | `timeline.delete` | `clips` listesini siler; `ripple:true` boşluğu kapatır. |
+| Sekans | `sequence.setWorkArea`; `sequence.setWorkAreaIn`; `sequence.setWorkAreaOut` | Çalışma aralığını `start`, `end` tick değerleriyle ya da giriş/çıkış uçlarıyla ayarlar. |
+| Sekans | `sequence.duplicateFrames` | Yinelenen kareleri listeler. |
+| Altyazı | `captions.duplicate` | `captions` ve `delta` tick veya `deltaFrames` ile çoğaltır. |
 | Kurgu | `timeline.trim`; `edit.rippleDelete` | Klip kenarını düzeltir (`clip`, `edge`, `mode`, `deltaFrames`); seçilen klibi boşluğu kapatarak siler (`clips`). |
 | Grafik | `graphics.newText`; `graphics.newShape` | Metin (`text`, `position`, `size`, `seconds`) veya şekil (`shape`, `position`, `size`) ekler. |
 | Grafik | `graphics.align`; `graphics.template.apply` | Katman hizalar (`clip`, `layers`, `align`, `to`) veya şablon uygular (`template`, `values`, `time`). |
@@ -50,7 +54,38 @@ Bu bölüm yalnız kullanıcı “al” dedikten sonra uygulanır. Önce `comman
 | Efekt | `effects.setParam`; `effects.setInterpolation` | `clip`, `effect`, `param`, `value`, `time`, `keyframe:true` ile animasyon; `mediaTime`, `interpolation` ile geçiş ayarı. |
 | Dışa aktarım | `export.quick`; `export.presets.list` | Yalnız kullanıcı “al” dedikten sonra kullanılır; önce `query`, `category`, `format`, `favorites` ile önayar aranır, sonra gerçek önayar adıyla `path`, `preset`, `wait:true` kullanılır. |
 
-Her değişiklikten sonra `sequence_inspect` ile doğrula; kritik karelerde `render_frame` ile görsel kontrol yap. Yalnız onaylı dışa aktarım sonrasında dosyayı `ffprobe` ile kontrol et. Reels sekansı baştan **2160×3840** kurulur. FilmCraft 0.10.0 alfa sürümüdür: hata halinde adımı tekrar etme, hatayı ve mevcut durumu Claude'a raporla. Komut uydurma; yalnızca `araclar/filmcraft-komutlar.txt` içindeki adları kullan.
+Her değişiklikten sonra `sequence_inspect` ile doğrula; kritik karelerde `render_frame` ile görsel kontrol yap. Yalnız onaylı dışa aktarım sonrasında dosyayı `ffprobe` ile kontrol et. Reels sekansı baştan **2160×3840** kurulur. FilmCraft 0.17.1 alfa sürümüdür: hata halinde adımı tekrar etme, hatayı ve mevcut durumu Claude'a raporla. Komut uydurma; yalnızca `araclar/filmcraft-komutlar.txt` içindeki adları kullan.
+
+Ayrı `filmcraft-cli` çağrıları arasında durum korunmaz: `--project p.fcproj import` tek başına projeyi kaydetmez. Çok adımlı işi tek `run script.jsonl` içinde yürüt ve sonuna `file.save` koy. Canlı MCP `ui_screenshot` yalnız `max_side` ve `panel` parametrelerini alır; `path` yoktur, görüntü base64 döner.
+
+## Craft ailesi
+
+Ayrıntılı araç matrisi ve kalite kapıları için `sinema-kalitesi` skill'ine bak.
+
+Beş CLI kurulu: `~/.local/bin/filmcraft-cli` (0.17.1), `~/.local/bin/soundcraft-cli` (0.17.1), `~/.local/bin/effectcraft-cli` (0.21.1), `~/.local/bin/vectorcraft-cli` (0.21.1), `~/.local/bin/photocraft-cli` (PhotoCraft uygulamasına sembolik bağ, 0.20.2). Beş canlı köprü `craft-ac` ile doğrulandı. Uygulamalı tarifler `sablonlar/craft-tarifler/`, ayrıntılar `docs/craft-ailesi.md`.
+
+| Uygulama | Durum ve kalıcı kayıt |
+|---|---|
+| FilmCraft | Çok adımı tek `run script.jsonl` içinde çalıştır; sonda `file.save` veya `file.saveAs`. Ayrı çağrı projeyi kendiliğinden kaydetmez. |
+| SoundCraft | `script tarif-v2.jsonl --save miks.scraft`; sonraki çağrıda `--in miks.scraft`. İthal izlere kalıcı ID ile eriş. |
+| PhotoCraft | `run --new ... --cmd ... --params ... --out kapak.pcraft`; sonraki `run kapak.pcraft ... --out ...`. `batch --actions ... --in ... --out ...`. |
+| EffectCraft | `--empty run --commands ... --save-as proje.ecproj`; sonraki çağrı `--project proje.ecproj` ve `--save`/`--save-as`. Hatalı batch durur. |
+| VectorCraft | `run --commands ...`; devam için `--in dosya.vectorcraft`, kayıt için `file.saveAs`/`document.save` veya `--export`. Adımlar `$N.id`/`$N.ids` kullanır. |
+
+Kritik tuzaklar: (1) SoundCraft `mix.mute` parametresi `value:true`; videonun ayrı açılan ses izini sustur. (2) Maximizer varsayılan `threshold:0` kazanç sağlamaz; testte `-8` hedefi tuttu. (3) `eq_1band` tipi sayıdır: 0 Peak, 1 Low Shelf, 2 High Shelf, 3 High Pass, 4 Low Pass, 5 Notch, 6 Band Pass; `freq`/`q` kullan. (4) SoundCraft iz sıra numarasını değil kalıcı ID'yi kullan. (5) EffectCraft maske koordinatı layer-space; `render-frame` ile bak. (6) Lottie, Noise/Glow/adjustment'ı atlar ve text animator'ı bake eder. (7) VectorCraft `dither:true` degrade SVG/PDF'de rasterlaşır. (8) Pathfinder sonrası yeni `$N.ids` ile devam et; `stroke.set {weight:...}` kullan. (9) FilmCraft `timeline.place` için video `audio:false` kaynak sesini engeller. (10) `track:"new"` yeni V3 açar; alfa MOV'u V2/V3, final WAV'ı A1'e koy.
+
+Hat sırası: VectorCraft SVG/PNG → EffectCraft alfa ProRes 4444 → FilmCraft üst video izleri; FilmCraft referans MP4/WAV → SoundCraft 48 kHz/24-bit miks → FilmCraft A1; FilmCraft karesi → PhotoCraft kapak. Birleşik testte 3840×2160/25 fps, alfa kompozit ve Türkçe karakterler doğrulandı. Üretim işinde bu bölümün dışa aktarım onayı kuralını koru.
+
+
+| Canlı mod | Başlatma | Bağlanma |
+|---|---|---|
+| FilmCraft 9876 | `craft-ac film [dosya]` | `filmcraft-kopru mcp --bridge 127.0.0.1:9876` |
+| EffectCraft 9877 | `craft-ac effect [dosya]` | `effectcraft-cli mcp --bridge 9877` |
+| SoundCraft 7801 | `craft-ac sound [dosya]` | `soundcraft-cli mcp --connect 7801` |
+| PhotoCraft 7878 | `craft-ac photo [dosya]` | `photocraft-cli mcp --bridge 127.0.0.1:7878 --control-token-file "$HOME/.config/photocraft/control-token"` |
+| VectorCraft 7979 | `craft-ac vector [dosya]` | `vectorcraft-cli mcp --connect 127.0.0.1:7979` |
+
+Türkçe altyazı: `sablonlar/craft-tarifler/altyazi/whisper-srt.sh` ile SRT üret, sonra FilmCraft `captions.import` uygula. Bu derlemede `transcript.generate` yok. Rengi ortalamayla değil aynı karedeki bölge/piksel farkıyla ölç; düzeltilmiş orta alanda RGB mutlak fark 7,9/3,0/10,5 ve hedef <6 hâlâ karşılanmadı. Ses için `ses/temizle.sh` kullan; ölçülen gürültü tabanı −40,3 → −60,4 dB. FilmCraft maske takibi güvenilmez (yaklaşık 1670 px hata); EffectCraft nokta takibi de 58–63 px saptı. EffectCraft 4K25 6 sn ProRes 4444 render yaklaşık 107 sn sürer; zamanı planla.
 
 ## Kalite ve Sony FX30 (2026-10-21'de test edildi)
 - **FX30 dosyaları açılıyor:** XAVC S-I (H.264 High 4:2:2 Intra 10-bit) ve XAVC HS (HEVC 4:2:2 10-bit) M4 donanım çözücüsüyle (VideoToolbox) çözülüyor. FilmCraft'ın kendi yazılım çözücüsü 4:2:2 10-bit desteklemiyor; bu yalnızca Mac'te çalışır.

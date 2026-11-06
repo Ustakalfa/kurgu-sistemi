@@ -1,0 +1,8 @@
+#!/bin/zsh
+# FilmCraft'ı canlı kontrol açık (port 9876) ve kontrol anahtarıyla başlatır.
+# Kullanım: filmcraft-ac [proje.fcproj | medya...]   Port değiştirmek: FILMCRAFT_PORT=9877 filmcraft-ac
+port="${FILMCRAFT_PORT:-9876}"
+token="$(<"$HOME/.config/filmcraft/control-token")"
+dosyalar=()
+for f in "$@"; do dosyalar+=("${f:A}"); done
+exec /usr/bin/open -n --env "FILMCRAFT_CONTROL_TOKEN=$token" -a FilmCraft --args --control "$port" "${dosyalar[@]}"

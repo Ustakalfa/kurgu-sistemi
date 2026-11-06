@@ -1,0 +1,12 @@
+# Senkronla.sh korunan dosya listesi — her satır bir depo yolu (# yorum serbest)
+# Bu dosyalar canlı kaynaktan asla ezilmez.
+# Canlıyla farklıysa "Korunan dosya farklı (elle birleştir): ..." uyarısı verilir.
+remotion/src/Root.tsx
+remotion/src/Reels06.tsx
+remotion/src/Reels07.tsx
+docs/Kurgu Dersleri.md
+# Depoda canlıdan daha yeni (2026-11-06: Remotion 3D/Lottie paketleri, FilmCraft 0.17.1 komut listesi).
+# Canlı proje aynı sürüme gelince bu üç satır listeden çıkarılabilir.
+remotion/package.json
+remotion/package-lock.json
+remotion/araclar/filmcraft-komutlar.txt

@@ -1,0 +1,3 @@
+{"id": "lut.import", "params": {"path": "renk-duzeltme.cube", "name": "Kayik duzeltme"}}
+{"id": "lumetri.setInputLut", "params": {"clip": 15, "path": "renk-duzeltme.cube"}}
+{"id": "file.saveAs", "params": {"path": "renk.fcproj"}}

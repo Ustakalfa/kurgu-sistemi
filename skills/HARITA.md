@@ -10,6 +10,7 @@ Kurulum `--skills` bu yolları kullanır. Aynı adlı dış skill için aşağı
 | avenox-video | vendor/avenoxskills/skills/avenox-video | MIT | Yerel çalışan Avenox Studio hattında uzun video kurgu, kesme, grafik, altyazı, ses ve render işlerini insan yönetmen onayıyla yönlendirir. | orkestrasyon |
 | checking-delivery | vendor/done-is-a-claim/skills/checking-delivery | Apache-2.0 | Bir dosya, mesaj, dışa aktarım veya dağıtımın gerçek teslim hedefinde doğrulanmasını ve hazırlama, gönderim, yayın ile tüketici kontrolünün ayrılmasını sağlar. | teslim/denetim |
 | collecting-worker-results | vendor/done-is-a-claim/skills/collecting-worker-results | Apache-2.0 | Duran bir çalışanın döndürdüğü iş, kanıt ve doğrulamayı inceleyerek kabul, yeniden deneme veya entegrasyon kararını verir. | teslim/denetim |
+| sinema-kalitesi | skills/sinema-kalitesi | MIT | Video, grafik, efekt ve müzikte araç seçimi, birleştirme ve ölçümlü kalite kontrolü. | tüm üretim |
 | filmcraft-kurgu | skills/filmcraft-kurgu | MIT | FilmCraft MCP ile kesme, renk, ses, altyazı ve basit grafik işlemlerini proje dosyasına uygulayıp görsel olarak doğrular. | ince kurgu |
 | kurgu-ekip | skills/kurgu-ekip | MIT | Claude, Codex, Gemini ve yerel model arasındaki kurgu devrini ve teslim denetimini düzenler. | orkestrasyon |
 | kurgu-ustasi | skills/kurgu-ustasi | MIT | Brief ve ham çekim klasöründen çekim-kontrol raporunu okuyup format, hikâye, ses, renk ve teslim adımlarını içeren kurgu planı çıkarır. | çekim kontrol |

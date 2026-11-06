@@ -1,0 +1,5 @@
+#!/bin/zsh
+# FilmCraft 0.13+ canlı köprü: kontrol anahtarını ekleyip filmcraft-cli'yi çalıştırır.
+# Örnek: filmcraft-kopru --bridge 127.0.0.1:9876 inspect project · MCP: filmcraft-kopru mcp --bridge 127.0.0.1:9876
+export FILMCRAFT_CONTROL_TOKEN="$(<"$HOME/.config/filmcraft/control-token")"
+exec "$HOME/.local/bin/filmcraft-cli" "$@"

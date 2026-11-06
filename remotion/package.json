@@ -11,13 +11,18 @@
     "tip": "tsc --noEmit"
   },
   "dependencies": {
+    "@react-three/fiber": "9.8.2",
     "@remotion/captions": "4.0.532",
     "@remotion/cli": "4.0.532",
     "@remotion/google-fonts": "4.0.532",
+    "@remotion/lottie": "4.0.532",
     "@remotion/media": "4.0.532",
+    "@remotion/three": "4.0.532",
+    "lottie-web": "5.13.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "remotion": "4.0.532"
+    "remotion": "4.0.532",
+    "three": "0.187.0"
   },
   "devDependencies": {
     "@types/react": "19.3.0",

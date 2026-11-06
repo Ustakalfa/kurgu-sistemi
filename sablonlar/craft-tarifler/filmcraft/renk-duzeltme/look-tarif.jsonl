@@ -1,0 +1,3 @@
+{"id": "effects.setParam", "params": {"clip": 15, "effect": 0, "param": "contrast", "value": 8}}
+{"id": "effects.setParam", "params": {"clip": 15, "effect": 0, "param": "temperature", "value": 4}}
+{"id": "file.saveAs", "params": {"path": "look.fcproj"}}

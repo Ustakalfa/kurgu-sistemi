@@ -1,0 +1,6 @@
+{"command":"renderQueue.add","params":{"comp":"ANA_4K25_6SN","format":"h264","output":"effectcraft-queue-h264.mp4","quality":"best","resolution":"full","channels":"rgb","bitrate":35000,"audio":"off","frameRate":25}}
+{"command":"renderQueue.list","params":{}}
+{"command":"renderQueue.setRenderSettings","params":{"index":1,"quality":"best","resolution":"full","timeSpan":"comp","frameRate":25}}
+{"command":"renderQueue.setOutput","params":{"index":1,"module":1,"path":"effectcraft-queue-h264.mp4"}}
+{"command":"renderQueue.render","params":{"wait":true}}
+{"command":"renderQueue.list","params":{}}

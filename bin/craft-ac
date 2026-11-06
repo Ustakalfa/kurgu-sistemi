@@ -1,0 +1,19 @@
+#!/bin/zsh
+# Craft uygulamalarını canlı kontrol açık başlatır. Kullanım: craft-ac <film|effect|sound|photo|vector> [dosya...]
+# Portlar: film 9876 (anahtarlı) · effect 9877 · sound 7801 · photo 7878 (anahtarlı) · vector 7979
+# Bağlanma: filmcraft-kopru mcp --bridge 127.0.0.1:9876 · effectcraft-cli mcp --bridge 9877
+#           soundcraft-cli mcp --connect 7801 · photocraft-cli mcp --bridge 127.0.0.1:7878 --control-token-file ~/.config/photocraft/control-token
+#           vectorcraft-cli mcp --connect 127.0.0.1:7979
+uyg="${1:-}"; shift 2>/dev/null
+dosyalar=(); for f in "$@"; do dosyalar+=("${f:A}"); done
+case "$uyg" in
+  film) exec "$HOME/.local/bin/filmcraft-ac" "${dosyalar[@]}" ;;
+  effect) exec /usr/bin/open -n -a EffectCraft --args --control 9877 "${dosyalar[@]}" ;;
+  sound) exec /usr/bin/open -n -a SoundCraft --args --control 7801 "${dosyalar[@]}" ;;
+  photo)
+    tf="$HOME/.config/photocraft/control-token"
+    [[ -s $tf ]] || { (umask 077; mkdir -p "${tf:h}"; openssl rand -hex 32 > "$tf"); chmod 600 "$tf"; }
+    exec /usr/bin/open -n --env "PHOTOCRAFT_CONTROL_TOKEN_FILE=$tf" -a PhotoCraft --args --control 7878 "${dosyalar[@]}" ;;
+  vector) exec /usr/bin/open -n -a VectorCraft --args --control 7979 "${dosyalar[@]}" ;;
+  *) print -u2 'Kullanım: craft-ac <film|effect|sound|photo|vector> [dosya...]'; exit 2 ;;
+esac

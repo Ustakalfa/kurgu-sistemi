@@ -1,0 +1,9 @@
+{"id":"file.newProject","params":{"name":"Craft hattı testi"}}
+{"id":"file.import","params":{"paths":["$GIRDI/test4k.mp4","$GIRDI/effectcraft-alfa-prores4444.mov","$GIRDI/vector-kopru-alfa.mov","$GIRDI/miks-v3.wav"]}}
+{"id":"file.newSequence","params":{"name":"Hat 4K25","width":3840,"height":2160,"fps":25,"sampleRate":48000}}
+{"id":"timeline.place","params":{"item":1,"track":"V1","seconds":0,"insert":false,"audio":false}}
+{"id":"timeline.place","params":{"item":1,"track":"V1","seconds":4,"insert":false,"audio":false}}
+{"id":"timeline.place","params":{"item":2,"track":"V2","seconds":0,"insert":false}}
+{"id":"timeline.place","params":{"item":3,"track":"new","seconds":5,"insert":false}}
+{"id":"timeline.place","params":{"item":4,"track":"A1","seconds":0,"insert":false,"duration":{"seconds":8}}}
+{"id":"file.saveAs","params":{"path":"$CIKTI/hat.fcproj"}}

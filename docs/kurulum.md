@@ -96,15 +96,15 @@ ollama list
 
 `yerel-run`, temizle için ilk modeli; diğer türler için ikinci modeli kullanır.
 
-### 8. FilmCraft 0.10.0
+### 8. FilmCraft 0.17.1
 
-FilmCraft.app 0.10.0 sürümünü resmi dağıtımından `/Applications/FilmCraft.app` konumuna yerleştirin. İndirme URL'si depoda doğrulanmadı. `filmcraft-cli` dosyası `~/.local/bin/filmcraft-cli` olmalı ve çalıştırılabilir olmalıdır.
+FilmCraft.app 0.17.1 sürümünü resmi dağıtımından `/Applications/FilmCraft.app` konumuna yerleştirin. İndirme URL'si depoda doğrulanmadı. `filmcraft-cli` dosyası `~/.local/bin/filmcraft-cli` olmalı ve çalıştırılabilir olmalıdır.
 
-Canlı mod:
+Canlı mod: `./kurulum.sh --bin --mcp` eksik kontrol anahtarını `umask 077` ve `openssl rand -hex 32` ile `~/.config/filmcraft/control-token` yolunda üretir (izin 600), iki başlatıcıyı `~/.local/bin/` altına bağlar. Anahtarı depoya veya kasaya kopyalamayın.
 
 
 ```sh
-open -a FilmCraft --args --control 9876
+filmcraft-ac [proje.fcproj]
 ```
 
 
@@ -112,10 +112,24 @@ MCP kayıtları:
 
 
 ```sh
-claude mcp add filmcraft -- "$HOME/.local/bin/filmcraft-cli" mcp --bridge 127.0.0.1:9876
+claude mcp add filmcraft -- "$HOME/.local/bin/filmcraft-kopru" mcp --bridge 127.0.0.1:9876
 claude mcp add filmcraft-headless -- "$HOME/.local/bin/filmcraft-cli" mcp
 ```
 
+
+### 8b. Diğer Craft uygulamaları
+
+EffectCraft, SoundCraft, PhotoCraft, VectorCraft ve PdfCraft ayrı uygulamalardır; resmi dağıtımlarından kurulur (indirme adresleri depoda doğrulanmadı). CLI'ler `~/.local/bin/<uygulama>-cli` konumunda olmalıdır; doğrulanan sürümler [Sürümler](surumler.md) sayfasındadır. `./kurulum.sh --bin --mcp` eksik PhotoCraft kontrol anahtarını da `~/.config/photocraft/control-token` yolunda üretir. Canlı köprü:
+
+```sh
+craft-ac effectcraft
+```
+
+`dogrula.sh` Craft CLI'leri çalışmazsa yalnız uyarı verir; FilmCraft sürümü beklenenden farklıysa da uyarı verir, hata saymaz.
+
+### 8c. İsteğe bağlı gizlilik desenleri
+
+Senkron ve doğrulama, depodaki genel desenlere (kullanıcı yolu, anahtar kalıpları) ek olarak `$HOME/.config/kurgu-sistemi/gizli-desenler.txt` dosyasındaki kişiye özel desenleri (müşteri, kişi, proje adları) de tarar. Dosya yoksa uyarı verilir. Biçim için `config/gizli-desenler.ornek.txt` dosyasına bakın; gerçek adları depoya yazmayın.
 
 ### 9. LUT ve yazı tipi
 
@@ -192,7 +206,7 @@ Kurulum bağlantı kurduğu için hedef sembolik bağları elle kaldırmak geri 
 | `agy` yok | dış araç kurulmadı | resmi kurulumla `~/.local/bin/agy` oluştur |
 | Ollama yanıt vermiyor | servis kapalı | `brew services start ollama` |
 | Whisper modeli yok | indirme yarım | model yolunu ve dosya boyutunu kontrol et |
-| MCP bağlanmıyor | uygulama/port kapalı | FilmCraft'ı `--control 9876` ile başlat |
+| MCP bağlanmıyor | uygulama/port kapalı | `filmcraft-ac` ile başlat |
 | `npm ci` kilit hatası | Node/lock uyumsuz | doğrulanmış Node sürümünü kullan |
 | font ağdan yüklenmiyor | ağ veya önbellek | ilk kurulumu ağ varken çalıştır |
 | komut eski sürüm | bağlantı başka hedefe gidiyor | `which` ve `ls -l` ile bağı denetle |

@@ -1,0 +1,16 @@
+# Gizli desenler örnek dosyası — YALNIZ UYDURMA ÖRNEKLER, gerçek ad yok.
+# Gerçek desenlerinizi $HOME/.config/kurgu-sistemi/gizli-desenler.txt dosyasına koyun.
+# Her satır genişletilmiş bir regex'tir; # yorum satırıdır.
+
+# Kurgusal müşteri kodu örneği (uydurma)
+acme ?corp
+acmecorp
+betaprod
+
+# Kurgusal kişi adı örneği (uydurma)
+John Doe
+jane ?doe
+
+# Kurgusal kampanya kodu örneği (uydurma)
+kampanya ?beta
+betakampanya

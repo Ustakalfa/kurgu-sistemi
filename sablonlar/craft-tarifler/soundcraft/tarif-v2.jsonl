@@ -1,0 +1,17 @@
+session.new {"name":"YouTube Miks v2","sample_rate":48000,"bit_depth":24}
+file.import_audio {"path":"konusma-kirli.wav"}
+track.rename {"track":2,"name":"Konuşma"}
+file.import_audio {"path":"muzik-yatagi.wav"}
+track.rename {"track":5,"name":"Müzik"}
+file.import_video {"path":"test4k.mp4"}
+mix.mute {"tracks":[8],"value":true}
+mix.insert {"track":2,"slot":0,"plugin":"eq_1band","params":{"type":3,"freq":80}}
+mix.insert {"track":2,"slot":1,"plugin":"eq_1band","params":{"type":5,"freq":50,"q":8}}
+mix.insert {"track":2,"slot":2,"plugin":"expander_gate","params":{"threshold":-45,"ratio":4,"range":20,"release":150}}
+mix.insert {"track":2,"slot":3,"plugin":"de_esser","params":{"freq":6500,"threshold":-30,"range":8}}
+mix.insert {"track":2,"slot":4,"plugin":"compressor","params":{"threshold":-24,"ratio":3,"attack":5,"release":120,"makeup":4}}
+mix.insert {"track":2,"slot":5,"plugin":"maximizer","params":{"threshold":-8,"ceiling":-1.2,"release":60}}
+mix.volume {"tracks":[5],"db":-6}
+automation.write_range {"track":5,"param":"volume","start":0,"end":25,"value":-18}
+file.bounce_mix {"path":"miks-v3.wav","format":"wav","bit_depth":24}
+file.bounce_stems {"dir":"stemler-v3","format":"wav","bit_depth":24}

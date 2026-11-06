@@ -5,14 +5,16 @@
 Canlı mod, masaüstü uygulamasının 9876 portundaki kontrol köprüsüne bağlanır:
 
 ```sh
-open -a FilmCraft --args --control 9876
-filmcraft-cli mcp --bridge 127.0.0.1:9876
+filmcraft-ac [proje.fcproj]
+filmcraft-kopru mcp --bridge 127.0.0.1:9876
 ```
+
+FilmCraft 0.13+ canlı köprüde iki süreçte aynı kontrol anahtarı gerekir; anahtar yalnız `~/.config/filmcraft/control-token` içinde izin 600 ile tutulur. Depoya veya kasaya yazılmaz.
 
 Başsız mod `filmcraft-cli mcp` ile çalışır. Claude kayıtları:
 
 ```sh
-claude mcp add filmcraft -- "$HOME/.local/bin/filmcraft-cli" mcp --bridge 127.0.0.1:9876
+claude mcp add filmcraft -- "$HOME/.local/bin/filmcraft-kopru" mcp --bridge 127.0.0.1:9876
 claude mcp add filmcraft-headless -- "$HOME/.local/bin/filmcraft-cli" mcp
 ```
 

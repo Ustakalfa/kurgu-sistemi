@@ -1,0 +1,347 @@
+{"command":"file.newProject","params":{}}
+{"command":"file.projectSettings","params":{"bitDepth":16,"workingSpace":"rec709","renderer":"software"}}
+{"command":"comp.new","params":{"name":"SENKRON_ALT","width":3840,"height":2160,"frameRate":25,"duration":9.2,"background":"#00000000","open":true}}
+{"command":"layer.newText","params":{"name":"ALT_01_Merhaba","text":"Merhaba","position":[520,1840],"font":"Arial","style":"Bold","size":94,"fill":"#F58220","justify":"center"}}
+{"command":"prop.addKey","params":{"layer":"ALT_01_Merhaba","path":"transform/opacity","time":1.44,"value":0}}
+{"command":"prop.addKey","params":{"layer":"ALT_01_Merhaba","path":"transform/opacity","time":1.6,"value":100}}
+{"command":"prop.addKey","params":{"layer":"ALT_01_Merhaba","path":"transform/position","time":1.44,"value":[520,1882]}}
+{"command":"prop.addKey","params":{"layer":"ALT_01_Merhaba","path":"transform/position","time":1.6,"value":[520,1840]}}
+{"command":"prop.addKey","params":{"layer":"ALT_01_Merhaba","path":"transform/scale","time":1.44,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"ALT_01_Merhaba","path":"transform/scale","time":1.6,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["ALT_01_Merhaba"]}}
+{"command":"prop.addKey","params":{"layer":"ALT_01_Merhaba","path":"effects/#1/blurriness","time":1.44,"value":24}}
+{"command":"prop.addKey","params":{"layer":"ALT_01_Merhaba","path":"effects/#1/blurriness","time":1.6,"value":0}}
+{"command":"layer.newText","params":{"name":"ALT_02_arkadaşlar","text":"arkadaşlar.","position":[1080,1840],"font":"Arial","style":"Bold","size":94,"fill":"#FFFFFF","justify":"center"}}
+{"command":"prop.addKey","params":{"layer":"ALT_02_arkadaşlar","path":"transform/opacity","time":2.1999999999999997,"value":0}}
+{"command":"prop.addKey","params":{"layer":"ALT_02_arkadaşlar","path":"transform/opacity","time":2.36,"value":100}}
+{"command":"prop.addKey","params":{"layer":"ALT_02_arkadaşlar","path":"transform/position","time":2.1999999999999997,"value":[1080,1882]}}
+{"command":"prop.addKey","params":{"layer":"ALT_02_arkadaşlar","path":"transform/position","time":2.36,"value":[1080,1840]}}
+{"command":"prop.addKey","params":{"layer":"ALT_02_arkadaşlar","path":"transform/scale","time":2.1999999999999997,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"ALT_02_arkadaşlar","path":"transform/scale","time":2.36,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["ALT_02_arkadaşlar"]}}
+{"command":"prop.addKey","params":{"layer":"ALT_02_arkadaşlar","path":"effects/#1/blurriness","time":2.1999999999999997,"value":24}}
+{"command":"prop.addKey","params":{"layer":"ALT_02_arkadaşlar","path":"effects/#1/blurriness","time":2.36,"value":0}}
+{"command":"layer.newText","params":{"name":"ALT_03_Bugün","text":"Bugün","position":[1640,1940],"font":"Arial","style":"Bold","size":94,"fill":"#FFFFFF","justify":"center"}}
+{"command":"prop.addKey","params":{"layer":"ALT_03_Bugün","path":"transform/opacity","time":3.3,"value":0}}
+{"command":"prop.addKey","params":{"layer":"ALT_03_Bugün","path":"transform/opacity","time":3.46,"value":100}}
+{"command":"prop.addKey","params":{"layer":"ALT_03_Bugün","path":"transform/position","time":3.3,"value":[1640,1982]}}
+{"command":"prop.addKey","params":{"layer":"ALT_03_Bugün","path":"transform/position","time":3.46,"value":[1640,1940]}}
+{"command":"prop.addKey","params":{"layer":"ALT_03_Bugün","path":"transform/scale","time":3.3,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"ALT_03_Bugün","path":"transform/scale","time":3.46,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["ALT_03_Bugün"]}}
+{"command":"prop.addKey","params":{"layer":"ALT_03_Bugün","path":"effects/#1/blurriness","time":3.3,"value":24}}
+{"command":"prop.addKey","params":{"layer":"ALT_03_Bugün","path":"effects/#1/blurriness","time":3.46,"value":0}}
+{"command":"layer.newText","params":{"name":"ALT_04_dertten","text":"dertten","position":[2200,1940],"font":"Arial","style":"Bold","size":94,"fill":"#F58220","justify":"center"}}
+{"command":"prop.addKey","params":{"layer":"ALT_04_dertten","path":"transform/opacity","time":3.86,"value":0}}
+{"command":"prop.addKey","params":{"layer":"ALT_04_dertten","path":"transform/opacity","time":4.02,"value":100}}
+{"command":"prop.addKey","params":{"layer":"ALT_04_dertten","path":"transform/position","time":3.86,"value":[2200,1982]}}
+{"command":"prop.addKey","params":{"layer":"ALT_04_dertten","path":"transform/position","time":4.02,"value":[2200,1940]}}
+{"command":"prop.addKey","params":{"layer":"ALT_04_dertten","path":"transform/scale","time":3.86,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"ALT_04_dertten","path":"transform/scale","time":4.02,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["ALT_04_dertten"]}}
+{"command":"prop.addKey","params":{"layer":"ALT_04_dertten","path":"effects/#1/blurriness","time":3.86,"value":24}}
+{"command":"prop.addKey","params":{"layer":"ALT_04_dertten","path":"effects/#1/blurriness","time":4.02,"value":0}}
+{"command":"layer.newText","params":{"name":"ALT_05_bahsedeceğiz","text":"bahsedeceğiz.","position":[2760,1940],"font":"Arial","style":"Bold","size":94,"fill":"#FFFFFF","justify":"center"}}
+{"command":"prop.addKey","params":{"layer":"ALT_05_bahsedeceğiz","path":"transform/opacity","time":4.38,"value":0}}
+{"command":"prop.addKey","params":{"layer":"ALT_05_bahsedeceğiz","path":"transform/opacity","time":4.54,"value":100}}
+{"command":"prop.addKey","params":{"layer":"ALT_05_bahsedeceğiz","path":"transform/position","time":4.38,"value":[2760,1982]}}
+{"command":"prop.addKey","params":{"layer":"ALT_05_bahsedeceğiz","path":"transform/position","time":4.54,"value":[2760,1940]}}
+{"command":"prop.addKey","params":{"layer":"ALT_05_bahsedeceğiz","path":"transform/scale","time":4.38,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"ALT_05_bahsedeceğiz","path":"transform/scale","time":4.54,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["ALT_05_bahsedeceğiz"]}}
+{"command":"prop.addKey","params":{"layer":"ALT_05_bahsedeceğiz","path":"effects/#1/blurriness","time":4.38,"value":24}}
+{"command":"prop.addKey","params":{"layer":"ALT_05_bahsedeceğiz","path":"effects/#1/blurriness","time":4.54,"value":0}}
+{"command":"layer.newText","params":{"name":"ALT_06_Dert","text":"Dert","position":[3320,2040],"font":"Arial","style":"Bold","size":94,"fill":"#F58220","justify":"center"}}
+{"command":"prop.addKey","params":{"layer":"ALT_06_Dert","path":"transform/opacity","time":5.5,"value":0}}
+{"command":"prop.addKey","params":{"layer":"ALT_06_Dert","path":"transform/opacity","time":5.66,"value":100}}
+{"command":"prop.addKey","params":{"layer":"ALT_06_Dert","path":"transform/position","time":5.5,"value":[3320,2082]}}
+{"command":"prop.addKey","params":{"layer":"ALT_06_Dert","path":"transform/position","time":5.66,"value":[3320,2040]}}
+{"command":"prop.addKey","params":{"layer":"ALT_06_Dert","path":"transform/scale","time":5.5,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"ALT_06_Dert","path":"transform/scale","time":5.66,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["ALT_06_Dert"]}}
+{"command":"prop.addKey","params":{"layer":"ALT_06_Dert","path":"effects/#1/blurriness","time":5.5,"value":24}}
+{"command":"prop.addKey","params":{"layer":"ALT_06_Dert","path":"effects/#1/blurriness","time":5.66,"value":0}}
+{"command":"layer.newText","params":{"name":"ALT_07_aslında","text":"aslında","position":[520,2040],"font":"Arial","style":"Bold","size":94,"fill":"#FFFFFF","justify":"center"}}
+{"command":"prop.addKey","params":{"layer":"ALT_07_aslında","path":"transform/opacity","time":5.9399999999999995,"value":0}}
+{"command":"prop.addKey","params":{"layer":"ALT_07_aslında","path":"transform/opacity","time":6.1,"value":100}}
+{"command":"prop.addKey","params":{"layer":"ALT_07_aslında","path":"transform/position","time":5.9399999999999995,"value":[520,2082]}}
+{"command":"prop.addKey","params":{"layer":"ALT_07_aslında","path":"transform/position","time":6.1,"value":[520,2040]}}
+{"command":"prop.addKey","params":{"layer":"ALT_07_aslında","path":"transform/scale","time":5.9399999999999995,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"ALT_07_aslında","path":"transform/scale","time":6.1,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["ALT_07_aslında"]}}
+{"command":"prop.addKey","params":{"layer":"ALT_07_aslında","path":"effects/#1/blurriness","time":5.9399999999999995,"value":24}}
+{"command":"prop.addKey","params":{"layer":"ALT_07_aslında","path":"effects/#1/blurriness","time":6.1,"value":0}}
+{"command":"layer.newText","params":{"name":"ALT_08_bizim","text":"bizim","position":[1080,2040],"font":"Arial","style":"Bold","size":94,"fill":"#FFFFFF","justify":"center"}}
+{"command":"prop.addKey","params":{"layer":"ALT_08_bizim","path":"transform/opacity","time":6.4399999999999995,"value":0}}
+{"command":"prop.addKey","params":{"layer":"ALT_08_bizim","path":"transform/opacity","time":6.6,"value":100}}
+{"command":"prop.addKey","params":{"layer":"ALT_08_bizim","path":"transform/position","time":6.4399999999999995,"value":[1080,2082]}}
+{"command":"prop.addKey","params":{"layer":"ALT_08_bizim","path":"transform/position","time":6.6,"value":[1080,2040]}}
+{"command":"prop.addKey","params":{"layer":"ALT_08_bizim","path":"transform/scale","time":6.4399999999999995,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"ALT_08_bizim","path":"transform/scale","time":6.6,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["ALT_08_bizim"]}}
+{"command":"prop.addKey","params":{"layer":"ALT_08_bizim","path":"effects/#1/blurriness","time":6.4399999999999995,"value":24}}
+{"command":"prop.addKey","params":{"layer":"ALT_08_bizim","path":"effects/#1/blurriness","time":6.6,"value":0}}
+{"command":"layer.newText","params":{"name":"ALT_09_odağımızı","text":"odağımızı","position":[1640,2040],"font":"Arial","style":"Bold","size":94,"fill":"#F58220","justify":"center"}}
+{"command":"prop.addKey","params":{"layer":"ALT_09_odağımızı","path":"transform/opacity","time":6.84,"value":0}}
+{"command":"prop.addKey","params":{"layer":"ALT_09_odağımızı","path":"transform/opacity","time":7,"value":100}}
+{"command":"prop.addKey","params":{"layer":"ALT_09_odağımızı","path":"transform/position","time":6.84,"value":[1640,2082]}}
+{"command":"prop.addKey","params":{"layer":"ALT_09_odağımızı","path":"transform/position","time":7,"value":[1640,2040]}}
+{"command":"prop.addKey","params":{"layer":"ALT_09_odağımızı","path":"transform/scale","time":6.84,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"ALT_09_odağımızı","path":"transform/scale","time":7,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["ALT_09_odağımızı"]}}
+{"command":"prop.addKey","params":{"layer":"ALT_09_odağımızı","path":"effects/#1/blurriness","time":6.84,"value":24}}
+{"command":"prop.addKey","params":{"layer":"ALT_09_odağımızı","path":"effects/#1/blurriness","time":7,"value":0}}
+{"command":"layer.newText","params":{"name":"ALT_10_belirleyen","text":"belirleyen","position":[2200,2040],"font":"Arial","style":"Bold","size":94,"fill":"#FFFFFF","justify":"center"}}
+{"command":"prop.addKey","params":{"layer":"ALT_10_belirleyen","path":"transform/opacity","time":7.54,"value":0}}
+{"command":"prop.addKey","params":{"layer":"ALT_10_belirleyen","path":"transform/opacity","time":7.7,"value":100}}
+{"command":"prop.addKey","params":{"layer":"ALT_10_belirleyen","path":"transform/position","time":7.54,"value":[2200,2082]}}
+{"command":"prop.addKey","params":{"layer":"ALT_10_belirleyen","path":"transform/position","time":7.7,"value":[2200,2040]}}
+{"command":"prop.addKey","params":{"layer":"ALT_10_belirleyen","path":"transform/scale","time":7.54,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"ALT_10_belirleyen","path":"transform/scale","time":7.7,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["ALT_10_belirleyen"]}}
+{"command":"prop.addKey","params":{"layer":"ALT_10_belirleyen","path":"effects/#1/blurriness","time":7.54,"value":24}}
+{"command":"prop.addKey","params":{"layer":"ALT_10_belirleyen","path":"effects/#1/blurriness","time":7.7,"value":0}}
+{"command":"layer.newText","params":{"name":"ALT_11_şeydir","text":"şeydir.","position":[2760,2040],"font":"Arial","style":"Bold","size":94,"fill":"#FFFFFF","justify":"center"}}
+{"command":"prop.addKey","params":{"layer":"ALT_11_şeydir","path":"transform/opacity","time":8.22,"value":0}}
+{"command":"prop.addKey","params":{"layer":"ALT_11_şeydir","path":"transform/opacity","time":8.38,"value":100}}
+{"command":"prop.addKey","params":{"layer":"ALT_11_şeydir","path":"transform/position","time":8.22,"value":[2760,2082]}}
+{"command":"prop.addKey","params":{"layer":"ALT_11_şeydir","path":"transform/position","time":8.38,"value":[2760,2040]}}
+{"command":"prop.addKey","params":{"layer":"ALT_11_şeydir","path":"transform/scale","time":8.22,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"ALT_11_şeydir","path":"transform/scale","time":8.38,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["ALT_11_şeydir"]}}
+{"command":"prop.addKey","params":{"layer":"ALT_11_şeydir","path":"effects/#1/blurriness","time":8.22,"value":24}}
+{"command":"prop.addKey","params":{"layer":"ALT_11_şeydir","path":"effects/#1/blurriness","time":8.38,"value":0}}
+{"command":"comp.new","params":{"name":"SENKRON_ALINTI","width":3840,"height":2160,"frameRate":25,"duration":9.2,"background":"#00000000","open":true}}
+{"command":"layer.newText","params":{"name":"ALINTI_01_Merhaba","text":"Merhaba","position":[2780,500],"font":"Arial","style":"Bold","size":118,"fill":"#F58220","justify":"left"}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_01_Merhaba","path":"transform/opacity","time":1.44,"value":0}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_01_Merhaba","path":"transform/opacity","time":1.6,"value":100}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_01_Merhaba","path":"transform/position","time":1.44,"value":[2780,542]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_01_Merhaba","path":"transform/position","time":1.6,"value":[2780,500]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_01_Merhaba","path":"transform/scale","time":1.44,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_01_Merhaba","path":"transform/scale","time":1.6,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["ALINTI_01_Merhaba"]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_01_Merhaba","path":"effects/#1/blurriness","time":1.44,"value":24}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_01_Merhaba","path":"effects/#1/blurriness","time":1.6,"value":0}}
+{"command":"layer.newText","params":{"name":"ALINTI_02_arkadaşlar","text":"arkadaşlar.","position":[2780,635],"font":"Arial","style":"Bold","size":118,"fill":"#FFFFFF","justify":"left"}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_02_arkadaşlar","path":"transform/opacity","time":2.1999999999999997,"value":0}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_02_arkadaşlar","path":"transform/opacity","time":2.36,"value":100}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_02_arkadaşlar","path":"transform/position","time":2.1999999999999997,"value":[2780,677]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_02_arkadaşlar","path":"transform/position","time":2.36,"value":[2780,635]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_02_arkadaşlar","path":"transform/scale","time":2.1999999999999997,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_02_arkadaşlar","path":"transform/scale","time":2.36,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["ALINTI_02_arkadaşlar"]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_02_arkadaşlar","path":"effects/#1/blurriness","time":2.1999999999999997,"value":24}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_02_arkadaşlar","path":"effects/#1/blurriness","time":2.36,"value":0}}
+{"command":"layer.newText","params":{"name":"ALINTI_03_Bugün","text":"Bugün","position":[2780,770],"font":"Arial","style":"Bold","size":118,"fill":"#FFFFFF","justify":"left"}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_03_Bugün","path":"transform/opacity","time":3.3,"value":0}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_03_Bugün","path":"transform/opacity","time":3.46,"value":100}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_03_Bugün","path":"transform/position","time":3.3,"value":[2780,812]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_03_Bugün","path":"transform/position","time":3.46,"value":[2780,770]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_03_Bugün","path":"transform/scale","time":3.3,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_03_Bugün","path":"transform/scale","time":3.46,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["ALINTI_03_Bugün"]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_03_Bugün","path":"effects/#1/blurriness","time":3.3,"value":24}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_03_Bugün","path":"effects/#1/blurriness","time":3.46,"value":0}}
+{"command":"layer.newText","params":{"name":"ALINTI_04_dertten","text":"dertten","position":[2780,905],"font":"Arial","style":"Bold","size":118,"fill":"#F58220","justify":"left"}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_04_dertten","path":"transform/opacity","time":3.86,"value":0}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_04_dertten","path":"transform/opacity","time":4.02,"value":100}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_04_dertten","path":"transform/position","time":3.86,"value":[2780,947]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_04_dertten","path":"transform/position","time":4.02,"value":[2780,905]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_04_dertten","path":"transform/scale","time":3.86,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_04_dertten","path":"transform/scale","time":4.02,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["ALINTI_04_dertten"]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_04_dertten","path":"effects/#1/blurriness","time":3.86,"value":24}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_04_dertten","path":"effects/#1/blurriness","time":4.02,"value":0}}
+{"command":"layer.newText","params":{"name":"ALINTI_05_bahsedeceğiz","text":"bahsedeceğiz.","position":[2780,1040],"font":"Arial","style":"Bold","size":118,"fill":"#FFFFFF","justify":"left"}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_05_bahsedeceğiz","path":"transform/opacity","time":4.38,"value":0}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_05_bahsedeceğiz","path":"transform/opacity","time":4.54,"value":100}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_05_bahsedeceğiz","path":"transform/position","time":4.38,"value":[2780,1082]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_05_bahsedeceğiz","path":"transform/position","time":4.54,"value":[2780,1040]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_05_bahsedeceğiz","path":"transform/scale","time":4.38,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_05_bahsedeceğiz","path":"transform/scale","time":4.54,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["ALINTI_05_bahsedeceğiz"]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_05_bahsedeceğiz","path":"effects/#1/blurriness","time":4.38,"value":24}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_05_bahsedeceğiz","path":"effects/#1/blurriness","time":4.54,"value":0}}
+{"command":"layer.newText","params":{"name":"ALINTI_06_Dert","text":"Dert","position":[2780,1175],"font":"Arial","style":"Bold","size":118,"fill":"#F58220","justify":"left"}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_06_Dert","path":"transform/opacity","time":5.5,"value":0}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_06_Dert","path":"transform/opacity","time":5.66,"value":100}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_06_Dert","path":"transform/position","time":5.5,"value":[2780,1217]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_06_Dert","path":"transform/position","time":5.66,"value":[2780,1175]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_06_Dert","path":"transform/scale","time":5.5,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_06_Dert","path":"transform/scale","time":5.66,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["ALINTI_06_Dert"]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_06_Dert","path":"effects/#1/blurriness","time":5.5,"value":24}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_06_Dert","path":"effects/#1/blurriness","time":5.66,"value":0}}
+{"command":"layer.newText","params":{"name":"ALINTI_07_aslında","text":"aslında","position":[2780,1310],"font":"Arial","style":"Bold","size":118,"fill":"#FFFFFF","justify":"left"}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_07_aslında","path":"transform/opacity","time":5.9399999999999995,"value":0}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_07_aslında","path":"transform/opacity","time":6.1,"value":100}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_07_aslında","path":"transform/position","time":5.9399999999999995,"value":[2780,1352]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_07_aslında","path":"transform/position","time":6.1,"value":[2780,1310]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_07_aslında","path":"transform/scale","time":5.9399999999999995,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_07_aslında","path":"transform/scale","time":6.1,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["ALINTI_07_aslında"]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_07_aslında","path":"effects/#1/blurriness","time":5.9399999999999995,"value":24}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_07_aslında","path":"effects/#1/blurriness","time":6.1,"value":0}}
+{"command":"layer.newText","params":{"name":"ALINTI_08_bizim","text":"bizim","position":[2780,1445],"font":"Arial","style":"Bold","size":118,"fill":"#FFFFFF","justify":"left"}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_08_bizim","path":"transform/opacity","time":6.4399999999999995,"value":0}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_08_bizim","path":"transform/opacity","time":6.6,"value":100}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_08_bizim","path":"transform/position","time":6.4399999999999995,"value":[2780,1487]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_08_bizim","path":"transform/position","time":6.6,"value":[2780,1445]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_08_bizim","path":"transform/scale","time":6.4399999999999995,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_08_bizim","path":"transform/scale","time":6.6,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["ALINTI_08_bizim"]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_08_bizim","path":"effects/#1/blurriness","time":6.4399999999999995,"value":24}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_08_bizim","path":"effects/#1/blurriness","time":6.6,"value":0}}
+{"command":"layer.newText","params":{"name":"ALINTI_09_odağımızı","text":"odağımızı","position":[2780,1580],"font":"Arial","style":"Bold","size":118,"fill":"#F58220","justify":"left"}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_09_odağımızı","path":"transform/opacity","time":6.84,"value":0}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_09_odağımızı","path":"transform/opacity","time":7,"value":100}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_09_odağımızı","path":"transform/position","time":6.84,"value":[2780,1622]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_09_odağımızı","path":"transform/position","time":7,"value":[2780,1580]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_09_odağımızı","path":"transform/scale","time":6.84,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_09_odağımızı","path":"transform/scale","time":7,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["ALINTI_09_odağımızı"]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_09_odağımızı","path":"effects/#1/blurriness","time":6.84,"value":24}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_09_odağımızı","path":"effects/#1/blurriness","time":7,"value":0}}
+{"command":"layer.newText","params":{"name":"ALINTI_10_belirleyen","text":"belirleyen","position":[2780,1715],"font":"Arial","style":"Bold","size":118,"fill":"#FFFFFF","justify":"left"}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_10_belirleyen","path":"transform/opacity","time":7.54,"value":0}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_10_belirleyen","path":"transform/opacity","time":7.7,"value":100}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_10_belirleyen","path":"transform/position","time":7.54,"value":[2780,1757]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_10_belirleyen","path":"transform/position","time":7.7,"value":[2780,1715]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_10_belirleyen","path":"transform/scale","time":7.54,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_10_belirleyen","path":"transform/scale","time":7.7,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["ALINTI_10_belirleyen"]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_10_belirleyen","path":"effects/#1/blurriness","time":7.54,"value":24}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_10_belirleyen","path":"effects/#1/blurriness","time":7.7,"value":0}}
+{"command":"layer.newText","params":{"name":"ALINTI_11_şeydir","text":"şeydir.","position":[2780,1850],"font":"Arial","style":"Bold","size":118,"fill":"#FFFFFF","justify":"left"}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_11_şeydir","path":"transform/opacity","time":8.22,"value":0}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_11_şeydir","path":"transform/opacity","time":8.38,"value":100}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_11_şeydir","path":"transform/position","time":8.22,"value":[2780,1892]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_11_şeydir","path":"transform/position","time":8.38,"value":[2780,1850]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_11_şeydir","path":"transform/scale","time":8.22,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_11_şeydir","path":"transform/scale","time":8.38,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["ALINTI_11_şeydir"]}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_11_şeydir","path":"effects/#1/blurriness","time":8.22,"value":24}}
+{"command":"prop.addKey","params":{"layer":"ALINTI_11_şeydir","path":"effects/#1/blurriness","time":8.38,"value":0}}
+{"command":"comp.new","params":{"name":"SENKRON_DAKTILO","width":3840,"height":2160,"frameRate":25,"duration":9.2,"background":"#00000000","open":true}}
+{"command":"layer.newText","params":{"name":"DAKTILO_01_Merhaba","text":"Merhaba","position":[420,650],"font":"Arial","style":"Bold","size":110,"fill":"#F58220","justify":"left"}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_01_Merhaba","path":"transform/opacity","time":1.44,"value":0}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_01_Merhaba","path":"transform/opacity","time":1.6,"value":100}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_01_Merhaba","path":"transform/position","time":1.44,"value":[420,692]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_01_Merhaba","path":"transform/position","time":1.6,"value":[420,650]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_01_Merhaba","path":"transform/scale","time":1.44,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_01_Merhaba","path":"transform/scale","time":1.6,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["DAKTILO_01_Merhaba"]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_01_Merhaba","path":"effects/#1/blurriness","time":1.44,"value":24}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_01_Merhaba","path":"effects/#1/blurriness","time":1.6,"value":0}}
+{"command":"layer.applyTextPreset","params":{"layer":"DAKTILO_01_Merhaba","preset":"typewriter"}}
+{"command":"layer.newText","params":{"name":"DAKTILO_02_arkadaşlar","text":"arkadaşlar.","position":[1240,650],"font":"Arial","style":"Bold","size":110,"fill":"#FFFFFF","justify":"left"}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_02_arkadaşlar","path":"transform/opacity","time":2.1999999999999997,"value":0}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_02_arkadaşlar","path":"transform/opacity","time":2.36,"value":100}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_02_arkadaşlar","path":"transform/position","time":2.1999999999999997,"value":[1240,692]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_02_arkadaşlar","path":"transform/position","time":2.36,"value":[1240,650]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_02_arkadaşlar","path":"transform/scale","time":2.1999999999999997,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_02_arkadaşlar","path":"transform/scale","time":2.36,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["DAKTILO_02_arkadaşlar"]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_02_arkadaşlar","path":"effects/#1/blurriness","time":2.1999999999999997,"value":24}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_02_arkadaşlar","path":"effects/#1/blurriness","time":2.36,"value":0}}
+{"command":"layer.applyTextPreset","params":{"layer":"DAKTILO_02_arkadaşlar","preset":"typewriter"}}
+{"command":"layer.newText","params":{"name":"DAKTILO_03_Bugün","text":"Bugün","position":[2060,650],"font":"Arial","style":"Bold","size":110,"fill":"#FFFFFF","justify":"left"}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_03_Bugün","path":"transform/opacity","time":3.3,"value":0}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_03_Bugün","path":"transform/opacity","time":3.46,"value":100}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_03_Bugün","path":"transform/position","time":3.3,"value":[2060,692]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_03_Bugün","path":"transform/position","time":3.46,"value":[2060,650]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_03_Bugün","path":"transform/scale","time":3.3,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_03_Bugün","path":"transform/scale","time":3.46,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["DAKTILO_03_Bugün"]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_03_Bugün","path":"effects/#1/blurriness","time":3.3,"value":24}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_03_Bugün","path":"effects/#1/blurriness","time":3.46,"value":0}}
+{"command":"layer.applyTextPreset","params":{"layer":"DAKTILO_03_Bugün","preset":"typewriter"}}
+{"command":"layer.newText","params":{"name":"DAKTILO_04_dertten","text":"dertten","position":[2880,650],"font":"Arial","style":"Bold","size":110,"fill":"#F58220","justify":"left"}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_04_dertten","path":"transform/opacity","time":3.86,"value":0}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_04_dertten","path":"transform/opacity","time":4.02,"value":100}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_04_dertten","path":"transform/position","time":3.86,"value":[2880,692]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_04_dertten","path":"transform/position","time":4.02,"value":[2880,650]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_04_dertten","path":"transform/scale","time":3.86,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_04_dertten","path":"transform/scale","time":4.02,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["DAKTILO_04_dertten"]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_04_dertten","path":"effects/#1/blurriness","time":3.86,"value":24}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_04_dertten","path":"effects/#1/blurriness","time":4.02,"value":0}}
+{"command":"layer.applyTextPreset","params":{"layer":"DAKTILO_04_dertten","preset":"typewriter"}}
+{"command":"layer.newText","params":{"name":"DAKTILO_05_bahsedeceğiz","text":"bahsedeceğiz.","position":[420,970],"font":"Arial","style":"Bold","size":110,"fill":"#FFFFFF","justify":"left"}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_05_bahsedeceğiz","path":"transform/opacity","time":4.38,"value":0}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_05_bahsedeceğiz","path":"transform/opacity","time":4.54,"value":100}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_05_bahsedeceğiz","path":"transform/position","time":4.38,"value":[420,1012]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_05_bahsedeceğiz","path":"transform/position","time":4.54,"value":[420,970]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_05_bahsedeceğiz","path":"transform/scale","time":4.38,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_05_bahsedeceğiz","path":"transform/scale","time":4.54,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["DAKTILO_05_bahsedeceğiz"]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_05_bahsedeceğiz","path":"effects/#1/blurriness","time":4.38,"value":24}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_05_bahsedeceğiz","path":"effects/#1/blurriness","time":4.54,"value":0}}
+{"command":"layer.applyTextPreset","params":{"layer":"DAKTILO_05_bahsedeceğiz","preset":"typewriter"}}
+{"command":"layer.newText","params":{"name":"DAKTILO_06_Dert","text":"Dert","position":[1240,970],"font":"Arial","style":"Bold","size":110,"fill":"#F58220","justify":"left"}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_06_Dert","path":"transform/opacity","time":5.5,"value":0}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_06_Dert","path":"transform/opacity","time":5.66,"value":100}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_06_Dert","path":"transform/position","time":5.5,"value":[1240,1012]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_06_Dert","path":"transform/position","time":5.66,"value":[1240,970]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_06_Dert","path":"transform/scale","time":5.5,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_06_Dert","path":"transform/scale","time":5.66,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["DAKTILO_06_Dert"]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_06_Dert","path":"effects/#1/blurriness","time":5.5,"value":24}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_06_Dert","path":"effects/#1/blurriness","time":5.66,"value":0}}
+{"command":"layer.applyTextPreset","params":{"layer":"DAKTILO_06_Dert","preset":"typewriter"}}
+{"command":"layer.newText","params":{"name":"DAKTILO_07_aslında","text":"aslında","position":[2060,970],"font":"Arial","style":"Bold","size":110,"fill":"#FFFFFF","justify":"left"}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_07_aslında","path":"transform/opacity","time":5.9399999999999995,"value":0}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_07_aslında","path":"transform/opacity","time":6.1,"value":100}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_07_aslında","path":"transform/position","time":5.9399999999999995,"value":[2060,1012]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_07_aslında","path":"transform/position","time":6.1,"value":[2060,970]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_07_aslında","path":"transform/scale","time":5.9399999999999995,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_07_aslında","path":"transform/scale","time":6.1,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["DAKTILO_07_aslında"]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_07_aslında","path":"effects/#1/blurriness","time":5.9399999999999995,"value":24}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_07_aslında","path":"effects/#1/blurriness","time":6.1,"value":0}}
+{"command":"layer.applyTextPreset","params":{"layer":"DAKTILO_07_aslında","preset":"typewriter"}}
+{"command":"layer.newText","params":{"name":"DAKTILO_08_bizim","text":"bizim","position":[2880,970],"font":"Arial","style":"Bold","size":110,"fill":"#FFFFFF","justify":"left"}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_08_bizim","path":"transform/opacity","time":6.4399999999999995,"value":0}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_08_bizim","path":"transform/opacity","time":6.6,"value":100}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_08_bizim","path":"transform/position","time":6.4399999999999995,"value":[2880,1012]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_08_bizim","path":"transform/position","time":6.6,"value":[2880,970]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_08_bizim","path":"transform/scale","time":6.4399999999999995,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_08_bizim","path":"transform/scale","time":6.6,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["DAKTILO_08_bizim"]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_08_bizim","path":"effects/#1/blurriness","time":6.4399999999999995,"value":24}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_08_bizim","path":"effects/#1/blurriness","time":6.6,"value":0}}
+{"command":"layer.applyTextPreset","params":{"layer":"DAKTILO_08_bizim","preset":"typewriter"}}
+{"command":"layer.newText","params":{"name":"DAKTILO_09_odağımızı","text":"odağımızı","position":[420,1290],"font":"Arial","style":"Bold","size":110,"fill":"#F58220","justify":"left"}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_09_odağımızı","path":"transform/opacity","time":6.84,"value":0}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_09_odağımızı","path":"transform/opacity","time":7,"value":100}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_09_odağımızı","path":"transform/position","time":6.84,"value":[420,1332]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_09_odağımızı","path":"transform/position","time":7,"value":[420,1290]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_09_odağımızı","path":"transform/scale","time":6.84,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_09_odağımızı","path":"transform/scale","time":7,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["DAKTILO_09_odağımızı"]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_09_odağımızı","path":"effects/#1/blurriness","time":6.84,"value":24}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_09_odağımızı","path":"effects/#1/blurriness","time":7,"value":0}}
+{"command":"layer.applyTextPreset","params":{"layer":"DAKTILO_09_odağımızı","preset":"typewriter"}}
+{"command":"layer.newText","params":{"name":"DAKTILO_10_belirleyen","text":"belirleyen","position":[1240,1290],"font":"Arial","style":"Bold","size":110,"fill":"#FFFFFF","justify":"left"}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_10_belirleyen","path":"transform/opacity","time":7.54,"value":0}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_10_belirleyen","path":"transform/opacity","time":7.7,"value":100}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_10_belirleyen","path":"transform/position","time":7.54,"value":[1240,1332]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_10_belirleyen","path":"transform/position","time":7.7,"value":[1240,1290]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_10_belirleyen","path":"transform/scale","time":7.54,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_10_belirleyen","path":"transform/scale","time":7.7,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["DAKTILO_10_belirleyen"]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_10_belirleyen","path":"effects/#1/blurriness","time":7.54,"value":24}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_10_belirleyen","path":"effects/#1/blurriness","time":7.7,"value":0}}
+{"command":"layer.applyTextPreset","params":{"layer":"DAKTILO_10_belirleyen","preset":"typewriter"}}
+{"command":"layer.newText","params":{"name":"DAKTILO_11_şeydir","text":"şeydir.","position":[2060,1290],"font":"Arial","style":"Bold","size":110,"fill":"#FFFFFF","justify":"left"}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_11_şeydir","path":"transform/opacity","time":8.22,"value":0}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_11_şeydir","path":"transform/opacity","time":8.38,"value":100}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_11_şeydir","path":"transform/position","time":8.22,"value":[2060,1332]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_11_şeydir","path":"transform/position","time":8.38,"value":[2060,1290]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_11_şeydir","path":"transform/scale","time":8.22,"value":[94,94]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_11_şeydir","path":"transform/scale","time":8.38,"value":[100,100]}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["DAKTILO_11_şeydir"]}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_11_şeydir","path":"effects/#1/blurriness","time":8.22,"value":24}}
+{"command":"prop.addKey","params":{"layer":"DAKTILO_11_şeydir","path":"effects/#1/blurriness","time":8.38,"value":0}}
+{"command":"layer.applyTextPreset","params":{"layer":"DAKTILO_11_şeydir","preset":"typewriter"}}
+{"command":"file.saveAs","params":{"path":"senkron-yazi.ecproj"}}

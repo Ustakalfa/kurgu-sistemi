@@ -19,7 +19,7 @@
 | rapor başka yere yazıldı | hedef korumalı/yazılamıyor | uyarıdaki cwd çıktısını kullan veya `--cikti` ver |
 | Gemini katmanı çalışmadı | kota, agy, klasör | CSV günlüğü ve `-d` yolunu kontrol et |
 | MCP listede yok | kayıt yapılmadı | `./kurulum.sh --mcp` |
-| MCP bağlanmıyor | FilmCraft köprüsü kapalı | uygulamayı `open -a FilmCraft --args --control 9876` ile aç |
+| MCP bağlanmıyor | FilmCraft köprüsü kapalı | uygulamayı `filmcraft-ac` ile aç |
 | port dolu | başka süreç 9876 kullanıyor | süreci belirle; rastgele öldürmeden sahipliğini doğrula |
 | FilmCraft komutu parametre reddediyor | sürüm/şema farkı | `filmcraft-komutlar.txt` satırını tekrar oku |
 | adım dosyası yarıda kaldı | bir MCP çağrısı hata verdi | mevcut proje durumunu oku; tamamını kör tekrar etme |
@@ -64,8 +64,8 @@ Ham dosyayı silmeyin veya üzerine yazmayın. Kurulumun taşıdığı önceki h
 ## FilmCraft köprüsü için derin tanı
 
 ```sh
-open -a FilmCraft --args --control 9876
-claude mcp add filmcraft -- "$HOME/.local/bin/filmcraft-cli" mcp --bridge 127.0.0.1:9876
+filmcraft-ac
+claude mcp add filmcraft -- "$HOME/.local/bin/filmcraft-kopru" mcp --bridge 127.0.0.1:9876
 ```
 
 Uygulama tamamen açılmadan ilk çağrıyı göndermeyin. Aynı portta eski bir süreç varsa önce hangi uygulamaya ait olduğunu belirleyin. MCP kaydını silip yeniden eklemek proje durumunu düzeltmez; sorun kayıt mı, köprü mü, komut şeması mı ayrıştırılmalıdır.

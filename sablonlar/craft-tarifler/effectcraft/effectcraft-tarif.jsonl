@@ -1,0 +1,30 @@
+{"command":"file.newProject","params":{}}
+{"command":"file.projectSettings","params":{"bitDepth":16,"workingSpace":"rec709","renderer":"software"}}
+{"command":"comp.new","params":{"name":"ANA_4K25_6SN","width":3840,"height":2160,"frameRate":25,"duration":6,"background":"#0A0D18","open":true}}
+{"command":"layer.newSolid","params":{"name":"KOYU_ZEMIN","color":"#0A0D18","width":3840,"height":2160}}
+{"command":"layer.newText","params":{"name":"TURKCE_BASLIK","text":"Çağrı Işığı Öğün Şükür İğne","position":[1920,1060],"font":"Arial","style":"Bold","size":210,"fill":"#F3F7FF","tracking":70,"justify":"center"}}
+{"command":"prop.addKey","params":{"layer":"TURKCE_BASLIK","path":"transform/position","time":0,"value":[1920,1320]}}
+{"command":"prop.addKey","params":{"layer":"TURKCE_BASLIK","path":"transform/position","time":1.2,"value":[1920,1060]}}
+{"command":"prop.addKey","params":{"layer":"TURKCE_BASLIK","path":"transform/scale","time":0,"value":[86,86]}}
+{"command":"prop.addKey","params":{"layer":"TURKCE_BASLIK","path":"transform/scale","time":1.2,"value":[100,100]}}
+{"command":"prop.addKey","params":{"layer":"TURKCE_BASLIK","path":"transform/opacity","time":0,"value":0}}
+{"command":"prop.addKey","params":{"layer":"TURKCE_BASLIK","path":"transform/opacity","time":1.0,"value":100}}
+{"command":"keys.selectAll","params":{"layers":["TURKCE_BASLIK"]}}
+{"command":"keys.easyEase","params":{"which":"both"}}
+{"command":"layer.addMask","params":{"layer":"TURKCE_BASLIK","shape":"rect","rect":[500,900,2840,360],"mode":"Add"}}
+{"command":"effect.apply","params":{"effect":"Gaussian Blur","layers":["TURKCE_BASLIK"]}}
+{"command":"effect.apply","params":{"effect":"Glow","layers":["TURKCE_BASLIK"]}}
+{"command":"layer.applyTextPreset","params":{"layer":"TURKCE_BASLIK","preset":"fadeUpCharacters"}}
+{"command":"layer.newShape","params":{"kind":"rect","name":"CIZGI","size":[2500,8],"fill":"#72F2C7","position":[1920,1320]}}
+{"command":"layer.addShapeItem","params":{"layer":"CIZGI","kind":"trim"}}
+{"command":"prop.addKey","params":{"layer":"CIZGI","path":"transform/scale","time":0.2,"value":[0,100]}}
+{"command":"prop.addKey","params":{"layer":"CIZGI","path":"transform/scale","time":1.4,"value":[100,100]}}
+{"command":"prop.addKey","params":{"layer":"CIZGI","path":"transform/opacity","time":0.2,"value":0}}
+{"command":"prop.addKey","params":{"layer":"CIZGI","path":"transform/opacity","time":0.5,"value":100}}
+{"command":"keys.selectAll","params":{"layers":["CIZGI"]}}
+{"command":"keys.easyEase","params":{"which":"both"}}
+{"command":"layer.newAdjustment","params":{"name":"AYAR_GRAIN"}}
+{"command":"effect.apply","params":{"effect":"Noise","layers":["AYAR_GRAIN"]}}
+{"command":"layer.precompose","params":{"layers":["TURKCE_BASLIK","CIZGI"],"name":"BASLIK_PRECOMP","mode":"move","adjustDuration":true}}
+{"command":"file.import","params":{"paths":["vectorcraft-rozet.svg","vectorcraft-rozet.png","test4k.mp4"]}}
+{"command":"file.saveAs","params":{"path":"effectcraft-ana.ecproj"}}
